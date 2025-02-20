@@ -148,20 +148,20 @@ public class GenerationPo {
             // 如果您想生成，请直接在这里配置即可
         }else {
             CustomFile vue = new CustomFile.Builder()
-                    .fileName("index.vue")
-                    .templatePath("/templates/vue/index.vue.vm")
+                    .fileName("/index.vue")
+                    .templatePath("/templates/lucky/vue/index.vue.vm")
                     .packageName("vue")
                     .enableFileOverride().build();
 
             CustomFile js = new CustomFile.Builder()
-                    .fileName(StringUtils.toCamelCase(tableName)+".js") // sys_users -> sysUsers  + .js
-                    .templatePath("/templates/js/index.js.vm")
+                    .fileName("/"+StringUtils.toCamelCase(tableName)+".js") // sys_users -> sysUsers  + .js
+                    .templatePath("/templates/lucky/js/index.js.vm")
                     .packageName("js")
                     .enableFileOverride().build();
 
             CustomFile sql = new CustomFile.Builder()
-                    .fileName(StringUtils.toCamelCase(tableName) + ".sql")
-                    .templatePath("/templates/sql/menus.sql.vm")
+                    .fileName("/"+StringUtils.toCamelCase(tableName) + ".sql")
+                    .templatePath("/templates/lucky/sql/menus.sql.vm")
                     .packageName("sql")
                     .enableFileOverride().build();
             list.add(vue);
