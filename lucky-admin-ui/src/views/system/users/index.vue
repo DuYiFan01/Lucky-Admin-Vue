@@ -40,7 +40,7 @@
       </div>
     </div>
     <!-- 操作按钮栏 -->
-    <div class="button-bar">
+    <div v-permission="['system::users::query','system::users::insert','system::users::delete']" class="button-bar">
       <el-button v-permission="['system::users::insert']" type="primary" icon="el-icon-circle-plus-outline" size="small" plain :loading="loading" @click="handleAdd"> 新增项目 </el-button>
       <el-button v-permission="['system::users::delete']" type="danger" icon="el-icon-delete" size="small" plain :loading="loading" @click="handleRemove"> 批量删除 </el-button>
       <el-button v-permission="['system::users::query']" type="info" icon="el-icon-refresh-right" size="small" plain :loading="loading" @click="handleRefresh"> 刷新 </el-button>

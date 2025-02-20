@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 搜索栏 -->
-    <div class="search-bar">
+    <div v-permission="['system::roles::query']" class="search-bar">
       <div class="grid-item">
         <span>角色名称:</span>
         <el-input v-model="searchForm.name" placeholder="请输入角色名称" />
@@ -11,11 +11,11 @@
         <el-input v-model="searchForm.description" placeholder="请输入角色描述" />
       </div>
       <div class="grid-item">
-        <el-button type="primary" icon="el-icon-search" size="small" :loading="loading" @click="handleSearch">搜索</el-button>
+        <el-button v-permission="['system::roles::query']" type="primary" icon="el-icon-search" size="small" :loading="loading" @click="handleSearch">搜索</el-button>
       </div>
     </div>
     <!-- 操作按钮栏 -->
-    <div class="button-bar">
+    <div v-permission="['system::roles::query','system::roles::insert','system::roles::delete']" class="button-bar">
       <el-button type="primary" icon="el-icon-circle-plus-outline" size="small" plain :loading="loading" @click="handleAdd"> 新增项目 </el-button>
       <el-button type="danger" icon="el-icon-delete" size="small" plain :loading="loading" @click="handleRemove"> 批量删除 </el-button>
       <el-button type="info" icon="el-icon-refresh-right" size="small" plain :loading="loading" @click="handleRefresh"> 刷新 </el-button>
@@ -34,15 +34,16 @@
         <el-table-column prop="description" label="角色描述" :show-overflow-tooltip="showOverflowTooltip" />
         <el-table-column prop="sort" label="显示顺序" :show-overflow-tooltip="showOverflowTooltip" />
         <el-table-column
+          v-if="checkPermission(['system::roles::auth','system::roles::update','system::roles::delete'])"
           label="操作"
           width="200"
           fixed="right"
           align="center"
         >
           <template slot-scope="scope">
-            <el-button :size="toolBar.size" :type="toolBar.insertType" :icon="toolBar.insertIcon" @click="handleAddUser(scope.row)">分配用户</el-button>
-            <el-button :size="toolBar.size" :type="toolBar.updateType" :icon="toolBar.updateIcon" @click="handleEdit(scope.row)">编辑</el-button>
-            <el-button :size="toolBar.size" :type="toolBar.deleteType" :icon="toolBar.deleteIcon" @click="handleDelete(scope.row)">删除</el-button>
+            <el-button v-permission="['system::roles::auth']" :size="toolBar.size" :type="toolBar.insertType" :icon="toolBar.insertIcon" @click="handleAddUser(scope.row)">分配用户</el-button>
+            <el-button v-permission="['system::roles::update']" :size="toolBar.size" :type="toolBar.updateType" :icon="toolBar.updateIcon" @click="handleEdit(scope.row)">编辑</el-button>
+            <el-button v-permission="['system::roles::delete']" :size="toolBar.size" :type="toolBar.deleteType" :icon="toolBar.deleteIcon" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>

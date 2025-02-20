@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 搜索栏 -->
-    <div class="search-bar">
+    <div v-permission="['system::logs::operlog::query']" class="search-bar">
       <div class="grid-item">
         <span>模块标题:</span>
         <el-input v-model="searchForm.title" placeholder="请输入模块标题" />
@@ -48,14 +48,14 @@
         <el-input v-model="searchForm.errorMsg" placeholder="请输入错误消息" />
       </div>
       <div class="grid-item">
-        <el-button type="primary" icon="el-icon-search" size="small" :loading="loading" @click="handleSearch">搜索</el-button>
+        <el-button v-permission="['system::logs::operlog::query']" type="primary" icon="el-icon-search" size="small" :loading="loading" @click="handleSearch">搜索</el-button>
       </div>
     </div>
     <!-- 操作按钮栏 -->
     <div class="button-bar">
       <!-- <el-button type="primary" icon="el-icon-circle-plus-outline" size="small" plain :loading="loading" @click="handleAdd"> 新增项目 </el-button>
       <el-button type="danger" icon="el-icon-delete" size="small" plain :loading="loading" @click="handleRemove"> 批量删除 </el-button> -->
-      <el-button type="info" icon="el-icon-refresh-right" size="small" plain :loading="loading" @click="handleRefresh"> 刷新 </el-button>
+      <el-button v-permission="['system::logs::operlog::query']" type="info" icon="el-icon-refresh-right" size="small" plain :loading="loading" @click="handleRefresh"> 刷新 </el-button>
     </div>
     <!-- 表格 -->
     <div class="table-bar">
@@ -93,6 +93,17 @@
         <el-table-column prop="errorMsg" label="错误消息" :show-overflow-tooltip="showOverflowTooltip" />
         <el-table-column prop="operTime" label="操作时间" :show-overflow-tooltip="showOverflowTooltip" />
         <el-table-column prop="costTime" label="消耗时间" :show-overflow-tooltip="showOverflowTooltip" />
+        <!-- <el-table-column
+          label="操作"
+          width="200"
+          fixed="right"
+          align="center"
+        >
+          <template slot-scope="scope">
+            <el-button :size="toolBar.size" :type="toolBar.updateType" :icon="toolBar.updateIcon" @click="handleEdit(scope.row)">编辑</el-button>
+            <el-button :size="toolBar.size" :type="toolBar.deleteType" :icon="toolBar.deleteIcon" @click="handleDelete(scope.row)">删除</el-button>
+          </template>
+        </el-table-column> -->
       </el-table>
       <div class="pagination">
         <el-pagination
@@ -239,7 +250,7 @@ export default {
         { value: 0, label: '其他' },
         { value: 1, label: '新增' },
         { value: 2, label: '修改' },
-        { value: 3, label: '删除' },
+        { value: 3, label: '删除' }
       ],
       // 表格数据
       tableData: [],

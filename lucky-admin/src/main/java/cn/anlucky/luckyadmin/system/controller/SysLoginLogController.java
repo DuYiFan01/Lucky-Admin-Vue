@@ -5,6 +5,7 @@ import cn.anlucky.luckyadmin.system.enums.BusinessType;
 import cn.anlucky.luckyadmin.system.pojo.SysLoginLog;
 import cn.anlucky.luckyadmin.system.service.SysLoginLogService;
 import cn.anlucky.luckyadmin.utils.page.vo.PageDataVo;
+import cn.anlucky.luckyadmin.utils.satoken.SaUtils;
 import cn.anlucky.luckyadmin.vo.R;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.v3.oas.annotations.Operation;
@@ -66,7 +67,8 @@ public class SysLoginLogController extends BaseController {
     @PostMapping("/pageByParams")
     public R pageByParams(@RequestBody SysLoginLog sysLoginLog) {
         startPage();
-        List<SysLoginLog> list = sysLoginLogService.pageByParams(sysLoginLog);
+        // 只查询登录用户自己的登录日志
+        List<SysLoginLog> list = sysLoginLogService.pageByParams(sysLoginLog, SaUtils.hasPermission("system::logs::loginlog::all"));
         PageDataVo tableData = getTableData(list);
         return R.ok(tableData);
     }

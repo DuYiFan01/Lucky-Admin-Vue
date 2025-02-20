@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 搜索栏 -->
-    <div class="search-bar">
+    <div v-permission="['system::logs::loginlog::query']" class="search-bar">
       <div class="grid-item">
         <span>登录账号:</span>
         <el-input v-model="searchForm.username" placeholder="请输入登录账号" />
@@ -23,22 +23,26 @@
         <el-input v-model="searchForm.os" placeholder="请输入操作系统" />
       </div>
       <div class="grid-item">
-        <span>登录状态 （0-失败 1-成功）:</span>
-        <el-input v-model="searchForm.status" placeholder="请输入登录状态 （0-失败 1-成功）" />
+        <span>登录状态:</span>
+        <el-select v-model="searchForm.status" placeholder="请选择">
+          <el-option label="全部状态" value="" />
+          <el-option label="登录失败" value="0" />
+          <el-option label="登录成功" value="1" />
+        </el-select>
       </div>
       <div class="grid-item">
         <span>提示消息:</span>
         <el-input v-model="searchForm.msg" placeholder="请输入提示消息" />
       </div>
       <div class="grid-item">
-        <el-button type="primary" icon="el-icon-search" size="small" :loading="loading" @click="handleSearch">搜索</el-button>
+        <el-button v-permission="['system::logs::loginlog::query']" type="primary" icon="el-icon-search" size="small" :loading="loading" @click="handleSearch">搜索</el-button>
       </div>
     </div>
     <!-- 操作按钮栏 -->
     <div class="button-bar">
-      <el-button type="primary" icon="el-icon-circle-plus-outline" size="small" plain :loading="loading" @click="handleAdd"> 新增项目 </el-button>
-      <el-button type="danger" icon="el-icon-delete" size="small" plain :loading="loading" @click="handleRemove"> 批量删除 </el-button>
-      <el-button type="info" icon="el-icon-refresh-right" size="small" plain :loading="loading" @click="handleRefresh"> 刷新 </el-button>
+      <!-- <el-button v-permission="['system::logs::loginlog::insert']" type="primary" icon="el-icon-circle-plus-outline" size="small" plain :loading="loading" @click="handleAdd"> 新增项目 </el-button> -->
+      <!-- <el-button v-permission="['system::logs::loginlog::delete']" type="danger" icon="el-icon-delete" size="small" plain :loading="loading" @click="handleRemove"> 批量删除 </el-button> -->
+      <el-button v-permission="['system::logs::loginlog::query']" type="info" icon="el-icon-refresh-right" size="small" plain :loading="loading" @click="handleRefresh"> 刷新 </el-button>
     </div>
     <!-- 表格 -->
     <div class="table-bar">
@@ -55,9 +59,15 @@
         <el-table-column prop="ipAddr" label="登录地点" :show-overflow-tooltip="showOverflowTooltip" />
         <el-table-column prop="browser" label="浏览器类型" :show-overflow-tooltip="showOverflowTooltip" />
         <el-table-column prop="os" label="操作系统" :show-overflow-tooltip="showOverflowTooltip" />
-        <el-table-column prop="status" label="登录状态 （0-失败 1-成功）" :show-overflow-tooltip="showOverflowTooltip" />
+        <el-table-column prop="status" label="登录状态" :show-overflow-tooltip="showOverflowTooltip">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.status === '0'" type="danger">登录失败</el-tag>
+            <el-tag v-if="scope.row.status === '1'">登录成功</el-tag>
+          </template>
+
+        </el-table-column>
         <el-table-column prop="msg" label="提示消息" :show-overflow-tooltip="showOverflowTooltip" />
-        <el-table-column
+        <!-- <el-table-column
           label="操作"
           width="200"
           fixed="right"
@@ -67,7 +77,7 @@
             <el-button :size="toolBar.size" :type="toolBar.updateType" :icon="toolBar.updateIcon" @click="handleEdit(scope.row)">编辑</el-button>
             <el-button :size="toolBar.size" :type="toolBar.deleteType" :icon="toolBar.deleteIcon" @click="handleDelete(scope.row)">删除</el-button>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
       <div class="pagination">
         <el-pagination

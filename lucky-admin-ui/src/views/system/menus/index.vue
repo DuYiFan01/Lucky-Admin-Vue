@@ -14,7 +14,7 @@
           <el-option label="隐藏" value="0" />
         </el-select>
       </div>
-      <div class="grid-item">
+      <div v-permission="['system::menus::query']" class="grid-item">
         <el-button type="primary" icon="el-icon-search" size="small" :loading="loading" @click="handleSearch">
           搜索
         </el-button>
@@ -27,7 +27,7 @@
       <el-button v-permission="['system::menus::query']" type="info" icon="el-icon-refresh-right" size="small" plain :loading="loading" @click="handleRefresh"> 刷新 </el-button>
     </div>
     <!-- 表格 -->
-    <div class="table-bar" >
+    <div class="table-bar">
       <el-table
         v-if="tableShow"
         v-loading="loading"
@@ -62,9 +62,9 @@
           align="center"
         >
           <template slot-scope="scope">
-            <el-button :size="toolBar.size" :type="toolBar.insertType" :icon="toolBar.insertIcon" @click="handleAdd(scope.row)">新增</el-button>
-            <el-button :size="toolBar.size" :type="toolBar.updateType" :icon="toolBar.updateIcon" @click="handleEdit(scope.row)">编辑</el-button>
-            <el-button :size="toolBar.size" :type="toolBar.deleteType" :icon="toolBar.deleteIcon" @click="handleDelete(scope.row)">删除</el-button>
+            <el-button v-permission="['system::menus::insert']" :size="toolBar.size" :type="toolBar.insertType" :icon="toolBar.insertIcon" @click="handleAdd(scope.row)">新增</el-button>
+            <el-button v-permission="['system::menus::update']" :size="toolBar.size" :type="toolBar.updateType" :icon="toolBar.updateIcon" @click="handleEdit(scope.row)">编辑</el-button>
+            <el-button v-permission="['system::menus::delete']" :size="toolBar.size" :type="toolBar.deleteType" :icon="toolBar.deleteIcon" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>

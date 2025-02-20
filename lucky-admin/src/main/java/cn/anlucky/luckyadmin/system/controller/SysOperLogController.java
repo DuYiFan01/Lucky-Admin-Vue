@@ -5,8 +5,10 @@ import cn.anlucky.luckyadmin.system.enums.BusinessType;
 import cn.anlucky.luckyadmin.system.pojo.SysOperLog;
 import cn.anlucky.luckyadmin.system.service.SysOperLogService;
 import cn.anlucky.luckyadmin.utils.page.vo.PageDataVo;
+import cn.anlucky.luckyadmin.utils.satoken.SaUtils;
 import cn.anlucky.luckyadmin.vo.R;
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.stp.StpUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -66,7 +68,7 @@ public class SysOperLogController extends BaseController {
     @PostMapping("/pageByParams")
     public R pageByParams(@RequestBody SysOperLog sysOperLog) {
         startPage();
-        List<SysOperLog> list = sysOperLogService.pageByParams(sysOperLog);
+        List<SysOperLog> list = sysOperLogService.pageByParams(sysOperLog,SaUtils.hasPermission("system::logs::operlog::all"));
         PageDataVo tableData = getTableData(list);
         return R.ok(tableData);
     }

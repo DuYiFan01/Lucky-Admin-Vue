@@ -130,4 +130,14 @@ public class SaUtils {
     	return getLoginParams("username").toString();
     }
 
+    /**
+     * 校验是否具有指定的权限码
+     * @param permissionCode
+     * @return true 有 false 没有
+     */
+    public static boolean hasPermission(String permissionCode){
+        return StpUtil.hasPermission(permissionCode);
+    }
+
+
 }
