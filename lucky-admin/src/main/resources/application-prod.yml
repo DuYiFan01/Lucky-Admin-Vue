@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /prod-api
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/lucky_admin?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: lucky_admin
+    password: ZPrepCkNS2C5XyTr
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      db-type: mysql
+  data:
+    redis:
+      database: 0
+      host: localhost
+      port: 6379
+      password: 123456
