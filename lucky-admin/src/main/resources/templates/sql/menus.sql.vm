@@ -1,0 +1,33 @@
+INSERT INTO `menus`
+    (`id`, `name`, `title`, `parent_id`, `order_num`, `path`, `component`, `query`, `is_frame`, `is_cache`, `menu_type`, `visible`, `roles`, `icon`, `create_time`, `create_by`, `update_time`, `update_by`, `remark`)
+VALUES
+    (NULL, NULL, '$!{table.comment}查询', 0, 1, '', NULL, NULL, 0, 1, 'F', 1, '${package.ModuleName}::${params}::list', '#', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system', '');
+
+
+INSERT INTO `menus`
+(`id`, `name`, `title`, `parent_id`, `order_num`, `path`, `component`, `query`, `is_frame`, `is_cache`, `menu_type`, `visible`, `roles`, `icon`, `create_time`, `create_by`, `update_time`, `update_by`, `remark`)
+VALUES
+    (NULL, NULL, '$!{table.comment}新增', 0, 1, '', NULL, NULL, 0, 1, 'F', 1, '${package.ModuleName}::${params}::insert', '#', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system', '');
+
+INSERT INTO `menus`
+(`id`, `name`, `title`, `parent_id`, `order_num`, `path`, `component`, `query`, `is_frame`, `is_cache`, `menu_type`, `visible`, `roles`, `icon`, `create_time`, `create_by`, `update_time`, `update_by`, `remark`)
+VALUES
+    (NULL, NULL, '$!{table.comment}修改', 0, 1, '', NULL, NULL, 0, 1, 'F', 1, '${package.ModuleName}::${params}::update', '#', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system', '');
+
+
+INSERT INTO `menus`
+(`id`, `name`, `title`, `parent_id`, `order_num`, `path`, `component`, `query`, `is_frame`, `is_cache`, `menu_type`, `visible`, `roles`, `icon`, `create_time`, `create_by`, `update_time`, `update_by`, `remark`)
+VALUES
+    (NULL, NULL, '$!{table.comment}删除', 0, 1, '', NULL, NULL, 0, 1, 'F', 1, '${package.ModuleName}::${params}::delete', '#', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system', '');
+
+
+INSERT INTO `menus`
+(`id`, `name`, `title`, `parent_id`, `order_num`, `path`, `component`, `query`, `is_frame`, `is_cache`, `menu_type`, `visible`, `roles`, `icon`, `create_time`, `create_by`, `update_time`, `update_by`, `remark`)
+VALUES
+    (NULL, NULL, '$!{table.comment}导入', 0, 1, '', NULL, NULL, 0, 1, 'F', 1, '${package.ModuleName}::${params}::import', '#', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system', '');
+
+INSERT INTO `menus`
+(`id`, `name`, `title`, `parent_id`, `order_num`, `path`, `component`, `query`, `is_frame`, `is_cache`, `menu_type`, `visible`, `roles`, `icon`, `create_time`, `create_by`, `update_time`, `update_by`, `remark`)
+VALUES
+    (NULL, NULL, '$!{table.comment}导出', 0, 1, '', NULL, NULL, 0, 1, 'F', 1, '${package.ModuleName}::${params}::export', '#', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system', '');
+

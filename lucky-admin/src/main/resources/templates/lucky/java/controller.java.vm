@@ -1,0 +1,148 @@
+package ${package.Controller};
+
+import org.springframework.web.bind.annotation.RequestMapping;
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+## 这里是新增的包
+import lombok.RequiredArgsConstructor;
+import java.util.List;
+import cn.anlucky.luckyadmin.system.annotation.Log;
+## 这里设置模板的变量
+## 表相关
+#set($entityName = "${table.entityName}") ## 转为驼峰的实体名称
+#set($tableName = "${table.name}") ## 表的原始名称
+#set($tableComment = "${table.comment}") ## 表注释
+#set($tableEntityPath = "${table.entityPath}")##小驼峰表名称
+## 表字段相关
+#foreach($field in ${table.fields})
+## ${field.keyFlag} // 主键标识 true false
+## ${field.keyIdentityFlag} // 是否自增标识 true false
+## ${field.fill} fill  // 填充策略 如果没有填充策略泽输出 ${field.fill} 否则输出 INSERT_UPDATE INSERT UPDATE
+#if(${field.keyFlag})## 如果是主键
+#set($tableKeyFieldName = "${field.name}") ## 表主键原始字段名
+#set($tableKeyFieldComment = "${field.comment}")  ## 主键的字段注释
+#set($tableKeyJavaType = "${field.propertyType}") ## 主键Java类型 Long Integer String
+#set($tableKeyJavaName = "${field.propertyName}") ## 主键的属性名称 如字段名为 user_name 属性名为userName
+#set($tableKeyJavaBigName = "${field.capitalName}")## 主键的首字母大写的首字母大写属性名 如字段名为 user_name 属性名为UserName
+#end
+#end
+/**
+ * $!{tableComment}控制器
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@Tag(name = "$!{tableComment}Controller")
+@RequiredArgsConstructor
+@RequestMapping("/${package.ModuleName}/${tableEntityPath}")
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+#else
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+
+    private final ${table.serviceName} ${tableEntityPath}Service;
+
+    /**
+    * 指定ID查询 $!{tableComment}信息
+    * @param id 主键ID
+    * @return ${entityName}
+    */
+    @Operation(summary = "id查询一个${entityName}")
+    @SaCheckPermission("${package.ModuleName}::${tableEntityPath}::query")
+    @GetMapping("/get/{id}")
+    public R getById(@PathVariable(name = "id") Serializable id) {
+        ${entity} ${tableEntityPath} = ${tableEntityPath}Service.getById(id);
+        return R.ok(${tableEntityPath});
+    }
+
+    /**
+     * 查询所有$!{tableComment}信息
+     * @return List<${entity}>
+     */
+    @Operation(summary = "查询所有${entityName}信息")
+    @SaCheckPermission("${package.ModuleName}::${tableEntityPath}::query")
+    @PostMapping("/list")
+    public R list() {
+        List<${entity}> list = ${tableEntityPath}Service.list();
+        return R.ok(list);
+    }
+
+    /**
+     * 条件分页查询$!{tableComment}信息
+     * @param ${tableEntityPath} $!{tableComment}
+     * @return List<${entity}>
+     */
+    @Operation(summary = "条件分页查询${entityName}信息")
+    @SaCheckPermission("${package.ModuleName}::${tableEntityPath}::query")
+    @PostMapping("/pageByParams")
+    public R pageByParams(@RequestBody ${entity} ${tableEntityPath}) {
+        startPage();
+        List<${entity}> list = ${tableEntityPath}Service.pageByParams(${tableEntityPath});
+        PageDataVo tableData = getTableData(list);
+        return R.ok(tableData);
+    }
+
+    /**
+     * 新增$!{tableComment}信息
+     * @param ${tableEntityPath} $!{tableComment}
+     * @return 添加成功
+     */
+    @Operation(summary = "新增${entityName}信息")
+    @SaCheckPermission("${package.ModuleName}::${tableEntityPath}::insert")
+    @Log(title = "$!{tableComment}", businessType = BusinessType.INSERT)
+    @PostMapping("/save")
+    public R save(@RequestBody ${entity} ${tableEntityPath}) {
+        if(${tableEntityPath}Service.getById(${tableEntityPath}.get${tableKeyJavaBigName}())!=null){
+            throw new CustomException("ID已存在");
+        }
+        ${tableEntityPath}Service.save(${tableEntityPath});
+        return R.ok("添加成功");
+    }
+    /**
+     * 根据ID修改$!{tableComment}信息
+     * @param ${tableEntityPath} $!{tableComment}
+     * @return 修改成功
+     */
+    @Operation(summary = "修改${entityName}信息")
+    @SaCheckPermission("${package.ModuleName}::${tableEntityPath}::update")
+    @Log(title = "$!{tableComment}", businessType = BusinessType.UPDATE)
+    @PostMapping("/updateById")
+    public R updateById(@RequestBody ${entity} ${tableEntityPath}) {
+        ${tableEntityPath}Service.updateById(${tableEntityPath});
+        return R.ok("修改成功");
+    }
+
+    /**
+    * 批量删除和删除$!{tableComment}信息
+    * @param ids 主键ID数组
+    * @return 删除成功
+    */
+    @Operation(summary = "批量删除和删除${entityName}信息")
+    @SaCheckPermission("${package.ModuleName}::${tableEntityPath}::delete")
+    @Log(title = "$!{tableComment}", businessType = BusinessType.DELETE)
+    @GetMapping("/delete/{ids}")
+    public R deleteByIds(@PathVariable(name = "ids") Serializable[] ids) {
+        if (ids.length <= 0){
+            throw new CustomException("请选择要删除的数据");
+        }
+        ${tableEntityPath}Service.removeBatchByIds(Arrays.asList(ids));
+        return R.ok("删除成功");
+    }
+
+}
+#end

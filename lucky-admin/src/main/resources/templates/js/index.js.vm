@@ -1,0 +1,97 @@
+## 这里设置模板的变量
+## 表相关
+#set($entityName = "${table.entityName}") ## 转为驼峰的实体名称
+#set($tableName = "${table.name}") ## 表的原始名称
+#set($tableComment = "${table.comment}") ## 表注释
+#set($tableEntityPath = "${table.entityPath}")##小驼峰表名称
+## 表字段相关
+#foreach($field in ${table.fields})
+## ${field.keyFlag} // 主键标识 true false
+## ${field.keyIdentityFlag} // 是否自增标识 true false
+## ${field.fill} fill  // 填充策略 如果没有填充策略泽输出 ${field.fill} 否则输出 INSERT_UPDATE INSERT UPDATE
+#if(${field.keyFlag})## 如果是主键
+#set($tableKeyFieldName = "${field.name}") ## 表主键原始字段名
+#set($tableKeyFieldComment = "${field.comment}")  ## 主键的字段注释
+#set($tableKeyJavaType = "${field.propertyType}") ## 主键Java类型 Long Integer String
+#set($tableKeyJavaName = "${field.propertyName}") ## 主键的属性名称 如字段名为 user_name 属性名为userName
+#set($tableKeyJavaBigName = "${field.capitalName}")## 主键的首字母大写的首字母大写属性名 如字段名为 user_name 属性名为UserName
+#end
+#end
+import request from '@/utils/request'
+
+const apiPath = '/${package.ModuleName}/${tableEntityPath}'
+
+/**
+ * 根据id查询
+ * @param id
+ * @returns {*}
+ */
+export function getById(id) {
+    return request({
+        url: apiPath + '/get/' + id,
+        method: 'get'
+    })
+}
+/**
+ * 查询所有
+ * @param {*} data
+ * @returns
+ */
+export function list(data) {
+    return request({
+        url: apiPath + '/list',
+        method: 'post',
+        data
+    })
+}
+
+/**
+ * 查询所有
+ * @param {*} data
+ * @returns
+ */
+export function pageByParams(data,currentPage, pageSize) {
+    return request({
+        url: apiPath + '/pageByParams?currentPage=' + currentPage + '&pageSize=' + pageSize,
+        method: 'post',
+        data
+    })
+}
+
+/**
+ * 添加
+ * @param {*} data
+ * @returns
+ */
+export function save(data) {
+    return request({
+        url: apiPath + '/save',
+        method: 'post',
+        data
+    })
+}
+
+/**
+ * 修改
+ * @param {*} data
+ * @returns
+ */
+export function updateById(data) {
+    return request({
+        url: apiPath + '/updateById',
+        method: 'post',
+        data
+    })
+}
+
+/**
+ * 删除
+ * @param {*} ids
+ * @returns
+ */
+export function deleteByIds(ids) {
+    return request({
+        url: apiPath + '/delete/' + ids,
+        method: 'get'
+    })
+}

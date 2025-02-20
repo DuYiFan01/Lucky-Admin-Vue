@@ -1,0 +1,129 @@
+package ${package.Entity};
+
+## 这里设置模板的变量
+## 表相关
+#set($entityName = "${table.entityName}") ## 转为驼峰的实体名称
+#set($tableName = "${table.name}") ## 表的原始名称
+#set($tableComment = "${table.comment}") ## 表注释
+#set($tableEntityPath = "${table.entityPath}")##小驼峰表名称
+## 表字段相关
+#foreach($field in ${table.fields})
+## ${field.keyFlag} // 主键标识 true false
+## ${field.keyIdentityFlag} // 是否自增标识 true false
+## ${field.fill} fill  // 填充策略 如果没有填充策略泽输出 ${field.fill} 否则输出 INSERT_UPDATE INSERT UPDATE
+#if(${field.keyFlag})## 如果是主键
+#set($tableKeyFieldName = "${field.name}") ## 表主键原始字段名
+#set($tableKeyFieldComment = "${field.comment}")  ## 主键的字段注释
+#set($tableKeyJavaType = "${field.propertyType}") ## 主键Java类型 Long Integer String
+#set($tableKeyJavaName = "${field.propertyName}") ## 主键的属性名称 如字段名为 user_name 属性名为userName
+#set($tableKeyJavaBigName = "${field.capitalName}")## 主键的首字母大写的首字母大写属性名 如字段名为 user_name 属性名为UserName
+#end
+#end
+#foreach($pkg in ${importEntityPackages})
+import ${pkg};
+#end
+
+/**
+ * $!{tableComment}
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#foreach($an in ${entityClassAnnotations})
+${an.displayName}
+#end
+#if(${superEntityClass})
+public class ${entity} extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {
+#elseif(${activeRecord})
+public class ${entity} extends Model<${entity}> {
+#elseif(${entitySerialVersionUID})
+public class ${entity} implements Serializable {
+#else
+public class ${entity} {
+#end
+#if(${entitySerialVersionUID})
+
+    private static final long serialVersionUID = 1L;
+#end
+## ----------  BEGIN 字段循环遍历  ----------
+#foreach($field in ${table.fields})
+#if(${field.keyFlag})
+#set($keyPropertyName=${field.propertyName})
+#end
+#if("$!field.comment" != "")
+  #if(${entityFieldUseJavaDoc})
+    /**
+     * ${field.comment}
+     */
+  #end
+#end
+    #if(${field.propertyType}=='LocalDateTime' || ${field.propertyType}=='Date')
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
+    #elseif(${field.propertyType}=='LocalDate')
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
+    #end
+#foreach($an in ${field.annotationAttributesList})
+    ${an.displayName}
+#end
+    private ${field.propertyType} ${field.propertyName};
+#end
+## ----------  END 字段循环遍历  ----------
+#if(!${entityLombokModel})
+#foreach($field in ${table.fields})
+  #if(${field.propertyType.equals("boolean")})
+    #set($getprefix="is")
+  #else
+    #set($getprefix="get")
+  #end
+
+    public ${field.propertyType} ${getprefix}${field.capitalName}() {
+        return ${field.propertyName};
+    }
+
+  #if(${chainModel})
+    public ${entity} set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
+  #else
+    public void set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
+  #end
+        this.${field.propertyName} = ${field.propertyName};
+  #if(${chainModel})
+        return this;
+  #end
+    }
+#end
+## --foreach end---
+#end
+## --end of #if(!${entityLombokModel})--
+#if(${entityColumnConstant})
+  #foreach($field in ${table.fields})
+
+    public static final String ${field.name.toUpperCase()} = "${field.name}";
+  #end
+#end
+#if(${activeRecord})
+
+    @Override
+    public Serializable pkVal() {
+  #if(${keyPropertyName})
+        return this.${keyPropertyName};
+  #else
+        return null;
+  #end
+    }
+#end
+#if(!${entityLombokModel} && ${entityToString})
+
+    @Override
+    public String toString() {
+        return "${entity}{" +
+  #foreach($field in ${table.fields})
+    #if($!{foreach.index}==0)
+        "${field.propertyName} = " + ${field.propertyName} +
+    #else
+        ", ${field.propertyName} = " + ${field.propertyName} +
+    #end
+  #end
+        "}";
+    }
+#end
+}

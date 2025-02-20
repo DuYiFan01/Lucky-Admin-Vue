@@ -1,0 +1,105 @@
+package ${package.ServiceImpl};
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
+import org.springframework.stereotype.Service;
+import java.util.List;
+/**
+ *
+ * $!{table.comment} 服务实现类
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+#if(${kotlin})
+open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
+
+        }
+#else
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+
+    /**
+     * 分页带条件查询${entity}
+     * @param ${table.entityPath}
+     * @return
+     */
+    @Override
+    public List<${entity}> pageByParams(${entity} ${table.entityPath}) {
+        if (${table.entityPath} == null){
+            return this.list();
+        }
+        LambdaQueryWrapper<${entity}> wrapper = new LambdaQueryWrapper<>();
+#foreach($field in ${table.fields})
+    #set($params = ${table.entityPath})
+    #set($getFuncation = $params+".get"+${field.capitalName}+"()")
+    #set($type = ${field.propertyType})
+    #set($pojo=${entity})
+    #set($capitalName = ${field.capitalName})
+    #if($type=='String')
+        wrapper.eq(Strings.isNotBlank($getFuncation), ${pojo}::get${capitalName}, $getFuncation);
+    #elseif($type=='Integer' || $type=='Long' || $type=='Double' || $type=='Float' || $type=='Short' || $type=='Byte' || $type=='BigDecimal')
+        wrapper.eq(Objects.nonNull($getFuncation), ${pojo}::get${capitalName}, $getFuncation);
+    #elseif($type == 'LocalDateTime' || $type == 'LocalDate' || $type == 'Date')
+        wrapper.between(Objects.nonNull($getFuncation), ${pojo}::get${capitalName}, $getFuncation, $getFuncation);
+    #end
+#end
+    return this.list(wrapper);
+    }
+
+
+    /**
+     * 修改所有字段为新值
+     * @param  ${table.entityPath}
+     * @return
+     */
+    @Override
+    public boolean updateAllById(${entity} ${table.entityPath}){
+        if (${table.entityPath} == null){
+        throw new CustomException("参数不能为空");
+        }
+        if (${table.entityPath}.getId() == null){
+        throw new CustomException("id不能为空");
+        }
+        return this.updateById(${table.entityPath});
+    }
+
+    /**
+     * 修改指定字段为新值
+     * @param ${table.entityPath}
+     * @return
+     */
+    @Override
+    public boolean updateSpecifyById(${entity} ${table.entityPath}){
+        if (${table.entityPath} == null){
+            throw new CustomException("参数不能为空");
+        }
+        if (${table.entityPath}.getId() == null){
+            throw new CustomException("id不能为空");
+        }
+        LambdaUpdateWrapper<${entity}> wrapper = new LambdaUpdateWrapper<>();
+#foreach($field in ${table.fields})
+    #set($params = ${table.entityPath})
+    #set($getFuncation = $params+".get"+${field.capitalName}+"()")
+    #set($type = ${field.propertyType})
+    #set($pojo=${entity})
+    #set($capitalName = ${field.capitalName})
+#if(!${field.logicDeleteField} && ${field.fill} != "INSERT_UPDATE" && ${field.fill} != "INSERT" && ${field.fill} != "UPDATE") ## 如果有逻辑删除字段，则不修改
+    #if(${field.keyFlag})
+        wrapper.eq(${pojo}::get${capitalName}, $getFuncation);
+    #elseif($type=='String')
+        wrapper.set(Strings.isNotBlank($getFuncation), ${pojo}::get${capitalName}, $getFuncation);
+    #elseif($type=='Integer' || $type=='Long' || $type=='Double' || $type=='Float' || $type=='Short' || $type=='Byte' || $type=='BigDecimal')
+        wrapper.set(Objects.nonNull($getFuncation), ${pojo}::get${capitalName}, $getFuncation);
+    #elseif($type == 'LocalDateTime' || $type == 'LocalDate' || $type == 'Date')
+        wrapper.set(Objects.nonNull($getFuncation), ${pojo}::get${capitalName}, $getFuncation);
+    #end
+#end
+#end
+        return this.update(new ${pojo}(),wrapper);
+    }
+}
+#end

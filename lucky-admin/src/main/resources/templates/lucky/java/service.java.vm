@@ -1,0 +1,41 @@
+package ${package.Service};
+
+import ${package.Entity}.${entity};
+import ${superServiceClassPackage};
+## 这里是新增的包
+import java.util.List;
+## 这里设置模板的变量
+## 表相关
+#set($entityName = "${table.entityName}") ## 转为驼峰的实体名称
+#set($tableName = "${table.name}") ## 表的原始名称
+#set($tableComment = "${table.comment}") ## 表注释
+#set($tableEntityPath = "${table.entityPath}")##小驼峰表名称
+## 表字段相关
+#foreach($field in ${table.fields})
+#if(${field.keyFlag})## 如果是主键
+#set($tableKeyNameJava = "${field.capitalName}")## Id
+#set($tablekeyName = "${field.name}")## 字段名 id
+#set($tableKeyComment = "${table.entityName}")## 字段注释 用户名
+#set($tableKeyType = "${field.propertyType}") ## 字段Java类型 Long
+#end
+#end
+/**
+ * $!{tableComment} 服务类
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${kotlin})
+interface ${table.serviceName} : ${superServiceClass}<${entity}>
+#else
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+
+    /**
+     * 条件分页查询$!{tableComment}信息
+     * @param ${tableEntityPath}
+     * @return List<${entity}>
+     */
+    public List<${entity}> pageByParams(${entity} ${tableEntityPath});
+
+}
+#end

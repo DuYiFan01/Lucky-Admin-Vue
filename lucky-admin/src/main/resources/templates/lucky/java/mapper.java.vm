@@ -1,0 +1,41 @@
+package ${package.Mapper};
+
+import ${package.Entity}.${entity};
+import ${superMapperClassPackage};
+
+#foreach($pkg in ${importPackages})
+import ${pkg};
+#end
+
+#if(${mapperAnnotationClass})
+import ${mapperAnnotationClass.name};
+#end
+
+/**
+ * <p>
+ * $!{table.comment} Mapper 接口
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${mapperAnnotationClass})
+@${mapperAnnotationClass.simpleName}
+#end
+#if(${kotlin})
+interface ${table.mapperName} : ${superMapperClass}<${entity}> {
+#else
+public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
+#end
+
+#foreach($m in ${mapperMethodList})
+    /**
+     * generate by ${m.indexName}
+     *
+     #foreach($f in ${m.tableFieldList})
+     * @param ${f.propertyName} ${f.comment}
+     #end
+     */
+    ${m.method}
+#end
+}

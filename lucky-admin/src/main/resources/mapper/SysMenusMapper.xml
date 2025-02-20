@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.anlucky.luckyadmin.system.mapper.SysMenusMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.anlucky.luckyadmin.system.pojo.SysMenus">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="name" property="name" />
+        <result column="parent_id" property="parentId" />
+        <result column="sort" property="sort" />
+        <result column="path" property="path" />
+        <result column="component" property="component" />
+        <result column="query" property="query" />
+        <result column="is_cache" property="isCache" />
+        <result column="menu_type" property="menuType" />
+        <result column="visible" property="visible" />
+        <result column="roles" property="roles" />
+        <result column="icon" property="icon" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="routerMap" type="cn.anlucky.luckyadmin.system.pojo.SysMenus">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="name" property="name" />
+        <result column="parent_id" property="parentId" />
+        <result column="sort" property="sort" />
+        <result column="path" property="path" />
+        <result column="component" property="component" />
+        <result column="query" property="query" />
+        <result column="is_cache" property="isCache" />
+        <result column="menu_type" property="menuType" />
+        <result column="visible" property="visible" />
+        <result column="roles" property="roles" />
+        <result column="icon" property="icon" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, title, `name`, parent_id, sort, `path`, `component`, `query`, is_frame, is_cache, menu_type, `visible`, roles, icon, create_time, create_by, update_time, update_by, remark
+    </sql>
+    <!-- 根据角色查询菜单-->
+    <select id="getRouters" resultType="cn.anlucky.luckyadmin.system.pojo.SysMenus">
+        select DISTINCT
+            m.id,
+            m.title,
+            m.`name`,
+            m.parent_id,
+            m.sort,
+            m.`path`,
+            m.`component`,
+            m.`query`,
+            m.is_cache,
+            m.menu_type,
+            m.`visible`,
+            m.roles,
+            m.icon,
+            m.create_time,
+            m.create_by,
+            m.update_time,
+            m.update_by,
+            m.remark
+        from
+            sys_menus m
+        left join sys_roles_menus rm on rm.menu_id = m.id
+        left join sys_user_roles ur on ur.role_id = rm.role_id
+        where
+            visible = 1 -- 0-隐藏 1-显示
+        and
+            m.menu_type IN ('M', 'C', 'N', 'W')
+        and
+        ur.role_id in
+            <foreach item="item" collection="roleIds" separator="," open="(" close=")" index="">
+                #{item}
+            </foreach>
+        order by
+            sort asc -- 排序
+    </select>
+    <select id="getRoutersByRoleId" resultType="cn.anlucky.luckyadmin.system.pojo.SysMenus">
+        select
+            m.id,
+            m.title,
+            m.`name`,
+            m.parent_id,
+            m.sort,
+            m.`path`,
+            m.`component`,
+            m.`query`,
+            m.is_cache,
+            m.menu_type,
+            m.`visible`,
+            m.roles,
+            m.icon,
+            m.create_time,
+            m.create_by,
+            m.update_time,
+            m.update_by,
+            m.remark
+        from
+            sys_menus m
+        left join sys_roles_menus rm on rm.menu_id = m.id
+        left join sys_user_roles ur on ur.role_id = rm.role_id
+        where
+            visible = 1 -- 0-隐藏 1-显示
+        and
+            ur.role_id =#{roleId}
+        and
+            m.menu_type IN ('M', 'C', 'N', 'W')
+        order by
+            sort asc -- 排序
+    </select>
+
+</mapper>
