@@ -33,7 +33,7 @@ export function getInfo(token) {
 export function logout() {
   return request({
     url: apiPath + '/logout',
-    method: 'post'
+    method: 'get'
   })
 }
 

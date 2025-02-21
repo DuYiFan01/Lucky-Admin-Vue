@@ -2,8 +2,6 @@ package cn.anlucky.luckyadmin.system.manager.factory;
 
 import cn.anlucky.luckyadmin.system.constant.Constants;
 import cn.anlucky.luckyadmin.system.enums.BusinessStatus;
-import cn.anlucky.luckyadmin.system.enums.BusinessType;
-import cn.anlucky.luckyadmin.system.enums.Code;
 import cn.anlucky.luckyadmin.system.pojo.SysLoginLog;
 import cn.anlucky.luckyadmin.system.pojo.SysOperLog;
 import cn.anlucky.luckyadmin.system.service.SysLoginLogService;
@@ -13,7 +11,6 @@ import cn.anlucky.luckyadmin.utils.ServletUtils;
 import cn.anlucky.luckyadmin.utils.StringUtils;
 import cn.anlucky.luckyadmin.utils.ip.AddressUtils;
 import cn.anlucky.luckyadmin.utils.ip.IpUtils;
-import cn.anlucky.luckyadmin.utils.satoken.SaUtils;
 import cn.anlucky.luckyadmin.utils.spring.SpringUtils;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.slf4j.Logger;

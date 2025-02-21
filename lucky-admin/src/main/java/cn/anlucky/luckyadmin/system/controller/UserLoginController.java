@@ -52,6 +52,16 @@ public class UserLoginController {
         return R.ok(userLoginService.register(sysUsers));
     }
 
+    /**
+     * 注销登录
+     * @return
+     */
+    @GetMapping("/logout")
+    public R login() {
+        SaUtils.logout();
+        return R.ok("登出成功");
+    }
+
 
     /**
      * 获取用户信息

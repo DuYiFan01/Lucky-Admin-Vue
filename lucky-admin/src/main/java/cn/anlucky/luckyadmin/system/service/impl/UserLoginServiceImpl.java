@@ -3,21 +3,33 @@ package cn.anlucky.luckyadmin.system.service.impl;
 import cn.anlucky.luckyadmin.config.LuckyConfig;
 import cn.anlucky.luckyadmin.exception.CustomException;
 import cn.anlucky.luckyadmin.system.constant.Constants;
+import cn.anlucky.luckyadmin.system.enums.BusinessStatus;
 import cn.anlucky.luckyadmin.system.manager.AsyncManager;
 import cn.anlucky.luckyadmin.system.manager.factory.AsyncFactory;
+import cn.anlucky.luckyadmin.system.pojo.SysLoginLog;
 import cn.anlucky.luckyadmin.system.pojo.SysMenus;
 import cn.anlucky.luckyadmin.system.pojo.SysUserRoles;
 import cn.anlucky.luckyadmin.system.pojo.SysUsers;
 import cn.anlucky.luckyadmin.system.service.*;
 import cn.anlucky.luckyadmin.system.vo.*;
 import cn.anlucky.luckyadmin.utils.DateUtils;
+import cn.anlucky.luckyadmin.utils.LogUtils;
+import cn.anlucky.luckyadmin.utils.ServletUtils;
 import cn.anlucky.luckyadmin.utils.StringUtils;
+import cn.anlucky.luckyadmin.utils.ip.AddressUtils;
 import cn.anlucky.luckyadmin.utils.ip.IpUtils;
 import cn.anlucky.luckyadmin.utils.satoken.PasswordEncode;
 import cn.anlucky.luckyadmin.utils.satoken.SaTokenDaoUtils;
 import cn.anlucky.luckyadmin.utils.satoken.SaUtils;
+import cn.anlucky.luckyadmin.utils.spring.SpringUtils;
+import cn.anlucky.luckyadmin.utils.uuid.IdUtils;
+import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -79,10 +92,17 @@ public class UserLoginServiceImpl implements UserLoginService {
             saLoginModel.setExtra("username", users.getUsername());
             // 携带参数登录
             SaUtils.login(users.getId(), saLoginModel);
+            String token = SaUtils.getToken();
+            // 添加登录信息到缓存中
+            UserLoginDetail userLoginDetail = new UserLoginDetail();
+            userLoginDetail.setUserId(users.getId());
+            userLoginDetail.setUsername(users.getUsername());
+            userLoginDetail.setToken(token);
+            setUserLoginDetailCache(userLoginDetail);
             // 设置返回响应
             loginvo.setId(users.getId());
             loginvo.setUsername(users.getUsername());
-            loginvo.setToken(SaUtils.getToken());
+            loginvo.setToken(token);
             // 记录成功日志
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(userLoginVo.getUsername(), Constants.LOGIN_SUCCESS, "登录成功"));
             // 记录登录信息 登录IP和最后登录时间
@@ -431,6 +451,36 @@ public class UserLoginServiceImpl implements UserLoginService {
         sysUsers.setLoginTime(LocalDateTime.now());
         sysUsers.setUpdateBy("system");
         sysUsersService.updateById(sysUsers);
+    }
+
+    /**
+     * 设置用户登录信息缓存
+     * @param userLoginDetail 用户登录信息
+     */
+    private void setUserLoginDetailCache(UserLoginDetail userLoginDetail){
+        final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+        final String ip = IpUtils.getIpAddr();
+        String address = AddressUtils.getRealAddressByIP(ip);
+        // 获取客户端操作系统
+        String os = userAgent.getOperatingSystem().getName();
+        // 获取客户端浏览器
+        String browser = userAgent.getBrowser().getName();
+        userLoginDetail.setOs(os);
+        userLoginDetail.setUserAgent(browser);
+        userLoginDetail.setAddress(address);
+        userLoginDetail.setLoginTime(LocalDateTime.now());
+        userLoginDetail.setIp(ip);
+        // 插入数据
+        SaUtils.getTokenSessionByToken(userLoginDetail.getToken()).set(SaUtils.USER_LOGIN_DETAIL,userLoginDetail);
+        //
+        // // 遍历登录用户
+        // List<String> list = StpUtil.searchTokenValue("", 0, 100, true);
+        // System.out.println("list = " + list);
+        // for (String s : list) {
+        //     SaSession session = StpUtil.getTokenSessionByToken(s);
+        //     Object loginDetail = session.get("loginDetail");
+        //     System.out.println("loginDetail = " + loginDetail);
+        // }
     }
 
 }

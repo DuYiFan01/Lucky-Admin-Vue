@@ -67,6 +67,7 @@
 
         </el-table-column>
         <el-table-column prop="msg" label="提示消息" :show-overflow-tooltip="showOverflowTooltip" />
+        <el-table-column prop="createTime" label="访问时间" :show-overflow-tooltip="showOverflowTooltip" />
         <!-- <el-table-column
           label="操作"
           width="200"
