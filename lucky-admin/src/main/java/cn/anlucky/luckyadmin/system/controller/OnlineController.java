@@ -1,7 +1,7 @@
 package cn.anlucky.luckyadmin.system.controller;
 
 import cn.anlucky.luckyadmin.system.service.OnlineService;
-import cn.anlucky.luckyadmin.system.vo.UserLoginDetail;
+import cn.anlucky.luckyadmin.system.pojo.UserLoginDetail;
 import cn.anlucky.luckyadmin.vo.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -2,7 +2,7 @@ package cn.anlucky.luckyadmin.system.service.impl;
 
 import cn.anlucky.luckyadmin.exception.CustomException;
 import cn.anlucky.luckyadmin.system.service.OnlineService;
-import cn.anlucky.luckyadmin.system.vo.UserLoginDetail;
+import cn.anlucky.luckyadmin.system.pojo.UserLoginDetail;
 import cn.anlucky.luckyadmin.utils.ListUtils;
 import cn.anlucky.luckyadmin.utils.StringUtils;
 import cn.anlucky.luckyadmin.utils.page.vo.PageDataVo;

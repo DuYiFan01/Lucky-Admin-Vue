@@ -1,4 +1,4 @@
-package cn.anlucky.luckyadmin.system.vo;
+package cn.anlucky.luckyadmin.system.pojo;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;

@@ -1,10 +1,8 @@
 package cn.anlucky.luckyadmin.system.service;
 
 
-import cn.anlucky.luckyadmin.system.vo.UserLoginDetail;
+import cn.anlucky.luckyadmin.system.pojo.UserLoginDetail;
 import cn.anlucky.luckyadmin.utils.page.vo.PageDataVo;
-
-import java.util.List;
 
 /**
  * 在线用户 服务类

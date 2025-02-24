@@ -13,7 +13,7 @@ public class SaTokenDaoUtils {
     /**
      * 缓存前缀
      */
-    private static final String PREFIX = "Lucky";
+    public static final String PREFIX = "Lucky";
     /**
      * 角色缓存
      */

@@ -2,7 +2,6 @@ package cn.anlucky.luckyadmin.system.controller;
 
 import cn.anlucky.luckyadmin.system.pojo.Server;
 import cn.anlucky.luckyadmin.vo.R;
-import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
