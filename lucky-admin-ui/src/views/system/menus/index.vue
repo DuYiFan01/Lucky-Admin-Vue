@@ -37,7 +37,7 @@
         :default-expand-all="isExpand"
         max-height="560px"
       >
-        <el-table-column prop="title" label="菜单名称" :show-overflow-tooltip="showOverflowTooltip" />
+        <el-table-column width="200" prop="title" label="菜单名称" :show-overflow-tooltip="showOverflowTooltip" />
         <el-table-column prop="icon" label="菜单图标" :show-overflow-tooltip="showOverflowTooltip">
           <template slot-scope="scope">
             <svg-icon :icon-class="scope.row.icon" />
@@ -45,7 +45,7 @@
         </el-table-column>
         <el-table-column prop="sort" label="显示顺序" />
         <el-table-column prop="roles" label="权限标识" :show-overflow-tooltip="showOverflowTooltip" />
-        <el-table-column prop="component" label="组件路径" :show-overflow-tooltip="showOverflowTooltip" />
+        <!-- <el-table-column prop="component" label="组件路径" :show-overflow-tooltip="showOverflowTooltip" /> -->
         <el-table-column prop="path" label="路由地址" :show-overflow-tooltip="showOverflowTooltip" />
         <el-table-column prop="visible" label="菜单状态">
           <template slot-scope="scope">
@@ -53,7 +53,7 @@
             <el-tag v-if="scope.row.visible === 0" type="danger">隐藏</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" :show-overflow-tooltip="showOverflowTooltip" />
+        <!-- <el-table-column prop="createTime" label="创建时间" :show-overflow-tooltip="showOverflowTooltip" /> -->
         <el-table-column
           v-if="checkPermission(['system::menus::insert','system::menus::update','system::menus::delete'])"
           label="操作"

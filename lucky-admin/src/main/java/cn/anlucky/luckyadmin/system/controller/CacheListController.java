@@ -3,6 +3,7 @@ package cn.anlucky.luckyadmin.system.controller;
 import cn.anlucky.luckyadmin.system.pojo.SysCache;
 import cn.anlucky.luckyadmin.utils.satoken.SaTokenDaoUtils;
 import cn.anlucky.luckyadmin.vo.R;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.alibaba.fastjson2.JSON;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,7 +37,7 @@ public class CacheListController {
      * @return List<SysCache>
      */
     @Operation(summary = "查询可显示缓存列表")
-    // @SaCheckPermission("monitor::cacheList::query")
+    @SaCheckPermission("monitor::cacheList::query")
     @GetMapping("/nameList")
     public R nameList() {
         return R.ok(caches);
@@ -48,7 +49,7 @@ public class CacheListController {
      * @return SysLoginLog
      */
     @Operation(summary = "获取缓存Key列表")
-    // @SaCheckPermission("monitor::cacheList::query")
+    @SaCheckPermission("monitor::cacheList::query")
     @GetMapping("/keyList/{cacheName}")
     public R keyListByCacheName(@PathVariable(name = "cacheName") String cacheName) {
         List<String> keys = SaTokenDaoUtils.getSaTokenDao().searchData(cacheName, "",0, -1,false);
@@ -62,7 +63,7 @@ public class CacheListController {
      * @return SysCache 缓存值
      */
     @Operation(summary = "获取缓存值")
-    // @SaCheckPermission("monitor::cacheList::query")
+    @SaCheckPermission("monitor::cacheList::query")
     @GetMapping("/cacheValue/{cacheName}/{cacheKey}")
     public R cacheValueByKey(@PathVariable(name = "cacheName") String cacheName, @PathVariable(name = "cacheKey") String cacheKey) {
         Object objectKey = SaTokenDaoUtils.getSaTokenDao().getObject(cacheKey);
@@ -83,7 +84,7 @@ public class CacheListController {
      * @return 删除缓存成功
      */
     @Operation(summary = "删除指定名字的缓存")
-    // @SaCheckPermission("monitor::cacheList::delete")
+    @SaCheckPermission("monitor::cacheList::delete")
     @GetMapping("/deleteCacheName/{cacheName}")
     public R deleteCacheNameByCacheName(@PathVariable(name = "cacheName") String cacheName) {
         List<String> list = SaTokenDaoUtils.getSaTokenDao().searchData(cacheName, "", 0, -1, false);
@@ -99,7 +100,7 @@ public class CacheListController {
      * @return
      */
     @Operation(summary = "删除指定Key缓存")
-    // @SaCheckPermission("monitor::cacheList::delete")
+    @SaCheckPermission("monitor::cacheList::delete")
     @GetMapping("/deleteCacheKey/{cacheKey}")
     public R deleteCacheKeyByCacheKey(@PathVariable(name = "cacheKey") String cacheKey) {
         SaTokenDaoUtils.getSaTokenDao().deleteObject(cacheKey);
@@ -111,7 +112,7 @@ public class CacheListController {
      * @return
      */
     @Operation(summary = "清空缓存")
-    // @SaCheckPermission("monitor::cacheList::delete")
+    @SaCheckPermission("monitor::cacheList::delete")
     @GetMapping("/deleteCacheAll")
     public R deleteCacheAll() {
         caches.forEach(sysCache -> {
