@@ -1,5 +1,6 @@
 <template>
   <div class="dashboard-container">
+    <h1>请文明使用在线预览,不要修改关键信息，如：用户密码，角色权限信息</h1>
     <div class="dashboard-text">id: {{ id }}</div>
     <div class="dashboard-text">username: {{ username }}</div>
     <div class="dashboard-text">name: {{ name }}</div>

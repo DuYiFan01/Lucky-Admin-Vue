@@ -417,7 +417,7 @@ public class UserLoginServiceImpl implements UserLoginService {
         if (captcha == null) {
             throw new CustomException("验证码已过期");
         }
-        if (!code.equalsIgnoreCase(captcha)) {
+        if (code == null ||!code.equalsIgnoreCase(captcha)) {
             // 验证码不正确
             throw new CustomException("验证码不正确");
         }

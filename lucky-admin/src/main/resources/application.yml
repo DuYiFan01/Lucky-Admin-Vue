@@ -42,7 +42,7 @@ sa-token:
 lucky:
   admin:
     # 是否开启验证码
-    captcha: false
+    captcha: true
     # 验证码类型 number-数字 text-字符 mixed-数字+字母 math-计算
     captcha-type: number
     # IP取位置是否开启
