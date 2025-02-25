@@ -107,7 +107,7 @@
                 <el-radio aria-hidden="false" label="M">目录</el-radio>
                 <el-radio label="C">菜单</el-radio>
                 <el-radio label="F">按钮</el-radio>
-                <el-radio label="N">内链</el-radio>
+                <!-- <el-radio label="N">内链</el-radio> -->
                 <el-radio label="W">外链</el-radio>
               </el-radio-group>
             </el-form-item>
@@ -169,7 +169,7 @@
           <el-col v-if="form.menuType !== 'F'" :span="12">
             <el-form-item label="路由地址" prop="path">
               <span slot="label">
-                <el-tooltip content="路由地址,如:系统管理->菜单管理-/system/menus (注意:英文小写)" placement="top">
+                <el-tooltip content="路由地址,如:系统管理->菜单管理-/system/menus,外链时,请填写http/https全链接 (注意:英文小写)" placement="top">
                   <i class="el-icon-question" />
                 </el-tooltip>
                 路由地址
@@ -388,7 +388,6 @@ export default {
       this.btnType = 'update'
       this.InitPopUpMenusTree()
       this.form = { ...row }
-      console.log('菜单', row)
     },
     // 删除按钮 被点击
     handleDelete(row) {

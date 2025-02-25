@@ -243,7 +243,6 @@ export default {
   },
   methods: {
     treeChange() {
-      console.log('treeChange', this.$refs.tree.getCheckedKeys())
     },
     handleInit() {
       // 画面加载完毕
@@ -391,7 +390,6 @@ export default {
     },
     handleCheckAll() {
       const arr = this.$refs.tree.getCheckedKeys()
-      console.log(arr)
       // 全选
       if (arr && arr.length > 0) {
         this.selectTreeNode([])

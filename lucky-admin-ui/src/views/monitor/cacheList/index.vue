@@ -40,6 +40,7 @@
               :show-overflow-tooltip="true"
             />
             <el-table-column
+              v-if="checkPermission(['monitor::cacheList::delete'])"
               label="操作"
               width="60"
               align="center"
@@ -90,6 +91,7 @@
             >
             </el-table-column>
             <el-table-column
+              v-if="checkPermission(['monitor::cacheList::delete'])"
               label="操作"
               width="60"
               align="center"
@@ -113,6 +115,7 @@
           <div slot="header">
             <span><i class="el-icon-document"></i> 缓存内容</span>
             <el-button
+              v-if="checkPermission(['monitor::cacheList::delete'])"
               style="float: right; padding: 3px 0"
               type="text"
               icon="el-icon-refresh-right"

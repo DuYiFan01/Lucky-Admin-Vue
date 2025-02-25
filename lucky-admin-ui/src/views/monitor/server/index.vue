@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-    <!-- v-permission="['monitor::server::list']" -->
     <el-row >
       <el-col :span="12" class="card-box">
         <el-card>

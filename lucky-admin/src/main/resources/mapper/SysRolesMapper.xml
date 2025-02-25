@@ -33,7 +33,7 @@
         LEFT JOIN
             sys_roles r ON r.id = ur.role_id
         WHERE
-            ur.user_id = 1
+            ur.user_id = #{userId}
     </select>
 
     <select id="getPermissionByRoleIds" resultType="java.lang.String">
@@ -45,7 +45,7 @@
             sys_roles_menus rm on rm.menu_id = m.id
         WHERE
             m.menu_type = 'F'
-          AND rm.role_id = 1
+          AND rm.role_id = #{roleId}
     </select>
 
 </mapper>

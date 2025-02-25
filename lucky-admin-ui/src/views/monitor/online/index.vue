@@ -1,18 +1,18 @@
 <template>
     <div class="app-container">
       <!-- 搜索栏 -->
-      <div v-permission="['system::logs::loginlog::query']" class="search-bar">
+      <div v-permission="['monitor::online::query']" class="search-bar">
         <div class="grid-item">
           <span>登录账号:</span>
           <el-input v-model="searchForm.username" placeholder="请输入登录账号" />
         </div>
         <div class="grid-item">
-          <el-button v-permission="['system::logs::loginlog::query']" type="primary" icon="el-icon-search" size="small" :loading="loading" @click="handleSearch">搜索</el-button>
+          <el-button v-permission="['monitor::online::query']" type="primary" icon="el-icon-search" size="small" :loading="loading" @click="handleSearch">搜索</el-button>
         </div>
       </div>
       <!-- 操作按钮栏 -->
       <div class="button-bar">
-        <el-button v-permission="['system::logs::loginlog::query']" type="info" icon="el-icon-refresh-right" size="small" plain :loading="loading" @click="handleRefresh"> 刷新 </el-button>
+        <el-button v-permission="['monitor::online::query']" type="info" icon="el-icon-refresh-right" size="small" plain :loading="loading" @click="handleRefresh"> 刷新 </el-button>
       </div>
       <!-- 表格 -->
       <div class="table-bar">
@@ -31,6 +31,7 @@
           <el-table-column prop="os" label="操作系统" :show-overflow-tooltip="showOverflowTooltip" />
           <el-table-column prop="loginTime" label="登录时间" :show-overflow-tooltip="showOverflowTooltip"/>
           <el-table-column
+            v-if="checkPermission(['monitor::online::kickout'])"
             label="操作"
             width="150"
             fixed="right"

@@ -24,6 +24,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -95,17 +96,18 @@ public class GenerationServiceImpl implements GenerationService {
         // 创建ZIP对象
         ZipOutputStream zip = new ZipOutputStream(outputStream);
         // 循环添加zip代码文件
-        map.forEach((key, value) -> {
-            try {
+        try {
+            Set<String> keys = map.keySet();
+            for (String key : keys) {
                 zip.putNextEntry(new ZipEntry(packagePath + key));
-                IOUtils.write(value, zip);
-                zip.flush();
-                zip.closeEntry();
-                IOUtils.closeQuietly(zip);
-            }catch (Exception e){
-                throw new CustomException(e.getMessage());
+                IOUtils.write(map.get(key), zip);
             }
-        });
+            zip.flush();
+            zip.closeEntry();
+            IOUtils.closeQuietly(zip);
+        } catch (Exception e) {
+            throw new CustomException("生成压缩包失败");
+        }
         return outputStream.toByteArray();
     }
 

@@ -2,6 +2,7 @@ package cn.anlucky.luckyadmin.system.config;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.jwt.StpLogicJwtForSimple;
+import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +30,11 @@ public class SaTokenConfigure implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册 Sa-Token 拦截器，校验规则为 StpUtil.checkLogin() 登录校验。
-        registry.addInterceptor(new SaInterceptor(handler -> StpUtil.checkLogin()))
+        registry.addInterceptor(new SaInterceptor(handler -> {
+                    StpUtil.checkLogin();
+                    SaRouter.match("/swagger-ui/**",r->StpUtil.checkPermission("tools::swagger::query"));
+                    SaRouter.match("/api-docs",r->StpUtil.checkPermission("tools::swagger::query"));
+                }))
                 .addPathPatterns("/**")
                 .excludePathPatterns( "/user/login","/user/register","/user/getCode");
         // /user/register 注册地址

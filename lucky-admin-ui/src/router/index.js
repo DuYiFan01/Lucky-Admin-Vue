@@ -60,17 +60,6 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/testMenus',
-    component: Layout,
-    redirect: '/index',
-    children: [{
-      path: 'testMenus',
-      name: 'testMenus',
-      component: () => import('@/views/system/menus/index.vue'),
-      meta: { title: 'Test菜单配置', icon: 'system' }
-    }]
-  }
 ]
 
 /**

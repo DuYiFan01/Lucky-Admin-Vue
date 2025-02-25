@@ -63,7 +63,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password, uuid, code }).then(response => {
         const { data } = response
-        console.log(data)
+        // console.log(data)
         commit('SET_TOKEN', data.token)
         setToken(data.token)
         resolve()
@@ -86,8 +86,6 @@ const actions = {
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles必须是非空数组!')
         }
-        console.log('data', data)
-
         commit('SET_ID', id)
         commit('SET_USERNAME', username)
         commit('SET_NAME', name)
