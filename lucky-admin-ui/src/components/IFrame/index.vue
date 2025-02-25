@@ -1,14 +1,35 @@
 <template>
-  <i-frame :src="url" />
+  <div v-loading="loading" :style="'height:' + height">
+    <iframe
+      :src="src"
+      frameborder="no"
+      style="width: 100%; height: 100%"
+      scrolling="auto"
+    />
+  </div>
 </template>
 <script>
-import iFrame from '@/components/IFrame/index'
 export default {
-  name: 'Swagger',
-  components: { iFrame },
+  props: {
+    src: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
-      url: process.env.VUE_APP_BASE_API + '/swagger'
+      height: document.documentElement.clientHeight - 94.5 + 'px;',
+      loading: true,
+      url: this.src
+    }
+  },
+  mounted: function() {
+    setTimeout(() => {
+      this.loading = false
+    }, 300)
+    const that = this
+    window.onresize = function temp() {
+      that.height = document.documentElement.clientHeight - 94.5 + 'px;'
     }
   }
 }
