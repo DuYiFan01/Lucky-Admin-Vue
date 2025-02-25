@@ -29,8 +29,8 @@
           生成包:
         </span>
         <el-input v-model="genPo.packageName" placeholder="请输入包路径" style="width: 200px;" />
-        </div>
-        <div class="grid-item">
+      </div>
+      <div class="grid-item">
         <span>
           生成模块:
         </span>
@@ -38,12 +38,12 @@
       </div>
       <div class="grid-item">
         <el-button
-        :type="buttonBar.reFreshType"
-        :size="buttonBar.size"
-        :plain="buttonBar.plain"
-        @click="handleRefresh"
-      >刷新</el-button>
-      <el-tag effect="plain">{{ genPo.packageName + '.' + genPo.mouldName }}</el-tag>
+          :type="buttonBar.reFreshType"
+          :size="buttonBar.size"
+          :plain="buttonBar.plain"
+          @click="handleRefresh"
+        >刷新</el-button>
+        <el-tag effect="plain">{{ genPo.packageName + '.' + genPo.mouldName }}</el-tag>
       </div>
     </div>
     <el-table
@@ -96,10 +96,11 @@
     </div>
     <!-- 预览界面 -->
     <el-dialog
-    :title="preview.title"
-    :visible.sync="preview.open"
-    :close-on-click-modal="false"
-    center>
+      :title="preview.title"
+      :visible.sync="preview.open"
+      :close-on-click-modal="false"
+      center
+    >
       <el-tabs v-model="preview.activeName" class="scrollbar">
         <el-tab-pane
           v-for="(value, key) in preview.data"
@@ -135,7 +136,7 @@ hljs.registerLanguage('sql', require('highlight.js/lib/languages/sql'))
 
 export default {
   directives: {
-  clipboard
+    clipboard
   },
   data() {
     return {
@@ -225,7 +226,7 @@ export default {
     },
     /** 高亮显示 */
     highlightedCode(code, key) {
-      const vmName = key.indexOf("/")==-1?key:key.substring(key.indexOf("/")+1)
+      const vmName = key.indexOf('/') === -1 ? key : key.substring(key.indexOf('/') + 1)
       var language = vmName.substring(vmName.indexOf('.') + 1, vmName.length)
       const result = hljs.highlight(language, code, true)
       return result.value || '&nbsp;'

@@ -24,7 +24,7 @@ service.interceptors.request.use(
   },
   error => {
     // 处理请求错误
-    console.log('请求错误',error) // 用于调试
+    console.log('请求错误', error) // 用于调试
     return Promise.reject(error)
   }
 )

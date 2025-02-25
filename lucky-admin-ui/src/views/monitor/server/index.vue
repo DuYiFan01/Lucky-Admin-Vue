@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-row >
+    <el-row>
       <el-col :span="12" class="card-box">
         <el-card>
           <div slot="header"><span><i class="el-icon-cpu" /> CPU</span></div>

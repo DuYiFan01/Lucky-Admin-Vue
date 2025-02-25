@@ -59,7 +59,7 @@ export const constantRoutes = [
         meta: { title: '个人中心', icon: 'dashboard' }
       }
     ]
-  },
+  }
 ]
 
 /**
