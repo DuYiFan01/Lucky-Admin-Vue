@@ -12,7 +12,7 @@
 
     <groupId>cn.anlucky</groupId>
     <artifactId>lucky-admin</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>lucky-admin</name>
     <description>lucky-admin</description>
 
