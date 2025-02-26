@@ -40,10 +40,11 @@ sa-token:
   jwt-secret-key: lucky-admin-vue
 # 项目设置
 lucky:
-  admin:
-    # 是否开启验证码
-    captcha: true
+    # 验证码开关
+    captcha-enabled: true
     # 验证码类型 number-数字 text-字符 mixed-数字+字母 math-计算
     captcha-type: number
     # IP取位置是否开启
     ip-location: true
+    # 文件上传路径
+    profile: D:/lucky-admin/file/

@@ -42,9 +42,6 @@ public class UserLoginServiceImpl implements UserLoginService {
     private SysMenusService sysMenusService;
     @Autowired
     private SysUserRolesService sysUserRolesService;
-    @Autowired
-    private LuckyConfig luckyConfig;
-
 
     /**
      * 用户登录
@@ -406,7 +403,7 @@ public class UserLoginServiceImpl implements UserLoginService {
      * @param uuid     唯一标识
      */
     private void validateCaptcha(String username, String code, String uuid) {
-        Boolean captchaEnabled = luckyConfig.getCaptchaEnabled();
+        Boolean captchaEnabled = LuckyConfig.getCaptchaEnabled();
         if (!captchaEnabled) {
             // 如果验证码是关闭状态
             return;

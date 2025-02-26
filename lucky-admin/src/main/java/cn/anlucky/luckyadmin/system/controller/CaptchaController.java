@@ -32,8 +32,6 @@ import java.io.IOException;
 @RequestMapping("/user")
 public class CaptchaController {
 
-    @Autowired
-    private LuckyConfig luckyConfig;
     @Resource(name = "captchaProducer")
     private Producer captchaProducer;
     /**
@@ -55,9 +53,7 @@ public class CaptchaController {
     @Operation(summary = "获取验证码")
     @GetMapping("/getCode")
     public R getCode(){
-
-        Boolean captchaEnabled = luckyConfig.getCaptchaEnabled();
-
+        Boolean captchaEnabled = LuckyConfig.getCaptchaEnabled();
         CaptchaVo captchaVo = new CaptchaVo();
         // 设置验证码是否开启状态
         captchaVo.setCaptchaEnabled(captchaEnabled);
@@ -71,16 +67,16 @@ public class CaptchaController {
         String code = null;
         BufferedImage image = null;
 
-        if (luckyConfig.getCaptchaType().equals(CaptchaConfig.CAPTCHA_TYPE_NUM)){
+        if (LuckyConfig.getCaptchaType().equals(CaptchaConfig.CAPTCHA_TYPE_NUM)){
             // 数字验证码
             code = getCaptchaByNumberType(numberTypeLength);
-        }else if(luckyConfig.getCaptchaType().equals(CaptchaConfig.CAPTCHA_TYPE_TEXT)){
+        }else if(LuckyConfig.getCaptchaType().equals(CaptchaConfig.CAPTCHA_TYPE_TEXT)){
             // 字母验证码
             code = getCaptchaByTextType(textTypeLength);
-        }else if(luckyConfig.getCaptchaType().equals(CaptchaConfig.CAPTCHA_TYPE_MIXED)){
+        }else if(LuckyConfig.getCaptchaType().equals(CaptchaConfig.CAPTCHA_TYPE_MIXED)){
             // 数字字母混合验证
             code = getCaptchaByMixedType(mixedTypeLength);
-        } else if (luckyConfig.getCaptchaType().equals(CaptchaConfig.CAPTCHA_TYPE_MATH)) {
+        } else if (LuckyConfig.getCaptchaType().equals(CaptchaConfig.CAPTCHA_TYPE_MATH)) {
             // 计算验证码
             code = getCaptchaByNumberType(numberTypeLength);
         } else {

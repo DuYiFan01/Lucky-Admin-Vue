@@ -93,7 +93,7 @@ public class SysMenusServiceImp extends ServiceImpl<SysMenusMapper, SysMenus> im
             throw new CustomException("菜单ID不能为空");
         }
         this.updateById(sysMenus);
-        // todo:这里会导致缓存大部分失效有缓存雪崩的风险
+        // ToDO:这里会导致缓存大部分失效有缓存雪崩的风险
         // 如果修改了菜单
         List<String> list = null;
         if (Constants.TYPE_BUTTON.equals(sysMenus.getMenuType())){

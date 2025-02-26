@@ -1,5 +1,6 @@
 package cn.anlucky.luckyadmin.utils.ip;
 
+import cn.anlucky.luckyadmin.config.LuckyConfig;
 import cn.anlucky.luckyadmin.system.constant.Constants;
 import cn.anlucky.luckyadmin.utils.StringUtils;
 import cn.anlucky.luckyadmin.utils.http.HttpUtils;
@@ -30,7 +31,7 @@ public class AddressUtils
         {
             return "内网IP";
         }
-        if (true) // todo: LuckyConfig.getIpLocation() 是否开启IP查询地址的开关应该在这里被取到，因此暂时写死为true
+        if (LuckyConfig.getIpLocation())
         {
             try
             {

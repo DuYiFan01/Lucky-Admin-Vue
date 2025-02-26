@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.anlucky.luckyadmin.system.mapper.SysFilesMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.anlucky.luckyadmin.system.pojo.SysFiles">
+        <id column="file_id" property="fileId" />
+        <result column="original_name" property="originalName" />
+        <result column="file_name" property="fileName" />
+        <result column="storage_path" property="storagePath" />
+        <result column="file_hash" property="fileHash" />
+        <result column="file_type" property="fileType" />
+        <result column="file_business_type" property="fileBusinessType" />
+        <result column="file_size" property="fileSize" />
+        <result column="del_flag" property="delFlag" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        file_id, original_name, file_name, storage_path, file_hash, file_type, file_business_type, file_size, del_flag, create_time, create_by, update_time, update_by, remark
+    </sql>
+
+</mapper>
