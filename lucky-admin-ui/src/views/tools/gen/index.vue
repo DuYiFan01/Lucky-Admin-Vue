@@ -1,5 +1,5 @@
 <template>
-  <div class="user-management">
+  <div class="app-container">
     <div class="search-bar">
       <div class="grid-item">
         <span>
@@ -46,43 +46,44 @@
         <el-tag effect="plain">{{ genPo.packageName + '.' + genPo.mouldName }}</el-tag>
       </div>
     </div>
-    <el-table
-      v-loading="tableLoading"
-      :data="tableData"
-      style="width: 100%"
-      max-height="560"
-      @selection-change="handleSelectionChange"
-    >
-      <el-table-column type="selection" width="55" v-bind="columnProps" />
-      <el-table-column type="index" width="50" label="序号" v-bind="columnProps" />
-      <el-table-column prop="name" label="表名称" v-bind="columnProps" />
-      <el-table-column prop="comment" label="表描述" v-bind="columnProps" />
-      <el-table-column prop="entity" label="实体名称" v-bind="columnProps" />
-      <el-table-column prop="createTime" label="创建时间" v-bind="columnProps" />
-      <el-table-column prop="updateTime" label="更新时间" v-bind="columnProps" />
-      <el-table-column
-        label="操作"
-        width="200"
-        fixed="right"
-        :header-align="tableConfig.headerAlign"
+    <div class="table-bar">
+      <el-table
+        v-loading="tableLoading"
+        :data="tableData"
+        style="width: 100%"
+        max-height="560"
+        @selection-change="handleSelectionChange"
       >
-        <template slot-scope="scope">
-          <el-button
-            :size="toolBar.size"
-            :type="toolBar.updateType"
-            icon="el-icon-view"
-            @click="handlePreview(scope.row)"
-          >预览代码</el-button>
-          <el-button
-            :size="toolBar.size"
-            :type="toolBar.updateType"
-            icon="el-icon-download"
-            @click="handleDownloadCode(scope.row)"
-          >下载代码</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
+        <el-table-column type="selection" width="55" v-bind="columnProps" />
+        <el-table-column type="index" width="50" label="序号" v-bind="columnProps" />
+        <el-table-column prop="name" label="表名称" v-bind="columnProps" />
+        <el-table-column prop="comment" label="表描述" v-bind="columnProps" />
+        <el-table-column prop="entity" label="实体名称" v-bind="columnProps" />
+        <el-table-column prop="createTime" label="创建时间" v-bind="columnProps" />
+        <el-table-column prop="updateTime" label="更新时间" v-bind="columnProps" />
+        <el-table-column
+          label="操作"
+          width="200"
+          fixed="right"
+          :header-align="tableConfig.headerAlign"
+        >
+          <template slot-scope="scope">
+            <el-button
+              :size="toolBar.size"
+              :type="toolBar.updateType"
+              icon="el-icon-view"
+              @click="handlePreview(scope.row)"
+            >预览代码</el-button>
+            <el-button
+              :size="toolBar.size"
+              :type="toolBar.updateType"
+              icon="el-icon-download"
+              @click="handleDownloadCode(scope.row)"
+            >下载代码</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
     <div class="pagination">
       <el-pagination
         :current-page="currentPage"
