@@ -17,14 +17,16 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
+ * 文件管理
+ *
  * @author yifan.du
- * @since 2025-02-25 16:19:40
+ * @since 2025-02-27 15:28:19
  */
 @Getter
 @Setter
 @ToString
 @TableName("sys_files")
-@Schema(name = "SysFiles", description = "")
+@Schema(name = "SysFiles", description = "文件管理")
 public class SysFiles implements Serializable {
 
     private static final long serialVersionUID = 1L;
