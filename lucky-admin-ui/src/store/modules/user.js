@@ -1,6 +1,8 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import { isHttp,isEmpty } from '@/utils/validate'
+import defaultAvatar from '@/assets/images/avatar/profile.jpg'
 
 const getDefaultState = () => {
   return {
@@ -45,7 +47,7 @@ const mutations = {
     state.phone = phone
   },
   SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar === null ? require('@/assets/images/avatar/profile.jpg') : avatar
+    state.avatar = avatar
     // state.avatar = avatar
   },
   SET_ROLES: (state, roles) => {
@@ -86,13 +88,18 @@ const actions = {
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles必须是非空数组!')
         }
+        let phote = avatar || ''
+        
+        if (!isHttp(phote)) {
+          phote = (isEmpty(phote)) ? defaultAvatar : process.env.VUE_APP_BASE_API + phote
+        }
         commit('SET_ID', id)
         commit('SET_USERNAME', username)
         commit('SET_NAME', name)
         commit('SET_SEX', sex)
         commit('SET_EMAIL', email)
         commit('SET_PHONE', phone)
-        commit('SET_AVATAR', avatar)
+        commit('SET_AVATAR', phote)
         commit('SET_ROLES', roles)
         commit('SET_PERMISSIONS', permissions)
         resolve(data)

@@ -84,6 +84,7 @@ export default {
         if (valid) {
           updateInfo(this.form).then(res => {
             this.$message.success(res.message)
+            this.resetUserInfo()
           })
         }
       })

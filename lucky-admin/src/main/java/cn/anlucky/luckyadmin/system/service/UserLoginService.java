@@ -1,9 +1,11 @@
 package cn.anlucky.luckyadmin.system.service;
 
-import cn.anlucky.luckyadmin.system.pojo.SysMenus;
+import cn.anlucky.luckyadmin.system.pojo.SysFiles;
 import cn.anlucky.luckyadmin.system.pojo.SysUsers;
 import cn.anlucky.luckyadmin.system.vo.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -89,6 +91,14 @@ public interface UserLoginService {
      * @param userIds
      */
     public void saveAuthRole(Long roleId ,List<Long> userIds);
+
+
+    /**
+     * 上传用户头像
+     * @param file 文件
+     * @return 文件信息
+     */
+    public SysFiles uploadUserAvatar(MultipartFile file);
 
 
 }

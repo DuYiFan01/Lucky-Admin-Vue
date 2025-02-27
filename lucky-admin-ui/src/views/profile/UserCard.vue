@@ -4,11 +4,8 @@
       <span>关于我</span>
     </div>
     <div class="box-center">
-      <div class="user-info-head" @click="editCropper()"><img
-        :src="options.img"
-        class="img-circle img-lg"
-        title="点击上传头像"
-      >
+      <div class="user-info-head" @click="editCropper()"><img :src="options.img" class="img-circle img-lg"
+          title="点击上传头像">
       </div>
     </div>
     <div class="user-profile">
@@ -23,35 +20,20 @@
             <li v-for="(item, index) in userInfoArray" :key="index" class="list-group-item">
               <!-- <span><i :class="item.iconClass"></i></span> -->
               <svg-icon :icon-class="item.iconClass" /> {{ item.lable }}
-              <div class="pull-right">{{ (item.value === null || item.value==='') ? '暂无' : item.value }}</div>
+              <div class="pull-right">{{ (item.value === null || item.value === '') ? '暂无' : item.value }}</div>
             </li>
           </ul>
         </div>
       </div>
     </div>
 
-    <el-dialog
-      :title="title"
-      :visible.sync="open"
-      width="800px"
-      append-to-body
-      @opened="modalOpened"
-      @close="closeDialog"
-    >
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body @opened="modalOpened"
+      @close="closeDialog">
       <el-row>
         <el-col :xs="24" :md="12" :style="{ height: '350px' }">
-          <vue-cropper
-            v-if="visible"
-            ref="cropper"
-            :img="options.img"
-            :info="true"
-            :auto-crop="options.autoCrop"
-            :auto-crop-width="options.autoCropWidth"
-            :auto-crop-height="options.autoCropHeight"
-            :fixed-box="options.fixedBox"
-            :output-type="options.outputType"
-            @realTime="realTime"
-          />
+          <vue-cropper v-if="visible" ref="cropper" :img="options.img" :info="true" :auto-crop="options.autoCrop"
+            :auto-crop-width="options.autoCropWidth" :auto-crop-height="options.autoCropHeight"
+            :fixed-box="options.fixedBox" :output-type="options.outputType" @realTime="realTime" />
         </el-col>
         <el-col :xs="24" :md="12" :style="{ height: '350px' }">
           <div class="avatar-upload-preview">
@@ -92,6 +74,9 @@
 <script>
 import { VueCropper } from 'vue-cropper'
 import { debounce } from '@/utils'
+import { uploadAvatar } from '@/api/user';
+import store from '@/store';
+
 
 export default {
   name: 'UserCard',
@@ -156,7 +141,7 @@ export default {
     },
     // 关闭窗口
     closeDialog() {
-      this.options.img = this.userCardInfo.avatar
+      // this.options.img = this.userCardInfo.avatar
       this.visible = false
       window.removeEventListener('resize', this.resizeHandler)
     },
@@ -167,7 +152,7 @@ export default {
     // 上传预处理
     beforeUpload(file) {
       if (file.type.indexOf('image/') === -1) {
-        this.$modal.msgError('文件格式错误，请上传图片类型,如：JPG，PNG后缀的文件。')
+        this.$message.error('文件格式错误，请上传图片类型,如：JPG，PNG后缀的文件。')
       } else {
         const reader = new FileReader()
         reader.readAsDataURL(file)
@@ -193,7 +178,23 @@ export default {
     changeScale(num) {
       num = num || 1
       this.$refs.cropper.changeScale(num)
-    }
+    },
+    // 上传图片
+    uploadImg() {
+      this.$refs.cropper.getCropBlob(data => {
+        let formData = new FormData();
+        formData.append("file", data, this.options.filename);
+        uploadAvatar(formData).then(response => {
+          const {data} = response
+          console.log('data',data);
+          this.open = false;
+          this.resetUserInfo()
+          this.options.img = process.env.VUE_APP_BASE_API + data;
+          this.$message.success("上传成功")
+          this.visible = false;
+        });
+      });
+    },
   }
 }
 </script>

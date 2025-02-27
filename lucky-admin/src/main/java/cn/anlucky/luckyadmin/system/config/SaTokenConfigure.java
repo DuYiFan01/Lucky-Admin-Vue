@@ -1,5 +1,7 @@
 package cn.anlucky.luckyadmin.system.config;
 
+import cn.anlucky.luckyadmin.config.LuckyConfig;
+import cn.anlucky.luckyadmin.system.constant.Constants;
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.jwt.StpLogicJwtForSimple;
 import cn.dev33.satoken.router.SaRouter;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Map;
@@ -38,6 +41,13 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns( "/user/login","/user/register","/user/getCode");
         // /user/register 注册地址
+    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+        /** 本地文件上传路径 */
+        registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**")
+                .addResourceLocations("file:" + LuckyConfig.getProfile() + "/");
     }
     /**
      * Sa-Token 权限认证规则

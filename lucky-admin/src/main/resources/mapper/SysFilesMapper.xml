@@ -25,4 +25,26 @@
         file_id, original_name, file_name, storage_path, file_hash, file_type, file_business_type, file_size, del_flag, create_time, create_by, update_time, update_by, remark
     </sql>
 
+    <select id="getFileAbsPathById" resultType="java.lang.String">
+        SELECT
+            sf.storage_path
+        FROM
+            sys_business_files sbf
+        LEFT JOIN
+            sys_files sf ON sf.file_id = sbf.file_id
+        WHERE
+            sbf.id = #{fileBusinessId}
+    </select>
+    <select id="getFileAbsPath" resultType="java.lang.String">
+        SELECT
+            sf.storage_path
+        FROM
+            sys_business_files sbf
+                LEFT JOIN
+            sys_files sf ON sf.file_id = sbf.file_id
+        WHERE
+            sbf.business_id = #{businessId}
+          AND
+            sbf.business_type = #{fileBusinessType}
+    </select>
 </mapper>

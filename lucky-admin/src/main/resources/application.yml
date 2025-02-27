@@ -3,6 +3,13 @@ spring:
     name: lucky-admin
   profiles:
     active: dev
+  servlet:
+    multipart:
+      enabled: true
+      # 设置单个文件的最大大小
+      max-file-size: 200MB
+      # 设置请求中所有文件的最大总大小
+      max-request-size: 200MB
 server:
   port: 8080
   servlet:
@@ -46,5 +53,17 @@ lucky:
     captcha-type: number
     # IP取位置是否开启
     ip-location: true
+    # 文件存储位置 local-本地 qiniu-七牛
+    file-location: local
     # 文件上传路径
     profile: D:/lucky-admin/file/
+    # 文件最大大小 MB
+    file-max-size: 50
+    # 文件名最大长度 名字最大长度
+    fileNameMaxLength: 200
+    # 七牛存储Ak
+    qiniu-ak:
+    # 七牛存储Sk
+    qiniu-sk:
+    # 七牛存储空间
+    qiniu-bucket:

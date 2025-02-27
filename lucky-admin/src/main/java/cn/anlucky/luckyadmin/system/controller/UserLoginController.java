@@ -3,11 +3,14 @@ package cn.anlucky.luckyadmin.system.controller;
 
 import cn.anlucky.luckyadmin.system.annotation.Log;
 import cn.anlucky.luckyadmin.system.enums.BusinessType;
+import cn.anlucky.luckyadmin.system.pojo.SysFiles;
 import cn.anlucky.luckyadmin.system.pojo.SysUsers;
+import cn.anlucky.luckyadmin.system.service.SysUsersService;
 import cn.anlucky.luckyadmin.system.service.UserLoginService;
 import cn.anlucky.luckyadmin.system.vo.PasswordUpdateVo;
 import cn.anlucky.luckyadmin.system.vo.RouterVo;
 import cn.anlucky.luckyadmin.system.vo.UserLoginVo;
+import cn.anlucky.luckyadmin.utils.file.FileUploadUtils;
 import cn.anlucky.luckyadmin.utils.satoken.SaUtils;
 import cn.anlucky.luckyadmin.vo.R;
 import cn.dev33.satoken.annotation.SaCheckPermission;
@@ -15,7 +18,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -163,5 +168,21 @@ public class UserLoginController {
         userLoginService.saveAuthRole(Long.valueOf(roleId), userIds);
         return R.ok("分配成功");
     }
+
+
+    @Log(title = "用户头像", businessType = BusinessType.UPDATE)
+    @PostMapping("/avatar")
+    public R uploadUserAvatar(@RequestParam("file") MultipartFile file){
+        if (file.isEmpty()){
+            throw new RuntimeException("上传文件不能为空");
+        }
+        SysFiles sysFiles = userLoginService.uploadUserAvatar(file);
+
+        return R.ok("上传成功",sysFiles.getStoragePath());
+    }
+
+
+
+
 
 }

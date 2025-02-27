@@ -6,8 +6,7 @@ package cn.anlucky.luckyadmin.system.constant;
  *
  * @author ruoyi
  */
-public class Constants
-{
+public class Constants {
     /**
      * UTF-8 字符集
      */
@@ -50,16 +49,24 @@ public class Constants
      */
     public static final String LAYOUT = "Layout";
 
-    /** ParentView组件标识 */
+    /**
+     * ParentView组件标识
+     */
     public final static String PARENT_VIEW = "ParentView";
 
-    /** 菜单类型（目录） */
+    /**
+     * 菜单类型（目录）
+     */
     public static final String TYPE_DIR = "M";
 
-    /** 菜单类型（菜单） */
+    /**
+     * 菜单类型（菜单）
+     */
     public static final String TYPE_MENU = "C";
 
-    /** 菜单类型（按钮） */
+    /**
+     * 菜单类型（按钮）
+     */
     public static final String TYPE_BUTTON = "F";
 
     /**
@@ -71,4 +78,29 @@ public class Constants
      * 菜单类型（外链）
      */
     public static final String TYPE_W_URL = "W";
+
+    /**
+     * 资源映射路径 前缀
+     */
+    public static final String RESOURCE_PREFIX = "/profile";
+
+    /**
+     * 文件Hash 算法
+     */
+    public static final String SHA256 = "SHA-256";
+    /**
+     * 文件Hash 算法
+     */
+    public static final String MD5 = "MD5";
+
+    /**
+     * 文件存储位置 本地
+     */
+    public static final String FILE_LOCATION_LOCAL = "LOCAL";
+
+    /**
+     * 文件存储位置 七牛
+     */
+    public static final String FILE_LOCATION_QINIU = "QINIU";
+
 }

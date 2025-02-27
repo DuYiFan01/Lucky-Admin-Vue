@@ -3,6 +3,8 @@ package cn.anlucky.luckyadmin.system.service.impl;
 import cn.anlucky.luckyadmin.config.LuckyConfig;
 import cn.anlucky.luckyadmin.exception.CustomException;
 import cn.anlucky.luckyadmin.system.constant.Constants;
+import cn.anlucky.luckyadmin.system.enums.BusinessType;
+import cn.anlucky.luckyadmin.system.enums.FileBusinessType;
 import cn.anlucky.luckyadmin.system.manager.AsyncManager;
 import cn.anlucky.luckyadmin.system.manager.factory.AsyncFactory;
 import cn.anlucky.luckyadmin.system.pojo.*;
@@ -10,18 +12,22 @@ import cn.anlucky.luckyadmin.system.service.*;
 import cn.anlucky.luckyadmin.system.vo.*;
 import cn.anlucky.luckyadmin.utils.ServletUtils;
 import cn.anlucky.luckyadmin.utils.StringUtils;
+import cn.anlucky.luckyadmin.utils.file.FileTypeValidator;
 import cn.anlucky.luckyadmin.utils.ip.AddressUtils;
 import cn.anlucky.luckyadmin.utils.ip.IpUtils;
 import cn.anlucky.luckyadmin.utils.satoken.PasswordEncode;
 import cn.anlucky.luckyadmin.utils.satoken.SaTokenDaoUtils;
 import cn.anlucky.luckyadmin.utils.satoken.SaUtils;
 import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +48,10 @@ public class UserLoginServiceImpl implements UserLoginService {
     private SysMenusService sysMenusService;
     @Autowired
     private SysUserRolesService sysUserRolesService;
+    @Autowired
+    private SysFilesService sysFilesService;
+    @Autowired
+    private SysBusinessFilesService sysBusinessFilesService;
 
     /**
      * 用户登录
@@ -157,7 +167,13 @@ public class UserLoginServiceImpl implements UserLoginService {
         userInfoVo.setSex(users.getSex());
         userInfoVo.setEmail(users.getEmail());
         userInfoVo.setPhone(users.getPhone());
-        userInfoVo.setAvatar(users.getAvatar());
+        // 查询头像地址
+        List<String> fileAbsPath = sysFilesService.getFileAbsPath(Long.valueOf(users.getAvatar()), FileBusinessType.USER_AVATAR);
+        if (!fileAbsPath.isEmpty()) {
+            userInfoVo.setAvatar(fileAbsPath.get(0));
+        }else{
+            userInfoVo.setAvatar(null);
+        }
         userInfoVo.setCreateTime(users.getCreateTime());
         userInfoVo.setRoles(rolesCode);
         userInfoVo.setPermissions(permission);
@@ -374,6 +390,36 @@ public class UserLoginServiceImpl implements UserLoginService {
         deleteIds.forEach(id -> {
             SaTokenDaoUtils.deleteObjectKey(SaTokenDaoUtils.ROLES_CACHE + id);
         });
+    }
+
+    /**
+     * 上传用户头像
+     *
+     * @param file 文件
+     * @return 文件信息
+     */
+    @Transactional
+    @Override
+    public SysFiles uploadUserAvatar(MultipartFile file) {
+        // 校验文件类型是否是图片
+        FileTypeValidator.isImage(file);
+        // 获取用户ID 业务表ID
+        Long userId = StpUtil.getLoginIdAsLong();
+        // 上传文件
+        SysFiles sysFiles = sysFilesService.uploadFile(file, FileBusinessType.USER_AVATAR);
+        // 保存业务表和关键表关联表数据
+        SysBusinessFiles sysBusinessFiles = new SysBusinessFiles();
+        sysBusinessFiles.setBusinessType(FileBusinessType.USER_AVATAR.getBusinessType());
+        sysBusinessFiles.setBusinessId(userId);
+        sysBusinessFiles.setFileId(sysFiles.getFileId());
+        // 保存文件表和业务表关联表信息 头像不允许出现多个 为false
+        sysBusinessFilesService.saveFileBusinessType(sysBusinessFiles, false);
+        // 更新用户表头像字段
+        SysUsers sysUsers = new SysUsers();
+        sysUsers.setId(userId);
+        sysUsers.setAvatar(sysBusinessFiles.getId().toString());
+        sysUsersService.updateById(sysUsers);
+        return sysFiles;
     }
 
 
