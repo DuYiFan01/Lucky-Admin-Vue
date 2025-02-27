@@ -17,6 +17,13 @@ Lucky-Admin-Vue是一个基于SpringBoot3+Vue2前后端分离的快速开发后�
 - SpringBoot 3.4.1
 - Mybatis-plus 3.5.10.1
 - Springdoc OpenAPI 2.7.0
+
+## 目录结构
+```
+    > lucku-admin         ## 后端项目
+    > lucku-admin-vue     ## 前端项目
+```
+
 ## 后端目录结构
 ```
 main
