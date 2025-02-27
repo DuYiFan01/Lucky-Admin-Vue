@@ -246,3 +246,38 @@ CREATE TABLE `sys_oper_log`  (
  INDEX `idx_sys_oper_log_s`(`status`),
  INDEX `idx_sys_oper_log_ot`(`oper_time` DESC)
 ) ENGINE = InnoDB COMMENT = '操作日志';
+
+-- 文件表
+DROP TABLE IF EXISTS `sys_files`;
+CREATE TABLE `sys_files`  (
+                              `file_id` 			bigint 			NOT NULL 	AUTO_INCREMENT	 				COMMENT '文件ID',
+                              `original_name` 		varchar(255) 	NOT NULL 									COMMENT '原始文件名',
+                              `file_name` 			varchar(255)  	NOT NULL 									COMMENT '当前文件名',
+                              `storage_path` 		varchar(512)  	NOT NULL									COMMENT '存储路径',
+                              `file_hash` 			char(64)  		NULL 										COMMENT '哈希值',
+                              `file_type` 			varchar(100)  	NOT NULL 									COMMENT '文件类型',
+                              `file_business_type` 	varchar(50)  	NULL 		DEFAULT NULL 					COMMENT '业务分类',
+                              `file_size` 			bigint 			NOT NULL 									COMMENT '文件大小(字节)',
+                              `del_flag` 			int 			NULL 		DEFAULT 0 						COMMENT '逻辑删除标志，0-未删除，1-已删除',
+                              `create_time` 		datetime 		NULL 		DEFAULT CURRENT_TIMESTAMP 		COMMENT '创建时间',
+                              `create_by` 			varchar(64)  	NULL 		DEFAULT '' 						COMMENT '创建人',
+                              `update_time` 		datetime 		NULL 		DEFAULT CURRENT_TIMESTAMP 		COMMENT '更新时间',
+                              `update_by` 			varchar(64)  	NULL 		DEFAULT '' 						COMMENT '更新人',
+                              `remark` 				varchar(500)  	NULL 		DEFAULT '' 						COMMENT '备注',
+                              PRIMARY KEY (`file_id`),
+                              UNIQUE INDEX `storage_path`(`storage_path`),
+                              UNIQUE INDEX `file_hash`(`file_hash` ASC),
+                              INDEX `file_business_type`(`file_business_type` ASC)
+) ENGINE = InnoDB COMMENT = '文件管理';
+
+-- 业务文件关联表
+DROP TABLE IF EXISTS `sys_business_files`;
+CREATE TABLE `sys_business_files`  (
+                                       `id` 					bigint 				NOT NULL 		AUTO_INCREMENT 					COMMENT '主键ID',
+                                       `business_type` 		varchar(50)  		NOT NULL 										COMMENT '业务分类',
+                                       `business_id` 		bigint 				NOT NULL 										COMMENT '业务表ID',
+                                       `file_id` 			bigint 				NOT NULL 										COMMENT '文件表ID',
+                                       `create_time` 		datetime 			NULL 			DEFAULT CURRENT_TIMESTAMP 		COMMENT '创建时间',
+                                       PRIMARY KEY (`id`),
+                                       INDEX `index_type_id`(`business_type`, `business_id`)
+) ENGINE = InnoDB COMMENT = '业务文件关联';

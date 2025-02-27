@@ -168,7 +168,7 @@ public class UserLoginServiceImpl implements UserLoginService {
         userInfoVo.setEmail(users.getEmail());
         userInfoVo.setPhone(users.getPhone());
         // 查询头像地址
-        List<String> fileAbsPath = sysFilesService.getFileAbsPath(Long.valueOf(users.getAvatar()), FileBusinessType.USER_AVATAR);
+        List<String> fileAbsPath = sysFilesService.getFileAbsPath(users.getId(), FileBusinessType.USER_AVATAR);
         if (!fileAbsPath.isEmpty()) {
             userInfoVo.setAvatar(fileAbsPath.get(0));
         }else{
