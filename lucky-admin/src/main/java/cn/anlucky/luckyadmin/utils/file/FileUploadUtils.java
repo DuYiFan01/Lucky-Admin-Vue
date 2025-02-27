@@ -41,7 +41,7 @@ public class FileUploadUtils {
 
         try {
             // 本地文件上传
-            if (StringUtils.isBlank(LuckyConfig.getFileLocation()) || Constants.FILE_LOCATION_LOCAL.equals(LuckyConfig.getFileLocation())){
+            if (StringUtils.isBlank(LuckyConfig.getFileLocation()) || Constants.FILE_LOCATION_LOCAL.equalsIgnoreCase(LuckyConfig.getFileLocation())){
                 file.transferTo(Paths.get(absolutePath));
             }
             // 七牛文件上传
