@@ -19,6 +19,7 @@ Lucky-Admin-Vue是一个基于SpringBoot3+Vue2前后端分离的快速开发后�
 - Springdoc OpenAPI 2.7.0
 
 ## 目录结构
+在线预览：http://admin.anlucky.cn/#/index
 ```
     > lucku-admin         ## 后端项目
     > lucku-admin-vue     ## 前端项目
@@ -112,5 +113,5 @@ main
 ### 生产环境文件上传失败
 在生产环境中，大多数上传失败的原因为权限不足的问题，请检查对应目录是否有写入的权限
 
-## 在线用户统计不准确
+### 在线用户统计不准确
 在线用户统计主要统计于登录的COOKIE，由于浏览器的缓存机制，COOKIE在浏览器关闭后失效，所以当浏览器关闭后，在线用户统计会不准确
