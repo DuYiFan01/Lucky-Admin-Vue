@@ -4,8 +4,11 @@
       <span>关于我</span>
     </div>
     <div class="box-center">
-      <div class="user-info-head" @click="editCropper()"><img :src="options.img" class="img-circle img-lg"
-          title="点击上传头像">
+      <div class="user-info-head" @click="editCropper()"><img
+        :src="options.img"
+        class="img-circle img-lg"
+        title="点击上传头像"
+      >
       </div>
     </div>
     <div class="user-profile">
@@ -27,13 +30,28 @@
       </div>
     </div>
 
-    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body @opened="modalOpened"
-      @close="closeDialog">
+    <el-dialog
+      :title="title"
+      :visible.sync="open"
+      width="800px"
+      append-to-body
+      @opened="modalOpened"
+      @close="closeDialog"
+    >
       <el-row>
         <el-col :xs="24" :md="12" :style="{ height: '350px' }">
-          <vue-cropper v-if="visible" ref="cropper" :img="options.img" :info="true" :auto-crop="options.autoCrop"
-            :auto-crop-width="options.autoCropWidth" :auto-crop-height="options.autoCropHeight"
-            :fixed-box="options.fixedBox" :output-type="options.outputType" @realTime="realTime" />
+          <vue-cropper
+            v-if="visible"
+            ref="cropper"
+            :img="options.img"
+            :info="true"
+            :auto-crop="options.autoCrop"
+            :auto-crop-width="options.autoCropWidth"
+            :auto-crop-height="options.autoCropHeight"
+            :fixed-box="options.fixedBox"
+            :output-type="options.outputType"
+            @realTime="realTime"
+          />
         </el-col>
         <el-col :xs="24" :md="12" :style="{ height: '350px' }">
           <div class="avatar-upload-preview">
@@ -74,10 +92,7 @@
 <script>
 import { VueCropper } from 'vue-cropper'
 import { debounce } from '@/utils'
-import { uploadAvatar } from '@/api/user';
-import store from '@/store';
-
-
+import { uploadAvatar } from '@/api/user'
 export default {
   name: 'UserCard',
   components: { VueCropper },
@@ -182,19 +197,19 @@ export default {
     // 上传图片
     uploadImg() {
       this.$refs.cropper.getCropBlob(data => {
-        let formData = new FormData();
-        formData.append("file", data, this.options.filename);
+        const formData = new FormData()
+        formData.append('file', data, this.options.filename)
         uploadAvatar(formData).then(response => {
-          const {data} = response
-          console.log('data',data);
-          this.open = false;
+          const { data } = response
+          console.log('data', data)
+          this.open = false
           this.resetUserInfo()
-          this.options.img = process.env.VUE_APP_BASE_API + data;
-          this.$message.success("上传成功")
-          this.visible = false;
-        });
-      });
-    },
+          this.options.img = process.env.VUE_APP_BASE_API + data
+          this.$message.success('上传成功')
+          this.visible = false
+        })
+      })
+    }
   }
 }
 </script>

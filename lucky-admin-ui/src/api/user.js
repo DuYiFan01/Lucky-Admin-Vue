@@ -135,7 +135,7 @@ export function saveAuthRole(roleId, data) {
 // 用户头像上传
 export function uploadAvatar(data) {
   return request({
-    url: apiPath+"/avatar",
+    url: apiPath + '/avatar',
     method: 'post',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     data: data

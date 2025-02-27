@@ -20,21 +20,20 @@ export function validUsername(str) {
   return str.trim()
 }
 
-
 /**
- * 判断value字符串是否为空 
+ * 判断value字符串是否为空
  * @param {string} value
  * @returns {Boolean}
  */
 export function isEmpty(value) {
-  if (value == null || value == "" || value == undefined || value == "undefined") {
+  if (value == null || value === '' || value === undefined || value === 'undefined') {
     return true
   }
   return false
 }
 
 /**
- * 判断url是否是http或https 
+ * 判断url是否是http或https
  * @param {string} url
  * @returns {Boolean}
  */

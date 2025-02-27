@@ -1,7 +1,7 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
-import { isHttp,isEmpty } from '@/utils/validate'
+import { isHttp, isEmpty } from '@/utils/validate'
 import defaultAvatar from '@/assets/images/avatar/profile.jpg'
 
 const getDefaultState = () => {
@@ -89,7 +89,7 @@ const actions = {
           reject('getInfo: roles必须是非空数组!')
         }
         let phote = avatar || ''
-        
+
         if (!isHttp(phote)) {
           phote = (isEmpty(phote)) ? defaultAvatar : process.env.VUE_APP_BASE_API + phote
         }
