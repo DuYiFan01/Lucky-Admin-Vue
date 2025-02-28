@@ -98,7 +98,6 @@
       :visible.sync="dialogVisible"
       width="680px"
       :close-on-click-modal="false"
-      size="mini"
       center
     >
       <el-form
