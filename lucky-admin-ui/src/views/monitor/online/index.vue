@@ -34,7 +34,6 @@
           v-if="checkPermission(['monitor::online::kickout'])"
           label="操作"
           width="150"
-          fixed="right"
           align="center"
         >
           <template slot-scope="scope">

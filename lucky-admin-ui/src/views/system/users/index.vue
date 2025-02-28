@@ -15,6 +15,10 @@
         <el-input v-model="searchForm.phone" placeholder="请输入手机号" />
       </div>
       <div class="grid-item">
+        <span>邮箱:</span>
+        <el-input v-model="searchForm.email" placeholder="请输入邮箱" />
+      </div>
+      <div class="grid-item">
         <span>性别:</span>
         <el-select v-model="searchForm.sex" placeholder="请选择">
           <el-option label="全部" value="" />
@@ -23,10 +27,7 @@
           <el-option label="未知" value="2" />
         </el-select>
       </div>
-      <div class="grid-item">
-        <span>邮箱:</span>
-        <el-input v-model="searchForm.email" placeholder="请输入邮箱" />
-      </div>
+
       <div class="grid-item">
         <span>是否启用:</span>
         <el-select v-model="searchForm.enabled" placeholder="请选择">
@@ -77,13 +78,12 @@
         <el-table-column
           v-if="checkPermission(['system::users::auth','system::users::update','system::users::delete'])"
           label="操作"
-          width="200"
-          fixed="right"
           align="center"
+          width="200"
         >
           <template slot-scope="scope">
-            <el-button v-permission="['system::users::auth']" :size="toolBar.size" :type="toolBar.insertType" :icon="toolBar.insertIcon" @click="handleAddRoles(scope.row)">分配角色</el-button>
-            <el-button v-permission="['system::users::update']" :size="toolBar.size" :type="toolBar.updateType" :icon="toolBar.updateIcon" @click="handleEdit(scope.row)">编辑</el-button>
+            <el-button  v-permission="['system::users::auth']" :size="toolBar.size" :type="toolBar.insertType" :icon="toolBar.insertIcon" @click="handleAddRoles(scope.row)">分配角色</el-button>
+            <el-button  v-permission="['system::users::update']" :size="toolBar.size" :type="toolBar.updateType" :icon="toolBar.updateIcon" @click="handleEdit(scope.row)">编辑</el-button>
             <el-button v-permission="['system::users::delete']" :size="toolBar.size" :type="toolBar.deleteType" :icon="toolBar.deleteIcon" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>

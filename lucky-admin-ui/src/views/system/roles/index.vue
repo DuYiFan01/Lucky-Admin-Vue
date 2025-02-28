@@ -37,7 +37,6 @@
           v-if="checkPermission(['system::roles::auth','system::roles::update','system::roles::delete'])"
           label="操作"
           width="200"
-          fixed="right"
           align="center"
         >
           <template slot-scope="scope">

@@ -58,7 +58,6 @@
           v-if="checkPermission(['system::menus::insert','system::menus::update','system::menus::delete'])"
           label="操作"
           width="200"
-          fixed="right"
           align="center"
         >
           <template slot-scope="scope">

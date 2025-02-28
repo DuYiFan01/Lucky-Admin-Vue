@@ -64,7 +64,6 @@
         <el-table-column
           label="操作"
           width="200"
-          fixed="right"
           :header-align="tableConfig.headerAlign"
         >
           <template slot-scope="scope">

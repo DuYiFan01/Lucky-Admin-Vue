@@ -4,8 +4,10 @@
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Lucky-Admin-Vue</h1>
 <h4 align="center">基于SpringBoot3+Vue2前后端分离的快速开发后台的框架</h4>
 <p align="center">
-	<a href="https://gitee.com/xiaodu6/lucky-admin-vue/stargazers"><img src="https://gitee.com/xiaodu6/lucky-admin-vue/badge/star.svg?theme=dark"></a>
+<a href='https://gitee.com/xiaodu6/lucky-admin-vue/stargazers'><img src='https://gitee.com/xiaodu6/lucky-admin-vue/badge/star.svg?theme=dark' alt='star'></img></a>
+    <a href='https://gitee.com/xiaodu6/lucky-admin-vue/members'><img src='https://gitee.com/xiaodu6/lucky-admin-vue/badge/fork.svg?theme=dark' alt='fork'></img></a>
 </p>
+
 
 ## 项目介绍
 Lucky-Admin-Vue是一个基于SpringBoot3+Vue2前后端分离的快速开发后台的框架，采用前后端分离方式，集成了用户管理、菜单管理、角色管理、日志管理、操作日志、登录日志、代码生成、系统接口、在线用户、服务监控、缓存管理、文件上传、文件下载等功能模块。
