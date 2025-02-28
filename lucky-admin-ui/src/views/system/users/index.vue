@@ -82,8 +82,8 @@
           width="200"
         >
           <template slot-scope="scope">
-            <el-button  v-permission="['system::users::auth']" :size="toolBar.size" :type="toolBar.insertType" :icon="toolBar.insertIcon" @click="handleAddRoles(scope.row)">分配角色</el-button>
-            <el-button  v-permission="['system::users::update']" :size="toolBar.size" :type="toolBar.updateType" :icon="toolBar.updateIcon" @click="handleEdit(scope.row)">编辑</el-button>
+            <el-button v-permission="['system::users::auth']" :size="toolBar.size" :type="toolBar.insertType" :icon="toolBar.insertIcon" @click="handleAddRoles(scope.row)">分配角色</el-button>
+            <el-button v-permission="['system::users::update']" :size="toolBar.size" :type="toolBar.updateType" :icon="toolBar.updateIcon" @click="handleEdit(scope.row)">编辑</el-button>
             <el-button v-permission="['system::users::delete']" :size="toolBar.size" :type="toolBar.deleteType" :icon="toolBar.deleteIcon" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>

@@ -1,6 +1,7 @@
 package cn.anlucky.luckyadmin.system.enums;
 
 
+import com.baomidou.mybatisplus.annotation.IEnum;
 import lombok.*;
 
 import java.util.Arrays;
@@ -13,8 +14,9 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public enum FileBusinessType {
-    USER_AVATAR("USER_AVATAR", "用户头像");
+public enum FileBusinessType{
+    USER_AVATAR("USER_AVATAR", "用户头像"),
+    File_UPLOAD("FILE_UPLOAD", "文件上传");
 
     /**
      * 业务类型

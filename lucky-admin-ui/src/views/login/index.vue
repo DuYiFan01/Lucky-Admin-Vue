@@ -23,7 +23,7 @@
           <svg-icon slot="prefix" icon-class="password" class="el-input__icon input-icon" />
         </el-input>
       </el-form-item>
-      <el-form-item prop="code" v-if="captchaEnabled">
+      <el-form-item v-if="captchaEnabled" prop="code">
         <el-input
           v-model="loginForm.code"
           auto-complete="off"
@@ -34,7 +34,7 @@
           <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
         </el-input>
         <div class="login-code">
-          <img :src="codeUrl" @click="getCode" class="login-code-img"/>
+          <img :src="codeUrl" class="login-code-img" @click="getCode">
         </div>
       </el-form-item>
 
