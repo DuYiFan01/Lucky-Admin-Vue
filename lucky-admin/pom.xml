@@ -91,6 +91,12 @@
             <artifactId>mybatis-plus-generator</artifactId>
             <version>${mybatis-plus.version}</version>
         </dependency>
+        <!--MyBatisPlus 插件-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
         <!-- 代码生成器模板 -->
         <dependency>
             <groupId>org.apache.velocity</groupId>
