@@ -86,7 +86,7 @@ public class SysFilesController extends BaseController {
      */
     @Operation(summary = "上传文件")
     @SaCheckPermission("system::files::insert")
-    @Log(title = "", businessType = BusinessType.INSERT)
+    @Log(title = "新增文件", businessType = BusinessType.INSERT)
     @PostMapping("/save")
     public R save(@RequestParam("files") MultipartFile[] files) {
         List<SysFiles> sysFiles = sysFilesService.uploadFiles(files, FileBusinessType.File_UPLOAD);
