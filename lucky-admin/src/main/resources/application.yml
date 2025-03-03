@@ -7,9 +7,9 @@ spring:
     multipart:
       enabled: true
       # 设置单个文件的最大大小
-      max-file-size: 200MB
+      max-file-size: 10MB
       # 设置请求中所有文件的最大总大小
-      max-request-size: 200MB
+      max-request-size: 10MB
 server:
   port: 8080
   servlet:
@@ -58,9 +58,9 @@ lucky:
     # 文件上传路径
     profile: D:/lucky-admin/file/
     # 文件最大大小 MB
-    file-max-size: 50
+    file-max-size: 10
     # 文件名最大长度 名字最大长度
-    fileNameMaxLength: 200
+    fileNameMaxLength: 100
     # 七牛存储Ak
     qiniu-ak:
     # 七牛存储Sk

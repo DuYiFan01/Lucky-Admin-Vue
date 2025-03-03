@@ -128,7 +128,10 @@ INSERT INTO `sys_menus` VALUES (39, '代码生成', 'gen', 38, 1, '/tools/gen', 
 INSERT INTO `sys_menus` VALUES (40, '系统接口', 'swagger', 38, 2, '/tools/swagger', '/tools/swagger/index', '', 0, 'C', 1, '', 'swagger', CURRENT_TIMESTAMP, 'system',CURRENT_TIMESTAMP, 'system', '');
 INSERT INTO `sys_menus` VALUES (41, '查询预览下载', '', 39, 1, '', '', '', 0, 'F', 1, 'tools::gen::query', '', CURRENT_TIMESTAMP, 'system',CURRENT_TIMESTAMP, 'system', '');
 INSERT INTO `sys_menus` VALUES (42, '查询接口', '', 40, 1, '', '', '', 0, 'F', 1, 'tools::swagger::query', '', CURRENT_TIMESTAMP, 'system',CURRENT_TIMESTAMP, 'system', '');
-
+INSERT INTO `sys_menus` VALUES (43, '文件管理', 'files', 1, 4, '/system/files', '/system/files', '', 0, 'C', 1, '', 'upload', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system', '');
+INSERT INTO `sys_menus` VALUES (44, '文件查询', '', 43, 1, '', '', '', 0, 'F', 1, 'system::files::query', '', CURRENT_TIMESTAMP, 'system',CURRENT_TIMESTAMP, 'system', '');
+INSERT INTO .`sys_menus`VALUES (45, '文件新增', '', 43, 2, '', '', '', 0, 'F', 1, 'system::files::insert', '', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system', '');
+INSERT INTO `sys_menus` VALUES (46, '文件删除', '', 43, 3, '', '', '', 0, 'F', 1, 'system::files::delete', '', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system', '');
 
 
 -- 创建角色菜单关联表
@@ -181,6 +184,10 @@ INSERT INTO `sys_roles_menus` VALUES (1, 39);
 INSERT INTO `sys_roles_menus` VALUES (1, 40);
 INSERT INTO `sys_roles_menus` VALUES (1, 41);
 INSERT INTO `sys_roles_menus` VALUES (1, 42);
+INSERT INTO `sys_roles_menus` VALUES (1, 43);
+INSERT INTO `sys_roles_menus` VALUES (1, 44);
+INSERT INTO `sys_roles_menus` VALUES (1, 45);
+INSERT INTO `sys_roles_menus` VALUES (1, 46);
 INSERT INTO `sys_roles_menus` VALUES (2, 1);
 INSERT INTO `sys_roles_menus` VALUES (2, 2);
 INSERT INTO `sys_roles_menus` VALUES (2, 3);
