@@ -177,7 +177,6 @@ public class UserLoginController {
             throw new RuntimeException("上传文件不能为空");
         }
         SysFiles sysFiles = userLoginService.uploadUserAvatar(file);
-
         return R.ok("上传成功",sysFiles.getStoragePath());
     }
 

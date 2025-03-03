@@ -31,7 +31,7 @@
     </div>
     <!-- 操作按钮栏 -->
     <div v-permission="['system::files::query','system::files::insert','system::files::delete']" class="button-bar">
-      <el-button v-permission="['system::files::insert']" type="primary" icon="el-icon-circle-plus-outline" size="small" plain :loading="loading" @click="handleAdd"> 新增项目 </el-button>
+      <el-button v-permission="['system::files::insert']" type="primary" icon="el-icon-circle-plus-outline" size="small" plain :loading="loading" @click="handleAdd"> 上传文件 </el-button>
       <el-button v-permission="['system::files::delete']" type="danger" icon="el-icon-delete" size="small" plain :loading="loading" @click="handleRemove"> 批量删除 </el-button>
       <el-button v-permission="['system::files::query']" type="info" icon="el-icon-refresh-right" size="small" plain :loading="loading" @click="handleRefresh"> 刷新 </el-button>
     </div>
@@ -85,63 +85,37 @@
       :close-on-click-modal="false"
       center
     >
-      <el-form
-        ref="formRef"
-        :model="form"
-        :rules="rules"
-        label-width="100px"
-        label-position="center"
-      >
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="原始文件名" prop="originalName">
-              <el-input v-model="form.originalName" placeholder="请输入原始文件名" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="当前文件名" prop="fileName">
-              <el-input v-model="form.fileName" placeholder="请输入当前文件名" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="存储路径" prop="storagePath">
-              <el-input v-model="form.storagePath" placeholder="请输入存储路径" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="哈希值" prop="fileHash">
-              <el-input v-model="form.fileHash" placeholder="请输入哈希值" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="文件类型" prop="fileType">
-              <el-input v-model="form.fileType" placeholder="请输入文件类型" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="业务分类" prop="fileBusinessType">
-              <el-input v-model="form.fileBusinessType" placeholder="请输入业务分类" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" placeholder="请输入备注" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
+    <el-upload
+        ref="upload"
+        name="files"
+        :action=uploadUrl
+        :accept="accepts"
+        :file-list="fileList"
+        :limit="fileLimit"
+        :show-file-list='false'
+        :auto-upload='false'
+        :on-change="handleFileChange"
+        :on-error="handleUploadError"
+        :on-success="handleUploadSuccess"
+        :on-exceed="handleExceed"	
+        >
+        <el-button v-permission="['system::files::insert']" type="primary" icon="el-icon-circle-plus-outline" size="small" plain :loading="loading"> 上传文件 </el-button>
+      </el-upload>
+      <div class="table-bar">
+        <el-table
+          v-loading="loading"
+          :data="fileList"
+          max-height="560px"
+        >
+          <el-table-column type="index" width="50" label="序号" />
+          <el-table-column prop="name" label="文件名" :show-overflow-tooltip="showOverflowTooltip" />
+          <el-table-column prop="size" label="文件大小(MB)" :show-overflow-tooltip="showOverflowTooltip" >
+            <template slot-scope="scope">
+              {{ (scope.row.size/1024/1024).toFixed(2) }}
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -218,6 +192,14 @@ export default {
       },
       // 所有的文件业务类型
       fileBusinessTypes:[],
+      // 文件上传 URL
+      uploadUrl: process.env.VUE_APP_BASE_API + '/system/sysFiles/save',
+      // 文件上传限制类型
+      accepts:"",
+      // 文件列表
+      fileList:[],
+      // 限制文件上传个数
+      fileLimit:3,
     }
   },
   created() {
@@ -261,20 +243,19 @@ export default {
       // 新增 按钮被点击
       this.btnType = 'insert'
       this.dialogVisible = true
-      this.dialogTitle = '新增文件管理'
+      this.dialogTitle = '新增文件'
       this.handleResetForm()
     },
     handleEdit(row) {
-      // 编辑 按钮被点击
-      // this.btnType = 'update'
-      // this.dialogVisible = true
-      // this.dialogTitle = '修改文件管理'
-      // this.form = { ...row }
+      // 文件预览下载
+      let url = ''
       if(isHttp(row.storagePath)){
-        window.open(row.storagePath)
+        url = row.storagePath
       }else{
-        window.open(process.env.VUE_APP_BASE_API +row.storagePath)
+        url = process.env.VUE_APP_BASE_API + row.storagePath
       }
+      window.open(url)
+
     },
     handleDelete(row) {
       // 删除 按钮被点击
@@ -285,7 +266,7 @@ export default {
       }).then(() => {
         // 删除
         this.loading = true
-        deleteByIds(row.id).then(res => {
+        deleteByIds(row.fileId).then(res => {
           this.loading = false
           this.$message.success('删除成功')
           this.handleSearch()
@@ -318,33 +299,32 @@ export default {
         })
       })
     },
+    handleFileChange(file,fileList){
+      console.log('fileList',this.fileList)
+      console.log('file',file)
+      this.fileList = fileList;
+    },
+    handleUploadError(err, file, fileList) {
+      console.error('上传失败:', err);
+      this.$message.error(`上传失败: ${err.message || '服务器异常'}`);
+      this.dialogVisible = false
+      this.handleInit()
+    },
+    handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 ${this.fileLimit} 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      },
+    // 成功处理
+   handleUploadSuccess(res, file, fileList) {
+      if(res.code === '-1'){
+        this.handleUploadError(res,file,fileList)
+      }else{
+        this.$message.success('上传成功');
+        this.dialogVisible = false
+        this.handleInit()
+      }
+    },
     submitForm() {
-      // 表单提交
-      this.$refs.formRef.validate((valid) => {
-        if (valid) {
-        // 新增菜单
-          if (this.btnType === 'insert') {
-            this.loading = true
-            save(this.form).then(res => {
-              this.$message.success('新增成功')
-              this.loading = false
-              this.dialogVisible = false
-              this.handleSearch()
-            }).catch(() => {
-              this.loading = false
-            })
-          } else if (this.btnType === 'update') {
-            updateById(this.form).then(res => {
-              this.$message.success('修改成功')
-              this.loading = false
-              this.dialogVisible = false
-              this.handleSearch()
-            }).catch(() => {
-              this.loading = false
-            })
-          }
-        }
-      })
+      this.$refs.upload.submit();
     },
     handleSizeChange(newSize) {
       this.pageSize = newSize
@@ -358,7 +338,7 @@ export default {
     },
     handleSelectionChange(selection) {
       // 表格复选框被勾选
-      this.selectedIds = selection.map(obj => obj.id)
+      this.selectedIds = selection.map(obj => obj.fileId)
     },
     handleRefresh() {
       // 刷新 按钮被点击\
@@ -366,7 +346,7 @@ export default {
     },
     handleResetForm() {
       // 表单重置
-      this.form = { ...this.resetForm }
+      this.fileList = []
     }
   }
 }

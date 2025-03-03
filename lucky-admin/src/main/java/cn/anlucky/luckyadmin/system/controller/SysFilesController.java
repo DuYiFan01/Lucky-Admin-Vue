@@ -2,6 +2,7 @@ package cn.anlucky.luckyadmin.system.controller;
 
 import cn.anlucky.luckyadmin.exception.CustomException;
 import cn.anlucky.luckyadmin.system.enums.BusinessType;
+import cn.anlucky.luckyadmin.system.enums.FileBusinessType;
 import cn.anlucky.luckyadmin.system.pojo.SysFiles;
 import cn.anlucky.luckyadmin.system.service.SysFilesService;
 import cn.anlucky.luckyadmin.utils.page.vo.PageDataVo;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import cn.anlucky.luckyadmin.system.annotation.Log;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 控制器
@@ -82,16 +84,13 @@ public class SysFilesController extends BaseController {
      * @param sysFiles
      * @return 添加成功
      */
-    @Operation(summary = "新增SysFiles信息")
+    @Operation(summary = "上传文件")
     @SaCheckPermission("system::files::insert")
     @Log(title = "", businessType = BusinessType.INSERT)
     @PostMapping("/save")
-    public R save(@RequestBody SysFiles sysFiles) {
-        if (sysFilesService.getById(sysFiles.getFileId()) != null) {
-            throw new CustomException("ID已存在");
-        }
-        sysFilesService.save(sysFiles);
-        return R.ok("添加成功");
+    public R save(@RequestParam("files") MultipartFile[] files) {
+        List<SysFiles> sysFiles = sysFilesService.uploadFiles(files, FileBusinessType.File_UPLOAD);
+        return R.ok("添加成功",sysFiles);
     }
 
     /**
@@ -104,11 +103,11 @@ public class SysFilesController extends BaseController {
     @SaCheckPermission("system::files::delete")
     @Log(title = "删除文件", businessType = BusinessType.DELETE)
     @GetMapping("/delete/{ids}")
-    public R deleteByIds(@PathVariable(name = "ids") Serializable[] ids) {
+    public R deleteByIds(@PathVariable(name = "ids") Long[] ids) {
         if (ids.length <= 0) {
             throw new CustomException("请选择要删除的数据");
         }
-        sysFilesService.removeBatchByIds(Arrays.asList(ids));
+        sysFilesService.removeBatch(Arrays.asList(ids));
         return R.ok("删除成功");
     }
 

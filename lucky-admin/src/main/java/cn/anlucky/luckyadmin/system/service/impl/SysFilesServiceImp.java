@@ -1,6 +1,8 @@
 package cn.anlucky.luckyadmin.system.service.impl;
 
+import cn.anlucky.luckyadmin.config.LuckyConfig;
 import cn.anlucky.luckyadmin.exception.CustomException;
+import cn.anlucky.luckyadmin.system.constant.Constants;
 import cn.anlucky.luckyadmin.system.enums.FileBusinessType;
 import cn.anlucky.luckyadmin.system.pojo.SysBusinessFiles;
 import cn.anlucky.luckyadmin.system.pojo.SysFiles;
@@ -15,12 +17,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import cn.anlucky.luckyadmin.utils.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 服务实现类
@@ -91,6 +97,25 @@ public class SysFilesServiceImp extends ServiceImpl<SysFilesMapper, SysFiles> im
     }
 
     /**
+     * 批量上传文件
+     * @param files
+     * @param fileBusinessType
+     * @return
+     */
+    @Override
+    public List<SysFiles> uploadFiles(MultipartFile[] files, FileBusinessType fileBusinessType) {
+        if (files.length <= 0){
+            throw new CustomException("请选择要上传的文件");
+        }
+        List<SysFiles> list = new ArrayList<>();
+        for (int i = 0; i < files.length; i++) {
+            SysFiles sysFiles = uploadFile(files[i], fileBusinessType);
+            list.add(sysFiles);
+        }
+        return list;
+    }
+
+    /**
      * 根据业务类型和文件业务id获取文件绝对路径
      *
      * @param businessId
@@ -116,4 +141,18 @@ public class SysFilesServiceImp extends ServiceImpl<SysFilesMapper, SysFiles> im
         return this.baseMapper.getFileAbsPathById(fileBusinessId);
     }
 
+    /**
+     * 批量删除文件
+     * @param fileIdS
+     */
+    @Transactional
+    @Override
+    public void removeBatch(List<Long> fileIdS) {
+        // 删除文件并没有将文件真正的删除，而是将文件替换了位置，如果是本地存储的话
+        LambdaQueryWrapper<SysFiles> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(SysFiles::getFileId, fileIdS);
+        List<SysFiles> list = this.list(wrapper);
+        list.forEach(sysFiles -> { FileUploadUtils.removeFile(sysFiles);});
+        this.removeByIds(fileIdS);
+    }
 }

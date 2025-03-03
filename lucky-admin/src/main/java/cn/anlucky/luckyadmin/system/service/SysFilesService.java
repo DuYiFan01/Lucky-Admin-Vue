@@ -4,7 +4,9 @@ import cn.anlucky.luckyadmin.system.enums.FileBusinessType;
 import cn.anlucky.luckyadmin.system.pojo.SysFiles;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +42,15 @@ public interface SysFilesService extends IService<SysFiles> {
     public SysFiles uploadFile(MultipartFile file, FileBusinessType fileBusinessType);
 
     /**
+     * 批量上传文件
+     * @param files
+     * @param fileBusinessType
+     * @return
+     */
+    public List<SysFiles> uploadFiles(MultipartFile[] files, FileBusinessType fileBusinessType);
+
+
+    /**
      * 根据业务类型和文件业务id获取文件绝对路径
      * @param businessId
      * @param fileBusinessType
@@ -53,6 +64,12 @@ public interface SysFilesService extends IService<SysFiles> {
      * @return 文件绝对路径
      */
     public String getFileAbsPath(Long fileBusinessId);
+
+    /**
+     * 批量删除文件
+     * @param fileIdS
+     */
+    public void removeBatch(List<Long> fileIdS);
 
 
 

@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
@@ -17,6 +18,15 @@ import java.nio.file.Paths;
  */
 public class FileUploadUtils {
 
+    /**
+     * 是否是删除文件 否则 将文件移入到回收站文件夹
+     */
+    private static final boolean isDeleteFile = false;
+
+    /**
+     * 被删除的文件夹
+     */
+    private static final String deleteFilesDir = "/deleteFiles";
 
     /**
      * 文件上传
@@ -66,6 +76,61 @@ public class FileUploadUtils {
         sysFiles.setFileSize(file.getSize());
         return sysFiles;
     }
+
+    /**
+     * 删除文件
+     * @param sysFiles
+     */
+    public static final void removeFile(SysFiles sysFiles){
+        // 删除文件或移动文件
+        if (isDeleteFile){
+            // 删除文件
+            deleteFile(sysFiles);
+        }else {
+            // 移动文件
+            moveFile(sysFiles);
+        }
+    }
+
+    /**
+     * 删除文件
+     * @param sysFiles
+     */
+    private static void deleteFile(SysFiles sysFiles){
+        if (Constants.FILE_LOCATION_LOCAL.equalsIgnoreCase(LuckyConfig.getFileLocation())){
+            // 本地文件删除
+            try {
+                Files.delete(Paths.get(LuckyConfig.getProfile() + "/" +sysFiles.getFileName()));
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new CustomException("Funcation FileUploadUtils.deleteFile() Error,Message:" + e.getMessage());
+            }
+        } else if (Constants.FILE_LOCATION_QINIU.equalsIgnoreCase(LuckyConfig.getFileLocation())) {
+            // 七牛文件删除
+        }
+    }
+
+    /**
+     * 移动文件
+     * @param sysFiles
+     */
+    private static void moveFile(SysFiles sysFiles){
+        if (Constants.FILE_LOCATION_LOCAL.equalsIgnoreCase(LuckyConfig.getFileLocation())){
+            // 本地文件移动
+            // 获取文件完整存储路径
+            String absolutePath = getAbsoluteFile(LuckyConfig.getProfile()+"/"+deleteFilesDir, sysFiles.getFileName()).getAbsolutePath();
+            try {
+                Files.move(Paths.get(LuckyConfig.getProfile() + "/" +sysFiles.getFileName()), Paths.get(absolutePath));
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new CustomException("Funcation FileUploadUtils.moveFile() Error,Message:" + e.getMessage());
+            }
+        } else if (Constants.FILE_LOCATION_QINIU.equalsIgnoreCase(LuckyConfig.getFileLocation())) {
+            // 七牛文件移动
+        }
+    }
+
+
 
 
     /**
