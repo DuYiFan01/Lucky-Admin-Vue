@@ -34,11 +34,73 @@ export default {
 <style lang="scss" scoped>
 .dashboard {
   &-container {
-    margin: 30px;
+    margin: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+
+    h1 {
+      font-size: 24px;
+      color: #606266;
+      margin-bottom: 20px;
+      text-align: center;
+    }
   }
   &-text {
-    font-size: 30px;
-    line-height: 46px;
+    font-size: 16px;
+    line-height: 2;
+    margin-bottom: 15px;
+    color: #303133;
+
+    .el-tag {
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dashboard {
+    &-container {
+      margin: 10px;
+      padding: 15px;
+
+      h1 {
+        font-size: 20px;
+        margin-bottom: 15px;
+      }
+    }
+    &-text {
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .dashboard {
+    &-container {
+      margin: 5px;
+      padding: 10px;
+
+      h1 {
+        font-size: 18px;
+        margin-bottom: 12px;
+      }
+    }
+    &-text {
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 10px;
+
+      .el-tag {
+        margin-right: 4px;
+        margin-bottom: 4px;
+        font-size: 12px;
+      }
+    }
   }
 }
 </style>

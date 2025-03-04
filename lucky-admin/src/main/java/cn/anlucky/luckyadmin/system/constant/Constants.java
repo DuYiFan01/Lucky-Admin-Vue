@@ -55,6 +55,11 @@ public class Constants {
     public final static String PARENT_VIEW = "ParentView";
 
     /**
+     * iframe
+     */
+    public static final String IFRAME = "Iframe";
+
+    /**
      * 菜单类型（目录）
      */
     public static final String TYPE_DIR = "M";

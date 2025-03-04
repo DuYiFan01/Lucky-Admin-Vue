@@ -1,0 +1,67 @@
+// 响应式断点
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1600px
+);
+
+// 栅格系统
+@mixin respond-above($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $min: map-get($breakpoints, $breakpoint);
+    @media (min-width: $min) {
+      @content;
+    }
+  }
+}
+
+.app-container {
+  padding: 20px;
+
+  .search-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+
+    .grid-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      > span {
+        white-space: nowrap;
+      }
+
+      .el-input, .el-select {
+        flex: 1;
+      }
+    }
+
+    @include respond-above(md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .button-bar {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .el-table {
+    @include respond-above(sm) {
+      min-width: 800px;
+    }
+  }
+
+  .el-dialog {
+    @include respond-above(sm) {
+      min-width: 40%;
+    }
+  }
+}

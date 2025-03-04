@@ -178,8 +178,10 @@ export default {
 .login-form {
   border-radius: 6px;
   background: #ffffff;
-  width: 400px;
+  width: 90%;
+  max-width: 400px;
   padding: 25px 25px 5px 25px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   .el-input {
     height: 38px;
     input {
@@ -220,5 +222,39 @@ export default {
 }
 .login-code-img {
   height: 38px;
+}
+
+@media screen and (max-width: 768px) {
+  .login-form {
+    width: 95%;
+    padding: 20px 15px 5px 15px;
+  }
+  .title {
+    font-size: 20px;
+    margin: 0px auto 20px auto;
+  }
+  .el-input {
+    height: 36px;
+    input {
+      height: 36px;
+    }
+  }
+  .login-code {
+    height: 36px;
+  }
+  .login-code-img {
+    height: 36px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .login-form {
+    width: 100%;
+    padding: 15px 10px 5px 10px;
+  }
+  .title {
+    font-size: 18px;
+    margin: 0px auto 15px auto;
+  }
 }
 </style>

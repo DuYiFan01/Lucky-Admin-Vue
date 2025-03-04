@@ -190,6 +190,10 @@ public class SysMenusServiceImp extends ServiceImpl<SysMenusMapper, SysMenus> im
         if (Constants.TYPE_MENU.equals(menu.getMenuType())){
             return menu.getComponent();
         }
+        if (Constants.TYPE_N_URL.equalsIgnoreCase(menu.getMenuType())){
+            // 如果是内链
+            return Constants.IFRAME;
+        }
         return Constants.LAYOUT;
     }
 

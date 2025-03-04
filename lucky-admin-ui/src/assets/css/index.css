@@ -4,6 +4,9 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .search-bar {
@@ -53,7 +56,7 @@
   flex-wrap: wrap;
 }
 
-.table-bar el-table {
+.table-bar .el-table {
   width: 100%;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
@@ -76,6 +79,13 @@
 
 /* 响应式布局 */
 @media (max-width: 768px) {
+  .app-container {
+    padding: 10px;
+    gap: 15px;
+  }
+  .search-bar {
+    padding: 15px;
+  }
   .search-bar {
     grid-template-columns: 1fr;
     /* 小屏幕下改为单列 */
@@ -103,6 +113,17 @@
   }
 }
 @media (max-width: 480px) {
+  .app-container {
+    padding: 8px;
+    gap: 10px;
+  }
+  .search-bar {
+    padding: 10px;
+  }
+  .grid-item span {
+    font-size: 14px;
+    min-width: 60px;
+  }
   .table-bar .el-table-column--selection .cell {
     padding-left: 5px !important;
     padding-right: 5px !important;

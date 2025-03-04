@@ -48,11 +48,11 @@ sa-token:
 # 项目设置
 lucky:
     # 验证码开关
-    captcha-enabled: true
+    captcha-enabled: false
     # 验证码类型 number-数字 text-字符 mixed-数字+字母 math-计算
     captcha-type: number
     # IP取位置是否开启
-    ip-location: true
+    ip-location: false
     # 文件存储位置 local-本地 qiniu-七牛
     file-location: local
     # 文件上传路径
