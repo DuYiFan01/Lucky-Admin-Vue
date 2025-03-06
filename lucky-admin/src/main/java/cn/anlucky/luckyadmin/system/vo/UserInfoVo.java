@@ -1,5 +1,6 @@
 package cn.anlucky.luckyadmin.system.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -41,6 +42,7 @@ public class UserInfoVo {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private LocalDateTime createTime;
     /**
      * 用户拥有的角色

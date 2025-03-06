@@ -39,7 +39,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                     SaRouter.match("/api-docs",r->StpUtil.checkPermission("tools::swagger::query"));
                 }))
                 .addPathPatterns("/**")
-                .excludePathPatterns( "/user/login","/user/register","/user/getCode");
+                .excludePathPatterns( "/user/login","/user/register","/user/getCode","/user/logout");
         // /user/register 注册地址
     }
     @Override

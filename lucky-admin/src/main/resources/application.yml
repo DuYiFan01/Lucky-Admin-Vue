@@ -67,3 +67,6 @@ lucky:
     qiniu-sk:
     # 七牛存储空间
     qiniu-bucket:
+wx:
+  appid:
+  secret:
