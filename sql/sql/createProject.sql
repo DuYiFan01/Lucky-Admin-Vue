@@ -130,7 +130,7 @@ INSERT INTO `sys_menus` VALUES (41, '查询预览下载', '', 39, 1, '', '', '',
 INSERT INTO `sys_menus` VALUES (42, '查询接口', '', 40, 1, '', '', '', 0, 'F', 1, 'tools::swagger::query', '', CURRENT_TIMESTAMP, 'system',CURRENT_TIMESTAMP, 'system', '');
 INSERT INTO `sys_menus` VALUES (43, '文件管理', 'files', 1, 4, '/system/files', '/system/files', '', 0, 'C', 1, '', 'upload', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system', '');
 INSERT INTO `sys_menus` VALUES (44, '文件查询', '', 43, 1, '', '', '', 0, 'F', 1, 'system::files::query', '', CURRENT_TIMESTAMP, 'system',CURRENT_TIMESTAMP, 'system', '');
-INSERT INTO .`sys_menus`VALUES (45, '文件新增', '', 43, 2, '', '', '', 0, 'F', 1, 'system::files::insert', '', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system', '');
+INSERT INTO `sys_menus`VALUES (45, '文件新增', '', 43, 2, '', '', '', 0, 'F', 1, 'system::files::insert', '', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system', '');
 INSERT INTO `sys_menus` VALUES (46, '文件删除', '', 43, 3, '', '', '', 0, 'F', 1, 'system::files::delete', '', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system', '');
 
 
