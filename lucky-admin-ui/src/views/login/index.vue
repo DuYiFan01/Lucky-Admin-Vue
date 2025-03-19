@@ -96,7 +96,7 @@ export default {
       loading: false, // 加载
       passwordType: 'password', // 密码输入框类型
       redirect: undefined,
-      captchaEnabled: true, // 是否需要验证码
+      captchaEnabled: false, // 是否需要验证码
       codeUrl: '' // 验证码图片地址
     }
   },
