@@ -48,7 +48,7 @@
         <el-table-column prop="originalName" label="原始文件名" :show-overflow-tooltip="showOverflowTooltip" />
         <el-table-column prop="fileName" label="当前文件名" :show-overflow-tooltip="showOverflowTooltip" />
         <el-table-column prop="fileType" label="文件类型" :show-overflow-tooltip="showOverflowTooltip" />
-        <el-table-column prop="fileBusinessType" label="业务分类" :show-overflow-tooltip="showOverflowTooltip" >
+        <el-table-column prop="fileBusinessType" label="业务分类" :show-overflow-tooltip="showOverflowTooltip">
           <template slot-scope="scope">
             {{ fileBusinessTypes[scope.row.fileBusinessType] }}
           </template>
@@ -85,20 +85,20 @@
       :close-on-click-modal="false"
       center
     >
-    <el-upload
+      <el-upload
         ref="upload"
         name="files"
-        :action=uploadUrl
+        :action="uploadUrl"
         :accept="accepts"
         :file-list="fileList"
         :limit="fileLimit"
-        :show-file-list='false'
-        :auto-upload='false'
+        :show-file-list="false"
+        :auto-upload="false"
         :on-change="handleFileChange"
         :on-error="handleUploadError"
         :on-success="handleUploadSuccess"
-        :on-exceed="handleExceed"	
-        >
+        :on-exceed="handleExceed"
+      >
         <el-button v-permission="['system::files::insert']" type="primary" icon="el-icon-circle-plus-outline" size="small" plain :loading="loading"> 上传文件 </el-button>
       </el-upload>
       <div class="table-bar">
@@ -109,7 +109,7 @@
         >
           <el-table-column type="index" width="50" label="序号" />
           <el-table-column prop="name" label="文件名" :show-overflow-tooltip="showOverflowTooltip" />
-          <el-table-column prop="size" label="文件大小(MB)" :show-overflow-tooltip="showOverflowTooltip" >
+          <el-table-column prop="size" label="文件大小(MB)" :show-overflow-tooltip="showOverflowTooltip">
             <template slot-scope="scope">
               {{ (scope.row.size/1024/1024).toFixed(2) }}
             </template>
@@ -125,8 +125,8 @@
 </template>
 
 <script>
-import { getFileBusinessType, pageByParams, save, updateById, deleteByIds } from '@/api/system/sysFiles'
-import {isHttp} from '@/utils/validate'
+import { getFileBusinessType, pageByParams, deleteByIds } from '@/api/system/sysFiles'
+import { isHttp } from '@/utils/validate'
 export default {
   data() {
     return {
@@ -191,15 +191,15 @@ export default {
         remark: [{ required: true, message: '备注不能为空', trigger: 'blur' }]
       },
       // 所有的文件业务类型
-      fileBusinessTypes:[],
+      fileBusinessTypes: [],
       // 文件上传 URL
       uploadUrl: process.env.VUE_APP_BASE_API + '/system/sysFiles/save',
       // 文件上传限制类型
-      accepts:"",
+      accepts: '',
       // 文件列表
-      fileList:[],
+      fileList: [],
       // 限制文件上传个数
-      fileLimit:3,
+      fileLimit: 3
     }
   },
   created() {
@@ -249,13 +249,12 @@ export default {
     handleEdit(row) {
       // 文件预览下载
       let url = ''
-      if(isHttp(row.storagePath)){
+      if (isHttp(row.storagePath)) {
         url = row.storagePath
-      }else{
+      } else {
         url = process.env.VUE_APP_BASE_API + row.storagePath
       }
       window.open(url)
-
     },
     handleDelete(row) {
       // 删除 按钮被点击
@@ -299,32 +298,32 @@ export default {
         })
       })
     },
-    handleFileChange(file,fileList){
-      console.log('fileList',this.fileList)
-      console.log('file',file)
-      this.fileList = fileList;
+    handleFileChange(file, fileList) {
+      console.log('fileList', this.fileList)
+      console.log('file', file)
+      this.fileList = fileList
     },
     handleUploadError(err, file, fileList) {
-      console.error('上传失败:', err);
-      this.$message.error(`上传失败: ${err.message || '服务器异常'}`);
+      console.error('上传失败:', err)
+      this.$message.error(`上传失败: ${err.message || '服务器异常'}`)
       this.dialogVisible = false
       this.handleInit()
     },
     handleExceed(files, fileList) {
-        this.$message.warning(`当前限制选择 ${this.fileLimit} 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-      },
+      this.$message.warning(`当前限制选择 ${this.fileLimit} 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
     // 成功处理
-   handleUploadSuccess(res, file, fileList) {
-      if(res.code === '-1'){
-        this.handleUploadError(res,file,fileList)
-      }else{
-        this.$message.success('上传成功');
+    handleUploadSuccess(res, file, fileList) {
+      if (res.code === '-1') {
+        this.handleUploadError(res, file, fileList)
+      } else {
+        this.$message.success('上传成功')
         this.dialogVisible = false
         this.handleInit()
       }
     },
     submitForm() {
-      this.$refs.upload.submit();
+      this.$refs.upload.submit()
     },
     handleSizeChange(newSize) {
       this.pageSize = newSize
