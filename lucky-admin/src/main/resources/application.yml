@@ -56,7 +56,7 @@ lucky:
     # 文件存储位置 local-本地 qiniu-七牛
     file-location: local
     # 文件上传路径
-    profile: D:/lucky-admin/file/
+    profile: D:/lucky-admin-vue-file/file/
     # 文件最大大小 MB
     file-max-size: 10
     # 文件名最大长度 名字最大长度

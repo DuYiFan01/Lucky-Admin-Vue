@@ -26,4 +26,4 @@ lucky:
   # IP取位置是否开启
   ip-location: true
   # 文件上传路径
-  profile: /opt/lucky-admin/file/
+  profile: /opt/lucky-admin-vue/file/
