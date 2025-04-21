@@ -199,11 +199,64 @@ public class SysRolesServiceImp extends ServiceImpl<SysRolesMapper, SysRoles> im
         if (sysRolesVo.getId() == null) {
             throw new CustomException("角色ID不能为空");
         }
+        // 取当前角色拥有的所有菜单Id
+        List<Long> hasMenusIds = this.getRolesVoById(sysRolesVo.getId()).getMenusIds();
+        hasMenusIds = new ArrayList<>(hasMenusIds);
+        // 取所有的APP菜单Id
+        List<Long> appMenusId = this.baseMapper.getAppMenusId();
+        // 合并，去重 获得当前拥有的APP菜单ID
+        hasMenusIds.retainAll(appMenusId);
 
         SysRoles sysRoles = new SysRoles();
         BeanUtils.copyProperties(sysRolesVo, sysRoles);
         // 删除角色菜单关系
         sysRolesMenusService.remove(new LambdaQueryWrapper<SysRolesMenus>().eq(SysRolesMenus::getRoleId, sysRolesVo.getId()));
+        // 合并拥有的APP菜单ID和修改后的菜单ID
+        hasMenusIds.addAll(sysRolesVo.getMenusIds());
+        sysRolesVo.setMenusIds(hasMenusIds);
+        List<SysRolesMenus> list = new ArrayList<>();
+        sysRolesVo.getMenusIds().forEach(menuId -> {
+            SysRolesMenus rolesMenus = new SysRolesMenus();
+            rolesMenus.setRoleId(sysRolesVo.getId());
+            rolesMenus.setMenuId(menuId);
+            list.add(rolesMenus);
+        });
+        // 修改角色信息
+        this.updateById(sysRoles);
+        // 保存角色菜单关系
+        sysRolesMenusService.saveBatch(list);
+        // 删除当前角色的权限缓存
+        SaTokenDaoUtils.deleteObjectKey(SaTokenDaoUtils.PERMISSIONS_CACHE + sysRolesVo.getId());
+        // 删除当前角色的路由
+        SaTokenDaoUtils.deleteObjectKey(SaTokenDaoUtils.ROUTER_CACHE + sysRolesVo.getId());
+    }
+
+    /**
+     * 修改App角色信息
+     *
+     * @param sysRolesVo
+     * @return
+     */
+    @Override
+    public void updateAppByIdRolesVo(SysRolesVo sysRolesVo) {
+        if (sysRolesVo.getId() == null) {
+            throw new CustomException("角色ID不能为空");
+        }
+        // 取当前角色拥有的所有菜单Id
+        List<Long> hasMenusIds = this.getRolesVoById(sysRolesVo.getId()).getMenusIds();
+        hasMenusIds = new ArrayList<>(hasMenusIds);
+        // 取所有的APP菜单Id
+        List<Long> webMenusId = this.baseMapper.getWebMenusId();
+        // 合并，去重 获得当前拥有的APP菜单ID
+        hasMenusIds.retainAll(webMenusId);
+
+        SysRoles sysRoles = new SysRoles();
+        BeanUtils.copyProperties(sysRolesVo, sysRoles);
+        // 删除角色菜单关系
+        sysRolesMenusService.remove(new LambdaQueryWrapper<SysRolesMenus>().eq(SysRolesMenus::getRoleId, sysRolesVo.getId()));
+        // 合并拥有的APP菜单ID和修改后的菜单ID
+        hasMenusIds.addAll(sysRolesVo.getMenusIds());
+        sysRolesVo.setMenusIds(hasMenusIds);
         List<SysRolesMenus> list = new ArrayList<>();
         sysRolesVo.getMenusIds().forEach(menuId -> {
             SysRolesMenus rolesMenus = new SysRolesMenus();

@@ -15,7 +15,7 @@ import '@/icons' // icon
 import '@/permission' // permission control
 import { resetUserInfo } from '@/api/user'
 import permission from './directive'
-import { handleTree, checkPermission } from './utils/lucky'
+import { handleTree, checkPermission, handleMenuTree } from './utils/lucky'
 /**
  * 如果你不想使用mock-server
  * 你想使用MockJs模拟api
@@ -33,6 +33,7 @@ Vue.use(ElementUI)
 Vue.use(permission)
 // 自定义函数
 Vue.prototype.handleTree = handleTree
+Vue.prototype.handleMenuTree = handleMenuTree
 Vue.prototype.checkPermission = checkPermission
 
 // 全局按钮样式 操作栏按钮

@@ -6,7 +6,6 @@ import cn.anlucky.luckyadmin.utils.StringUtils;
 /**
  * 字符串格式化
  *
- * @author ruoyi
  */
 public class StrFormatter
 {

@@ -51,6 +51,62 @@ export function handleTree(data, id, parentId, children) {
 }
 
 /**
+ * 树形数据转换
+ * @param {*} data
+ * @param {*} id
+ * @param {*} pid
+ * @param {*} children
+ * @param {*} isApp 是否为APP菜单，true为APP菜单(根节点parentId为-1)，false为PC端菜单(根节点parentId为0)
+ */
+export function handleMenuTree(data, isApp, id, parentId, children) {
+  const config = {
+    id: id || 'id',
+    parentId: parentId || 'parentId',
+    childrenList: children || 'children'
+  }
+
+  var childrenListMap = {}
+  var nodeIds = {}
+  var tree = []
+
+  for (const d of data) {
+    const parentId = d[config.parentId]
+    if (childrenListMap[parentId] == null) {
+      childrenListMap[parentId] = []
+    }
+    nodeIds[d[config.id]] = d
+    childrenListMap[parentId].push(d)
+  }
+
+  // 根据isApp参数确定根节点的parentId值
+  const rootParentId = isApp === true ? -1 : 0
+
+  for (const d of data) {
+    const parentId = d[config.parentId]
+    // 判断是否为根节点，根据isApp参数确定根节点条件
+    if (nodeIds[parentId] == null && parentId === rootParentId) {
+      tree.push(d)
+    }
+  }
+
+  for (const t of tree) {
+    adaptToChildrenList(t)
+  }
+
+  function adaptToChildrenList(o) {
+    if (childrenListMap[o[config.id]] !== null) {
+      o[config.childrenList] = childrenListMap[o[config.id]]
+    }
+    if (o[config.childrenList]) {
+      for (const c of o[config.childrenList]) {
+        adaptToChildrenList(c)
+      }
+    }
+  }
+  return tree
+}
+
+/**
  * 角色权限校验
  * @param {Array} value
  * @returns {Boolean}
@@ -77,19 +133,19 @@ export function checkPermission(value) {
 export function tansParams(params) {
   let result = ''
   for (const propName of Object.keys(params)) {
-    const value = params[propName];
-    var part = encodeURIComponent(propName) + "=";
-    if (value !== null && value !== "" && typeof (value) !== "undefined") {
+    const value = params[propName]
+    var part = encodeURIComponent(propName) + '='
+    if (value !== null && value !== '' && typeof (value) !== 'undefined') {
       if (typeof value === 'object') {
         for (const key of Object.keys(value)) {
-          if (value[key] !== null && value[key] !== "" && typeof (value[key]) !== 'undefined') {
-            let params = propName + '[' + key + ']';
-            var subPart = encodeURIComponent(params) + "=";
-            result += subPart + encodeURIComponent(value[key]) + "&";
+          if (value[key] !== null && value[key] !== '' && typeof (value[key]) !== 'undefined') {
+            const params = propName + '[' + key + ']'
+            var subPart = encodeURIComponent(params) + '='
+            result += subPart + encodeURIComponent(value[key]) + '&'
           }
         }
       } else {
-        result += part + encodeURIComponent(value) + "&";
+        result += part + encodeURIComponent(value) + '&'
       }
     }
   }

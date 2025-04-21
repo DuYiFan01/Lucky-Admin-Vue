@@ -111,6 +111,21 @@ public class SysRolesController extends BaseController {
     }
 
     /**
+     * 根据ID修改角色信息信息
+     *
+     * @param sysRolesVo 角色信息
+     * @return 修改成功
+     */
+    @Operation(summary = "修改SysRoles信息")
+    @SaCheckPermission("system::roles::update")
+    @Log(title = "角色信息", businessType = BusinessType.UPDATE)
+    @PostMapping("/updateAppById")
+    public R updateAppById(@RequestBody SysRolesVo sysRolesVo) {
+        sysRolesService.updateAppByIdRolesVo(sysRolesVo);
+        return R.ok("修改成功");
+    }
+
+    /**
      * 批量删除和删除角色信息信息
      *
      * @param ids 主键ID数组

@@ -86,6 +86,11 @@ main
 4. 集成定时任务系统
 5. 微信小程序开发
 
+## 配置移动端
+1. 执行完 /sql/createProject.sql 文件的基础上，执行文件 /sql/createApp.sql 文件
+2. 打开 PC-Web端，查看菜单中是否包含对应的APP管理菜单和APP角色菜单
+3. APP管理-> APP菜单-> 添加菜单
+
 ## 项目截图
 ![img.png](img.png)
 ![img_1.png](img_1.png)
@@ -155,8 +160,6 @@ cn/anlucky/luckyadmin/utils/file/FileUploadUtils.java
 
 当然，我们也提供了物理删除的方式，查询代码修改配置即可实现自动切换移动和物理删除方式
 
-
-
 ### 自定义全局工具类
 src/main/java/cn/anlucky/luckyadmin/config/LuckyConfig.java 全局配置类
 
@@ -166,3 +169,32 @@ src/main/java/cn/anlucky/luckyadmin/config/LuckyConfig.java 全局配置类
 3. 添加组件注解，将bean对象交给Sping IOC进行管理自动注入
 4. 添加对应属性，添加属性时，请按照驼峰命名法
 5. 创建对应的Set方法(注意，使用Static修饰的属性无法被自动注入，框架采用使用私有set方式注入，并赋值的方式，参考LuckyConfig进行自定义)
+
+### APP端动态菜单
+APP端实现了动态菜单，但路由菜单是被page.json管理的
+所以添加APP菜单时，路由信息因为：page.json当中的path对应的值，若要修改，请修改page.json当中的Path并修改菜单路由信息
+
+### APP端菜单添加
+移动端动态菜单添加时，只允许一级目录，目录下菜单，菜单下按钮，不允许出现多级，否则可能会出现不可预估的错误BUG，若有对应的多级目录需求，请联系作者
+
+移动端菜单和PC端菜单是在同一张表当中，前端当中增加的HandleMenuTree函数进行格式化对应的数据为Tree,详情可以去了解/utils/lucky.js 工具类中的 handleMenuTree 方法
+
+移动端菜单和PC端菜单是在同一张表当中，移动端的APP菜单的根父路径ID为 -1 (parent_id = -1)
+### APP端角色修改
+APP端角色修改时，采用了同一个角色列表，但是在不同的页面当中配置不同的角色权限
+详细为：
+在APP角色页面当中，**列表编辑** 按钮点击后，弹出来的菜单配置为移动端的菜单配置
+在PC角色管理页面当中 **列表编辑** 按钮点击后，弹出来的菜单配置为PC端的菜单配置
+因他俩是同一个角色，只是在不同的页面当中查询了不同的菜单，所以对应用户分配角色时，他也会拥有对应的PC端的角色(因为是同一个角色，若PC没有菜单权限则就没有对应的权限)
+
+### 前端代码格式修复
+所有的配置文件都在 .eslintrc.js 中。 本项目基本规范是依托于 vue 官方的 eslint 规则 eslint-config-vue 做了少许的修改。大家可以按照自己的需求进行定制化配置。
+
+执行下方代码，会自动修复一些简单的代码格式
+```
+npm run lint -- --fix
+
+```
+### 取消ESLINT检查
+如果你不想使用 ESLint 校验（不推荐取消），只要找到 vue.config.js 文件。 进行如下设置 lintOnSave: false 即可。
+

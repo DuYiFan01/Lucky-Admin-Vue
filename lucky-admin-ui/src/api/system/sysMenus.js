@@ -14,6 +14,18 @@ export function list(data) {
     data
   })
 }
+/**
+ * 查询所有App菜单
+ * @param {*} data title 菜单名称
+ * @returns
+ */
+export function listApp(data) {
+  return request({
+    url: apiPath + '/listApp',
+    method: 'post',
+    data
+  })
+}
 
 /**
  * 添加菜单

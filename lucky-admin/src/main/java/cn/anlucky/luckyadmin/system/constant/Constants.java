@@ -4,7 +4,6 @@ package cn.anlucky.luckyadmin.system.constant;
 /**
  * 通用常量信息
  *
- * @author ruoyi
  */
 public class Constants {
     /**
@@ -108,4 +107,8 @@ public class Constants {
      */
     public static final String FILE_LOCATION_QINIU = "QINIU";
 
+    /**
+     * APP菜单父级ID
+     */
+    public static final Long MENU_APP = -1L;
 }

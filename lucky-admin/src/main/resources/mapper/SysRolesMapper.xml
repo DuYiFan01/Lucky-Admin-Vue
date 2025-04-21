@@ -48,4 +48,35 @@
           AND rm.role_id = #{roleId}
     </select>
 
+    <select id="getWebMenusId" resultType="java.lang.Long">
+        WITH RECURSIVE menu_tree AS (
+            -- 初始查询，找出 parent_id 为 -1 的菜单
+            SELECT id, parent_id
+            FROM sys_menus
+            WHERE parent_id = 0
+            UNION ALL
+            -- 递归查询，找出子菜单
+            SELECT sm.id, sm.parent_id
+            FROM sys_menus sm
+                     JOIN menu_tree mt ON sm.parent_id = mt.id
+        )
+        SELECT id
+        FROM menu_tree;
+    </select>
+    <select id="getAppMenusId" resultType="java.lang.Long">
+        WITH RECURSIVE menu_tree AS (
+            -- 初始查询，找出 parent_id 为 -1 的菜单
+            SELECT id, parent_id
+            FROM sys_menus
+            WHERE parent_id = -1
+            UNION ALL
+            -- 递归查询，找出子菜单
+            SELECT sm.id, sm.parent_id
+            FROM sys_menus sm
+            JOIN menu_tree mt ON sm.parent_id = mt.id
+        )
+        SELECT id
+        FROM menu_tree;
+    </select>
+
 </mapper>

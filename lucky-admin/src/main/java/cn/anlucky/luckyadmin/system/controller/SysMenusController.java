@@ -16,8 +16,10 @@ import lombok.RequiredArgsConstructor;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+
 import cn.anlucky.luckyadmin.system.annotation.Log;
-    /**
+
+/**
  * 菜单信息控制器
  *
  * @author yifan.du
@@ -32,10 +34,11 @@ public class SysMenusController extends BaseController {
     private final SysMenusService sysMenusService;
 
     /**
-    * 指定ID查询 菜单信息信息
-    * @param id 主键ID
-    * @return SysMenus
-    */
+     * 指定ID查询 菜单信息信息
+     *
+     * @param id 主键ID
+     * @return SysMenus
+     */
     @Operation(summary = "id查询一个SysMenus")
     @SaCheckPermission("system::menus::query")
     @GetMapping("/get/{id}")
@@ -46,6 +49,7 @@ public class SysMenusController extends BaseController {
 
     /**
      * 查询所有菜单信息信息
+     *
      * @return List<SysMenus>
      */
     @Operation(summary = "查询所有SysMenus信息")
@@ -58,6 +62,7 @@ public class SysMenusController extends BaseController {
 
     /**
      * 条件分页查询菜单信息信息
+     *
      * @param sysMenus 菜单信息
      * @return List<SysMenus>
      */
@@ -73,6 +78,7 @@ public class SysMenusController extends BaseController {
 
     /**
      * 新增菜单信息信息
+     *
      * @param sysMenus 菜单信息
      * @return 添加成功
      */
@@ -81,14 +87,16 @@ public class SysMenusController extends BaseController {
     @Log(title = "菜单信息", businessType = BusinessType.INSERT)
     @PostMapping("/save")
     public R save(@RequestBody SysMenus sysMenus) {
-        if(sysMenusService.getById(sysMenus.getId())!=null){
+        if (sysMenusService.getById(sysMenus.getId()) != null) {
             throw new CustomException("ID已存在");
         }
         sysMenusService.save(sysMenus);
         return R.ok("添加成功");
     }
+
     /**
      * 根据ID修改菜单信息信息
+     *
      * @param sysMenus 菜单信息
      * @return 修改成功
      */
@@ -102,16 +110,17 @@ public class SysMenusController extends BaseController {
     }
 
     /**
-    * 批量删除和删除菜单信息信息
-    * @param ids 主键ID数组
-    * @return 删除成功
-    */
+     * 批量删除和删除菜单信息信息
+     *
+     * @param ids 主键ID数组
+     * @return 删除成功
+     */
     @Operation(summary = "批量删除和删除SysMenus信息")
     @SaCheckPermission("system::menus::delete")
     @Log(title = "菜单信息", businessType = BusinessType.DELETE)
     @GetMapping("/delete/{ids}")
     public R deleteByIds(@PathVariable(name = "ids") Serializable[] ids) {
-        if (ids.length <= 0){
+        if (ids.length <= 0) {
             throw new CustomException("请选择要删除的数据");
         }
         sysMenusService.removeBatchByIds(Arrays.asList(ids));

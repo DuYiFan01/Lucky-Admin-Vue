@@ -66,6 +66,19 @@ export function updateById(data) {
 }
 
 /**
+ * 修改App角色
+ * @param {*} data
+ * @returns
+ */
+export function updateAppById(data) {
+  return request({
+    url: apiPath + '/updateAppById',
+    method: 'post',
+    data
+  })
+}
+
+/**
  * 删除
  * @param {*} ids
  * @returns

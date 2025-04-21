@@ -153,7 +153,7 @@
 
 <script>
 import { list } from '@/api/system/sysMenus'
-import { getById, pageByParams, save, updateById, deleteByIds } from '@/api/system/sysRoles'
+import { getById, pageByParams, save, updateAppById, deleteByIds } from '@/api/system/sysRoles'
 import { getAuthRole, saveAuthRole } from '@/api/user'
 
 export default {
@@ -351,7 +351,7 @@ export default {
               this.loading = false
             })
           } else if (this.btnType === 'update') {
-            updateById(this.form).then(res => {
+            updateAppById(this.form).then(res => {
               this.$message.success('修改成功')
               this.loading = false
               this.dialogVisible = false
@@ -412,7 +412,7 @@ export default {
       list({}).then(res => {
         const { data } = res
         this.menusTree = data
-        this.formartMenusTree = this.handleMenuTree(data, false)
+        this.formartMenusTree = this.handleMenuTree(data, true)
       })
     },
     selectTreeNode(ids) {

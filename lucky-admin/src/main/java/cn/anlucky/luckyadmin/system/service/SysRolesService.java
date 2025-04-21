@@ -80,6 +80,14 @@ public interface SysRolesService extends IService<SysRoles> {
     public void updateByIdRolesVo(SysRolesVo sysRolesVo);
 
     /**
+     * 修改App角色信息
+     *
+     * @param sysRolesVo
+     * @return
+     */
+    public void updateAppByIdRolesVo(SysRolesVo sysRolesVo);
+
+    /**
      * 删除角色信息
      * @param ids
      */

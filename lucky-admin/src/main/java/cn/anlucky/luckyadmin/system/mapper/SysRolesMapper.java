@@ -25,9 +25,21 @@ public interface SysRolesMapper extends BaseMapper<SysRoles> {
 
     /**
      * 根据用户ID查询权限信息
-     * @param userId
+     * @param roleId
      * @return
      */
     public List<String> getPermissionByRoleIds(Long roleId);
+
+    /**
+     * 获取所有Web菜单ID
+     * @return
+     */
+    public List<Long> getWebMenusId();
+
+    /**
+     * 获取所有App菜单ID
+     * @return
+     */
+    public List<Long> getAppMenusId();
 
 }
