@@ -26,7 +26,9 @@ Lucky-Admin-Vue是一个基于SpringBoot3+Vue2前后端分离的快速开发后�
     > lucku-admin         ## 后端项目
     > lucku-admin-vue     ## 前端项目
 ```
-
+## 初始密码
+ 系统搭建完毕 管理员账号为 admin，密码为 1111111 
+ 用户管理页面中 新增用户的密码为 1234567
 ## 后端目录结构
 ```
 main
