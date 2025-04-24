@@ -32,6 +32,14 @@ public interface SysMenusService extends IService<SysMenus> {
     public List<RouterVo> getRouters(List<Long> roleIds);
 
     /**
+     * 根据角色id获取App路由信息
+     *
+     * @param roleIds
+     * @return
+     */
+    public List<RouterVo> getAppRouters(List<Long> roleIds);
+
+    /**
      * 获取所有菜单
      *
      * @param sysMenus

@@ -15,6 +15,7 @@ public interface UserLoginService {
 
     /**
      * 用户登录
+     *
      * @param userLoginVo 用户登录信息
      * @return 用户信息
      */
@@ -22,6 +23,7 @@ public interface UserLoginService {
 
     /**
      * 用户注册
+     *
      * @param sysUser 用户登录信息
      * @return 用户信息
      */
@@ -29,6 +31,7 @@ public interface UserLoginService {
 
     /**
      * 获取指定Token的信息
+     *
      * @param token 登录的Token
      * @return UserInfoVo 用户信息
      */
@@ -36,12 +39,14 @@ public interface UserLoginService {
 
     /**
      * 获取当前登录用户的信息
+     *
      * @return UserInfoVo 用户信息
      */
     public UserInfoVo getUserInfo();
 
     /**
      * 更新用户信息
+     *
      * @param sysUsers 用户信息
      * @return SysUsers
      */
@@ -49,6 +54,7 @@ public interface UserLoginService {
 
     /**
      * 更新用户密码
+     *
      * @param passwordUpdateVo 用户信息
      * @return SysUsers
      */
@@ -56,14 +62,23 @@ public interface UserLoginService {
 
     /**
      * 获取当前登录用户的路由信息
+     *
      * @param userId 用户的ID
      * @return 路由信息
      */
     public List<RouterVo> getRouters(Long userId);
 
+    /**
+     * 获取用户可分配的路由信息
+     *
+     * @param userId
+     * @return
+     */
+    public List<RouterVo> getAppRouters(Long userId);
 
     /**
      * 获取用户可分配角色
+     *
      * @param userId
      * @return
      */
@@ -71,7 +86,8 @@ public interface UserLoginService {
 
     /**
      * 保存分配角色信息
-     * @param userId 用户ID
+     *
+     * @param userId  用户ID
      * @param roleIds 角色ID
      */
     public void saveAuthUser(Long userId, List<Long> roleIds);
@@ -79,6 +95,7 @@ public interface UserLoginService {
 
     /**
      * 获取角色可分配的用户
+     *
      * @param roleId
      * @return
      */
@@ -87,14 +104,16 @@ public interface UserLoginService {
 
     /**
      * 保存分配用户信息
+     *
      * @param roleId
      * @param userIds
      */
-    public void saveAuthRole(Long roleId ,List<Long> userIds);
+    public void saveAuthRole(Long roleId, List<Long> userIds);
 
 
     /**
      * 上传用户头像
+     *
      * @param file 文件
      * @return 文件信息
      */

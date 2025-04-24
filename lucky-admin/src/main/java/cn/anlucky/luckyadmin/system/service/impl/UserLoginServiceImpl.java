@@ -277,6 +277,22 @@ public class UserLoginServiceImpl implements UserLoginService {
     }
 
     /**
+     * 获取用户可分配的路由信息
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<RouterVo> getAppRouters(Long userId) {
+        // 获取当前用户的角色代码
+        List<Long> rolesids = sysRolesService.getRolesIdByUserId(userId);
+        // 获取树形菜单信息 此时并没有构建为前端可以识别的路由信息
+        List<RouterVo> routers = sysMenusService.getAppRouters(rolesids);
+        // 构建路由信息
+        return routers;
+    }
+
+    /**
      * 获取用户可分配角色
      *
      * @param userId

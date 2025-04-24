@@ -59,7 +59,18 @@ public class SysMenusServiceImp extends ServiceImpl<SysMenusMapper, SysMenus> im
      */
     @Override
     public List<RouterVo> getRouters(List<Long> roleIds) {
-        List<SysMenus> menusTree = this.getMenusTree(roleIds);
+        List<SysMenus> menusTree = this.getMenusTree(roleIds,0);
+        return buildRouters(menusTree);
+    }
+
+    /**
+     * 获取所有App路由
+     * @param roleIds 角色id集合
+     * @return
+     */
+    @Override
+    public List<RouterVo> getAppRouters(List<Long> roleIds) {
+        List<SysMenus> menusTree = this.getMenusTree(roleIds,-1);
         return buildRouters(menusTree);
     }
 
@@ -198,12 +209,12 @@ public class SysMenusServiceImp extends ServiceImpl<SysMenusMapper, SysMenus> im
     }
 
     /**
-     * 根据角色id获取路由信息
-     *
-     * @param roleIds
+     * 获取菜单树
+     * @param roleIds 角色的id集合
+     * @param parentId 根父级菜单id
      * @return
      */
-    public List<SysMenus> getMenusTree(List<Long> roleIds) {
+    public List<SysMenus> getMenusTree(List<Long> roleIds, int parentId) {
         // 根据角色查询角色拥有的菜单，并查询routers中是否存在，若不存在则添加
         // 这个方案没有合适的方式添加缓存
         // List<SysMenus> menus = this.baseMapper.getRouters(roleIds);
@@ -227,7 +238,7 @@ public class SysMenusServiceImp extends ServiceImpl<SysMenusMapper, SysMenus> im
         List<SysMenus> menus = list.stream().filter(menu -> seenIds.add(menu.getId()))
                 .sorted(Comparator.comparingInt(SysMenus::getSort))
                 .collect(Collectors.toList());
-        return getChildPerms(menus, 0);
+        return getChildPerms(menus, parentId);
     }
 
     /**

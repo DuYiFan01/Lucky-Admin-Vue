@@ -5,12 +5,10 @@ import cn.anlucky.luckyadmin.system.annotation.Log;
 import cn.anlucky.luckyadmin.system.enums.BusinessType;
 import cn.anlucky.luckyadmin.system.pojo.SysFiles;
 import cn.anlucky.luckyadmin.system.pojo.SysUsers;
-import cn.anlucky.luckyadmin.system.service.SysUsersService;
 import cn.anlucky.luckyadmin.system.service.UserLoginService;
 import cn.anlucky.luckyadmin.system.vo.PasswordUpdateVo;
 import cn.anlucky.luckyadmin.system.vo.RouterVo;
 import cn.anlucky.luckyadmin.system.vo.UserLoginVo;
-import cn.anlucky.luckyadmin.utils.file.FileUploadUtils;
 import cn.anlucky.luckyadmin.utils.satoken.SaUtils;
 import cn.anlucky.luckyadmin.vo.R;
 import cn.dev33.satoken.annotation.SaCheckPermission;
@@ -20,7 +18,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 
@@ -114,6 +111,18 @@ public class UserLoginController {
     public R getRouters() {
         Long userId = SaUtils.getLoginIdAsLong();
         List<RouterVo> routers = userLoginService.getRouters(userId);
+        return R.ok(routers);
+    }
+
+    /**
+     * 获取App路由
+     *
+     * @return R
+     */
+    @GetMapping("/getAppRouters")
+    public R getAppRouters() {
+        Long userId = SaUtils.getLoginIdAsLong();
+        List<RouterVo> routers = userLoginService.getAppRouters(userId);
         return R.ok(routers);
     }
 
