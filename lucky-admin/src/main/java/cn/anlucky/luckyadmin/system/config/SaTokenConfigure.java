@@ -47,6 +47,9 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         /** 本地文件上传路径 */
         registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**")
                 .addResourceLocations("file:" + LuckyConfig.getProfile() + "/");
+        /** 七牛文件上传路径 */
+        registry.addResourceHandler(Constants.RESOURCE_QINIU + "/**")
+                .addResourceLocations(LuckyConfig.getQiniuDomain() + "/");
     }
     /**
      * Sa-Token 权限认证规则

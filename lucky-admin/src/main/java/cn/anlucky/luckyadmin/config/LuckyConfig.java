@@ -21,37 +21,31 @@ public class LuckyConfig {
      */
     @Getter
     private static String captchaType;
-
     /**
      * ip获取地址开关
      */
     @Getter
     private static Boolean ipLocation;
-
     /**
      * 文件上传位置 local-本地 qiniu-七牛
      */
     @Getter
     private static String fileLocation;
-
     /**
      * 文件上传地址,末尾没有 "/"
      */
     @Getter
     private static String profile;
-
     /**
      * 文件最大上传大小
      */
     @Getter
     private static Long fileMaxSize;
-
     /**
      * 文件名最大长度
      */
     @Getter
     private static Integer fileNameMaxLength;
-
     /**
      * 七牛云存储AK
      */
@@ -67,6 +61,11 @@ public class LuckyConfig {
      */
     @Getter
     private static String qiniuBucket;
+    /**
+     * 七牛云存储域名
+     */
+    @Getter
+    private static String qiniuDomain;
 
 
     public void setCaptchaEnabled(Boolean captchaEnabled) {
@@ -113,5 +112,9 @@ public class LuckyConfig {
 
     public void setQiniuBucket(String qiniuBucket) {
         LuckyConfig.qiniuBucket = qiniuBucket;
+    }
+
+    public void setQiniuDomain(String qiniuDomain) {
+        LuckyConfig.qiniuDomain = qiniuDomain;
     }
 }

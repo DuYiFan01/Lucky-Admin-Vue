@@ -47,14 +47,17 @@ public class FileUploadUtils {
         String fileName = FileCheckUtils.formatFileName(file, fileBusinessType);
 
         // 获取文件完整存储路径
-        String absolutePath = getAbsoluteFile(LuckyConfig.getProfile(), fileName).getAbsolutePath();
+        String absolutePath = getAbsoluteFile(LuckyConfig.getProfile(), fileName).getPath();
 
         try {
-            // 本地文件上传
+            // LuckyConfig.getFileLocation() 未配置，默认本地文件上传
             if (StringUtils.isBlank(LuckyConfig.getFileLocation()) || Constants.FILE_LOCATION_LOCAL.equalsIgnoreCase(LuckyConfig.getFileLocation())){
                 file.transferTo(Paths.get(absolutePath));
             }
             // 七牛文件上传
+            if (Constants.FILE_LOCATION_QINIU.equalsIgnoreCase(LuckyConfig.getFileLocation())){
+                QiNiuUploadUtils.upload(file,fileName);
+            }
         } catch (IOException e) {
             e.printStackTrace();
             throw new CustomException("Funcation FileUploadUtils.uploadFile() Error,Message:" + e.getMessage());
@@ -154,8 +157,18 @@ public class FileUploadUtils {
     public static final String getPathFileName(String uploadDir){
         int dirLastIndex = LuckyConfig.getProfile().length() + 1;
         String currentDir = StringUtils.substring(uploadDir, dirLastIndex);
-        return Constants.RESOURCE_PREFIX + "/" + currentDir;
+        return getPathFilePrefix() + "/" + currentDir;
     }
-
+    public static final String getPathFilePrefix(){
+        // 默认文件上传，本地文件上传
+        if (StringUtils.isBlank(LuckyConfig.getFileLocation()) || Constants.FILE_LOCATION_LOCAL.equalsIgnoreCase(LuckyConfig.getFileLocation())){
+            return Constants.RESOURCE_PREFIX;
+        }
+        // 七牛上传文件映射前缀
+        if (Constants.FILE_LOCATION_QINIU.equalsIgnoreCase(LuckyConfig.getFileLocation())){
+            return Constants.RESOURCE_QINIU;
+        }
+        return Constants.RESOURCE_PREFIX;
+    }
 
 }

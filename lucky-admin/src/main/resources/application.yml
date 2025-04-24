@@ -1,3 +1,9 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: utf-8
 spring:
   application:
     name: lucky-admin
@@ -10,12 +16,6 @@ spring:
       max-file-size: 10MB
       # 设置请求中所有文件的最大总大小
       max-request-size: 10MB
-server:
-  port: 8080
-  servlet:
-    context-path: /
-    encoding:
-      charset: utf-8
 #Mybatis-Plus Config
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
@@ -67,6 +67,8 @@ lucky:
     qiniu-sk:
     # 七牛存储空间
     qiniu-bucket:
+    # 七牛存储域名 不包含结尾 /
+    qiniu-domain:
 wx:
   appid:
   secret:

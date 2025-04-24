@@ -89,6 +89,11 @@ public class Constants {
     public static final String RESOURCE_PREFIX = "/profile";
 
     /**
+     * 七牛资源映射路径 前缀
+     */
+    public static final String RESOURCE_QINIU = "/qiniu";
+
+    /**
      * 文件Hash 算法
      */
     public static final String SHA256 = "SHA-256";

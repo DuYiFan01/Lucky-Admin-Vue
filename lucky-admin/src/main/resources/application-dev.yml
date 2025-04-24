@@ -2,6 +2,8 @@ server:
   port: 8080
   servlet:
     context-path: /dev-api
+    encoding:
+      charset: utf-8
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -17,13 +19,48 @@ spring:
       host: localhost
       port: 6379
       password:
+# sa-token config
+sa-token:
+  # token 名称（同时也是 cookie 名称）
+  token-name: token
+  # token 有效期（单位：秒） 默认30天，-1 代表永久有效
+  timeout: 3600
+  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+  active-timeout: -1
+  # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
+  is-share: false
+  # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
+  token-style: uuid
+  # 是否输出操作日志
+  is-log: true
+  # jwt 密钥
+  jwt-secret-key: lucky-admin-vue
 # 项目设置
 lucky:
   # 验证码开关
-  captcha-enabled: true
+  captcha-enabled: false
   # 验证码类型 number-数字 text-字符 mixed-数字+字母 math-计算
   captcha-type: number
   # IP取位置是否开启
-  ip-location: true
+  ip-location: false
+  # 文件存储位置 local-本地 qiniu-七牛
+  file-location: local
   # 文件上传路径
   profile: D:/lucky-admin-vue-file/file/
+  # 文件最大大小 MB
+  file-max-size: 10
+  # 文件名最大长度 名字最大长度
+  fileNameMaxLength: 100
+  # 七牛存储Ak
+  qiniu-ak:
+  # 七牛存储Sk
+  qiniu-sk:
+  # 七牛存储空间
+  qiniu-bucket:
+  # 七牛存储域名 不包含结尾 /
+  qiniu-domain:
+wx:
+  appid:
+  secret:

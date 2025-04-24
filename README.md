@@ -200,3 +200,48 @@ npm run lint -- --fix
 ### 取消ESLINT检查
 如果你不想使用 ESLint 校验（不推荐取消），只要找到 vue.config.js 文件。 进行如下设置 lintOnSave: false 即可。
 
+### 七牛存储
+框架集成七牛存储，默认情况下上传到本地当中，配置了七牛的情况下会上传到七牛云当中去
+注意在yml文件中进行配置七牛的上传秘钥
+
+> 七牛存储的空间类型目前只支持了 公开型空间，私有空间暂不支持 (但提供了私有空间下载链接的方法 src/main/java/cn/anlucky/luckyadmin/utils/file/QiNiuUploadUtils.java getDownloadUrl)
+> 原因：公开空间不需要添加鉴权，所以可直接配置 WebMvcConfigurer.addResourceHandlers 资源映射
+```java
+        /** 七牛文件上传路径 */
+        registry.addResourceHandler(Constants.RESOURCE_QINIU + "/**")
+                .addResourceLocations(LuckyConfig.getQiniuDomain() + "/");
+```
+> 私有空间需要添加鉴权，在这里直接添加此映射无法直接访问到资源，故对于系统框架而言暂时只支持了私有空间，若必须实现私有，请自行实现
+
+```java
+    /**
+     * 获取下载地址
+     * @param fileName 文件名
+     * @param timeOut 下载地址过期时间 默认 3600
+     * @return
+     */
+    public static String getDownloadUrl(String fileName,Long timeOut) {
+
+        // 获取下载地址
+        Auth auth = Auth.create(LuckyConfig.getQiniuAk(), LuckyConfig.getQiniuSk());
+
+        // 编码
+        String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8).replace("+", "%20");
+        // 组合  url + / + 文件名
+        String publicUrl = String.format("%s/%s", LuckyConfig.getQiniuDomain(), encodedFileName);
+        // 链接过期时间 默认3600秒
+        if (timeOut == null) {
+            timeOut = 3600L; // 1小时
+        }
+        // 获取下载链接
+        return auth.privateDownloadUrl(publicUrl, timeOut);
+    }
+```
+
+### 其他存储
+
+自行实现
+步骤如下：
+1. 在工具包中创建对应的upload工具类，并实现上传文件 如：QiNiuUploadUtils.java
+2. 在 FileUploadUtils.java 中 uploadFile 方法添加对应的判断系统设置和对应的代码执行
+3. 检查后续的配置是否正确
