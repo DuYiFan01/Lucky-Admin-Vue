@@ -179,7 +179,7 @@ public class SysMenusServiceImp extends ServiceImpl<SysMenusMapper, SysMenus> im
      * @return
      */
     public boolean getAlwaysShow(SysMenus menu) {
-        if (Constants.TYPE_DIR.equals(menu.getMenuType())) {
+        if (Constants.TYPE_DIR.equalsIgnoreCase(menu.getMenuType())) {
             return true;
         }
         return false;
@@ -193,12 +193,12 @@ public class SysMenusServiceImp extends ServiceImpl<SysMenusMapper, SysMenus> im
      */
     public String getComponent(SysMenus menu) {
         // 多级目录使用ParentView
-        if (Constants.TYPE_DIR.equals(menu.getMenuType()) && menu.getParentId() != 0) {
+        if (Constants.TYPE_DIR.equalsIgnoreCase(menu.getMenuType()) && menu.getParentId() != 0) {
             // 如果是目录，且不是根目录使用ParentView
             return Constants.PARENT_VIEW;
         }
         // 如果是菜单
-        if (Constants.TYPE_MENU.equals(menu.getMenuType())){
+        if (Constants.TYPE_MENU.equalsIgnoreCase(menu.getMenuType())){
             return menu.getComponent();
         }
         if (Constants.TYPE_N_URL.equalsIgnoreCase(menu.getMenuType())){
