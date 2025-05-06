@@ -245,3 +245,11 @@ npm run lint -- --fix
 1. 在工具包中创建对应的upload工具类，并实现上传文件 如：QiNiuUploadUtils.java
 2. 在 FileUploadUtils.java 中 uploadFile 方法添加对应的判断系统设置和对应的代码执行
 3. 检查后续的配置是否正确
+
+### 路由隐藏
+理论上而言 路由隐藏起来是 hidden: true 依然注册路由，在浏览器菜单当中是可以正常跳转的。
+但在当前框架中，若设置了路由被隐藏，则不注册路由，所以在浏览器当中也是无法被跳转的。
+代码修改位置：
+mapper/SysMenusMapper.xml 方法：getRoutersByRoleId 删除查询条件 visible = 1 即可
+
+注意删除缓存
