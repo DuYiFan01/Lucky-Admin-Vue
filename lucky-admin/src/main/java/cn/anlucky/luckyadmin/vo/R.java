@@ -11,15 +11,15 @@ import lombok.Data;
 @Data
 public class R<T> {
     // HTTP状态码
-    private String code;
+    private Integer code;
     // 响应消息
     private String message;
     // 响应数据
     private T data;
 
     // 私有构造函数
-    private R(String code, String message, T data) {
-        if (code == null || code.isEmpty()) {
+    private R(Integer code, String message, T data) {
+        if (code == null) {
             throw new IllegalArgumentException("Code cannot be null or empty");
         }
         if (message == null) {
@@ -78,7 +78,7 @@ public class R<T> {
      * @param message 错误消息
      * @return 错误的响应对象
      */
-    public static <T> R<T> error(String code, String message) {
+    public static <T> R<T> error(Integer code, String message) {
         return new R<>(code, message, null);
     }
 
@@ -90,7 +90,7 @@ public class R<T> {
      * @param data    错误响应携带的数据
      * @return 错误的响应对象
      */
-    public static <T> R<T> error(String code, String message, T data) {
+    public static <T> R<T> error(Integer code, String message, T data) {
         return new R<>(code, message, data);
     }
 

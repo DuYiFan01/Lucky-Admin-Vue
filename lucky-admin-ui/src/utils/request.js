@@ -48,7 +48,7 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     // 未登录状态码
-    if (res.code === '-401') {
+    if (res.code === -401) {
       // to re-login
       MessageBox.confirm('您的登录已失效,是否要重新登录', '确认注销', {
         confirmButtonText: '去登录',

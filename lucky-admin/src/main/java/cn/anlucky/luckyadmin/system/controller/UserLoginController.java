@@ -50,7 +50,7 @@ public class UserLoginController {
      * @return LoginVo
      */
     @PostMapping("/register")
-    public R login(@RequestBody SysUsers sysUsers) {
+    public R register(@RequestBody SysUsers sysUsers) {
         return R.ok(userLoginService.register(sysUsers));
     }
 
@@ -59,7 +59,7 @@ public class UserLoginController {
      * @return
      */
     @GetMapping("/logout")
-    public R login() {
+    public R logout() {
         SaUtils.logout();
         return R.ok("登出成功");
     }

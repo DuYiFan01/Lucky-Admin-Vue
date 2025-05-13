@@ -14,12 +14,6 @@
         <el-input v-model="searchForm.comment" placeholder="请输入表描述" style="width: 200px;" />
       </div>
       <div class="grid-item">
-        <span>
-          实体名称:
-        </span>
-        <el-input v-model="searchForm.entity" placeholder="请输入实体名称" style="width: 200px;" />
-      </div>
-      <div class="grid-item">
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
       </div>
     </div>
