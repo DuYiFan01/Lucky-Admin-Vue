@@ -58,7 +58,7 @@ public interface UserLoginService {
      * @param passwordUpdateVo 用户信息
      * @return SysUsers
      */
-    public SysUsers updateUserPasswrod(PasswordUpdateVo passwordUpdateVo);
+    public SysUsers updateUserPassword(PasswordUpdateVo passwordUpdateVo);
 
     /**
      * 获取当前登录用户的路由信息

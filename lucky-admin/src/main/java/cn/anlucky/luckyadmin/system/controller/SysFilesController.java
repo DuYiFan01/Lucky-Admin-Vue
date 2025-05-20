@@ -92,6 +92,20 @@ public class SysFilesController extends BaseController {
         List<SysFiles> sysFiles = sysFilesService.uploadFiles(files, FileBusinessType.File_UPLOAD);
         return R.ok("添加成功",sysFiles);
     }
+    /**
+     * 新增信息
+     *
+     * @param file
+     * @return 添加成功
+     */
+    @Operation(summary = "上传文件")
+    @SaCheckPermission("system::files::insert")
+    @Log(title = "新增文件", businessType = BusinessType.INSERT)
+    @PostMapping("/uploadFile")
+    public R save(@RequestParam("file") MultipartFile file,@RequestParam("fileBusinessType") FileBusinessType fileBusinessType) {
+        SysFiles sysFile = sysFilesService.uploadFile(file, fileBusinessType);
+        return R.ok("添加成功",sysFile);
+    }
 
     /**
      * 批量删除和删除信息

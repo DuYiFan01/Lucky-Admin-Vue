@@ -207,9 +207,6 @@ public class UserLoginServiceImpl implements UserLoginService {
         if (sysUsers.getName() == null || sysUsers.getName().trim().isEmpty()) {
             throw new CustomException("昵称不能为空");
         }
-        if (sysUsers.getEmail() == null || sysUsers.getEmail().trim().isEmpty()) {
-            throw new CustomException("邮箱不能为空");
-        }
         if (sysUsers.getSex() == null || sysUsers.getSex().trim().isEmpty()) {
             throw new CustomException("性别不能为空");
         }
@@ -224,7 +221,7 @@ public class UserLoginServiceImpl implements UserLoginService {
      * @return SysUsers
      */
     @Override
-    public SysUsers updateUserPasswrod(PasswordUpdateVo passwordUpdateVo) {
+    public SysUsers updateUserPassword(PasswordUpdateVo passwordUpdateVo) {
         if (passwordUpdateVo == null) {
             throw new CustomException("用户信息不能为空");
         }

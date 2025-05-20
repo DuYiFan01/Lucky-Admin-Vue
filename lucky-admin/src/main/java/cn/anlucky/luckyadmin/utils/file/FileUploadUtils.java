@@ -157,6 +157,9 @@ public class FileUploadUtils {
     public static final String getPathFileName(String uploadDir){
         int dirLastIndex = LuckyConfig.getProfile().length() + 1;
         String currentDir = StringUtils.substring(uploadDir, dirLastIndex);
+        // 将 \ 替换为 /
+        currentDir = StringUtils.replace(currentDir, "\\", "/");
+
         return getPathFilePrefix() + "/" + currentDir;
     }
     public static final String getPathFilePrefix(){

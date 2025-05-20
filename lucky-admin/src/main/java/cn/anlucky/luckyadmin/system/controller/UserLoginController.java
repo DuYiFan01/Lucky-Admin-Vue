@@ -98,7 +98,7 @@ public class UserLoginController {
     @Log(title = "修改密码", businessType = BusinessType.UPDATE)
     @PostMapping("/updatePassword")
     public R updatePasswrod(@RequestBody PasswordUpdateVo passwordUpdateVo) {
-        userLoginService.updateUserPasswrod(passwordUpdateVo);
+        userLoginService.updateUserPassword(passwordUpdateVo);
         return R.ok("修改成功");
     }
 
