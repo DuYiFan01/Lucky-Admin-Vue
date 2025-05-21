@@ -6,6 +6,9 @@
 <p align="center">
 <a href='https://gitee.com/xiaodu6/lucky-admin-vue/stargazers'><img src='https://gitee.com/xiaodu6/lucky-admin-vue/badge/star.svg?theme=dark' alt='star'></img></a>
     <a href='https://gitee.com/xiaodu6/lucky-admin-vue/members'><img src='https://gitee.com/xiaodu6/lucky-admin-vue/badge/fork.svg?theme=dark' alt='fork'></img></a>
+<a href='https://github.com/DuYiFan01/Lucky-Admin-Vue'><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/DuYiFan01/Lucky-Admin-Vue"> </a>
+<a href='https://github.com/DuYiFan01/Lucky-Admin-Vue'><img alt="GitHub forks" src="https://img.shields.io/github/forks/DuYiFan01/Lucky-Admin-Vue"> </a>
+
 </p>
 
 
