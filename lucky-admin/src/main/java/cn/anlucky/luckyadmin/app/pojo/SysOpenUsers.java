@@ -20,7 +20,7 @@ import lombok.ToString;
  * 跨平台用户
  *
  * @author yifan.du
- * @since 2025-05-22 14:54:09
+ * @since 2025-05-22 17:25:42
  */
 @Getter
 @Setter
@@ -31,16 +31,16 @@ public class SysOpenUsers implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
-     * 绑定id
+     * 绑定ID
      */
-    @Schema(description = "绑定id")
+    @Schema(description = "绑定ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /**
-     * 系统账户Id
+     * 系统账户ID
      */
     @TableField("sys_user_id")
-    @Schema(description = "系统账户Id")
+    @Schema(description = "系统账户ID")
     private Long sysUserId;
     /**
      * 跨平台用户标识
@@ -49,10 +49,10 @@ public class SysOpenUsers implements Serializable {
     @Schema(description = "跨平台用户标识")
     private String userOpenId;
     /**
-     * 平台标识 0-系统账户 1-微信小程序 2-抖音小程序
+     * 平台标识（0-系统账户 1-微信小程序 2-抖音小程序）
      */
     @TableField("sys_user_type")
-    @Schema(description = "平台标识 0-系统账户 1-微信小程序 2-抖音小程序")
+    @Schema(description = "平台标识（0-系统账户 1-微信小程序 2-抖音小程序）")
     private Integer sysUserType;
     /**
      * 创建时间

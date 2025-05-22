@@ -26,7 +26,6 @@ import cn.anlucky.luckyadmin.system.annotation.Log;
  * @since 2025-02-20 09:28:37
  */
 @RestController
-@Tag(name = "操作日志Controller")
 @RequiredArgsConstructor
 @RequestMapping("/system/sysOperLog")
 public class SysOperLogController extends BaseController {
@@ -38,7 +37,6 @@ public class SysOperLogController extends BaseController {
     * @param id 主键ID
     * @return SysOperLog
     */
-    @Operation(summary = "id查询一个SysOperLog")
     @SaCheckPermission("system::logs::operlog::query")
     @GetMapping("/get/{id}")
     public R getById(@PathVariable(name = "id") Serializable id) {
@@ -50,7 +48,6 @@ public class SysOperLogController extends BaseController {
      * 查询所有操作日志信息
      * @return List<SysOperLog>
      */
-    @Operation(summary = "查询所有SysOperLog信息")
     @SaCheckPermission("system::logs::operlog::query")
     @PostMapping("/list")
     public R list() {
@@ -63,7 +60,6 @@ public class SysOperLogController extends BaseController {
      * @param sysOperLog 操作日志
      * @return List<SysOperLog>
      */
-    @Operation(summary = "条件分页查询SysOperLog信息")
     @SaCheckPermission("system::logs::operlog::query")
     @PostMapping("/pageByParams")
     public R pageByParams(@RequestBody SysOperLog sysOperLog) {
@@ -78,7 +74,6 @@ public class SysOperLogController extends BaseController {
      * @param sysOperLog 操作日志
      * @return 添加成功
      */
-    @Operation(summary = "新增SysOperLog信息")
     @SaCheckPermission("system::logs::operlog::insert")
     @Log(title = "操作日志", businessType = BusinessType.INSERT)
     @PostMapping("/save")
@@ -94,7 +89,6 @@ public class SysOperLogController extends BaseController {
      * @param sysOperLog 操作日志
      * @return 修改成功
      */
-    @Operation(summary = "修改SysOperLog信息")
     @SaCheckPermission("system::logs::operlog::update")
     @Log(title = "操作日志", businessType = BusinessType.UPDATE)
     @PostMapping("/updateById")
@@ -108,7 +102,6 @@ public class SysOperLogController extends BaseController {
     * @param ids 主键ID数组
     * @return 删除成功
     */
-    @Operation(summary = "批量删除和删除SysOperLog信息")
     @SaCheckPermission("system::logs::operlog::delete")
     @Log(title = "操作日志", businessType = BusinessType.DELETE)
     @GetMapping("/delete/{ids}")

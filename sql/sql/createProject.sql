@@ -288,3 +288,18 @@ CREATE TABLE `sys_business_files`  (
                                        PRIMARY KEY (`id`),
                                        INDEX `index_type_id`(`business_type`, `business_id`)
 ) ENGINE = InnoDB COMMENT = '业务文件关联';
+
+
+-- 跨平台用户
+DROP TABLE IF EXISTS `sys_open_users`;
+CREATE TABLE sys_open_users (
+`id` BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '绑定id',
+sys_user_id BIGINT NOT NULL COMMENT '系统账户Id',
+user_open_id VARCHAR ( 100 ) NOT NULL COMMENT '跨平台用户标识',
+sys_user_type INT NOT NULL COMMENT '平台标识 0-系统账户 1-微信小程序 2-抖音小程序',
+`create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`create_by` VARCHAR ( 50 ) NULL DEFAULT NULL COMMENT '创建人',
+`update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+`update_by` VARCHAR ( 50 ) NULL DEFAULT NULL COMMENT '更新人',
+`del_flag` INT NULL DEFAULT 0 COMMENT '逻辑删除标志，0-未删除，1-已删除'
+)COMMENT '跨平台用户';

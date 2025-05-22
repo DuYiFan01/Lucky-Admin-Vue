@@ -17,15 +17,16 @@ import lombok.RequiredArgsConstructor;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+
 import cn.anlucky.luckyadmin.system.annotation.Log;
-        /**
+
+/**
  * 登录日志控制器
  *
  * @author yifan.du
  * @since 2025-02-20 09:28:37
  */
 @RestController
-@Tag(name = "登录日志Controller")
 @RequiredArgsConstructor
 @RequestMapping("/system/sysLoginLog")
 public class SysLoginLogController extends BaseController {
@@ -33,11 +34,11 @@ public class SysLoginLogController extends BaseController {
     private final SysLoginLogService sysLoginLogService;
 
     /**
-    * 指定ID查询 登录日志信息
-    * @param id 主键ID
-    * @return SysLoginLog
-    */
-    @Operation(summary = "id查询一个SysLoginLog")
+     * ID查登录日志
+     *
+     * @param id 主键ID
+     * @return SysLoginLog
+     */
     @SaCheckPermission("system::logs::loginlog::query")
     @GetMapping("/get/{id}")
     public R getById(@PathVariable(name = "id") Serializable id) {
@@ -47,9 +48,9 @@ public class SysLoginLogController extends BaseController {
 
     /**
      * 查询所有登录日志信息
+     *
      * @return List<SysLoginLog>
      */
-    @Operation(summary = "查询所有SysLoginLog信息")
     @SaCheckPermission("system::logs::loginlog::query")
     @PostMapping("/list")
     public R list() {
@@ -59,10 +60,10 @@ public class SysLoginLogController extends BaseController {
 
     /**
      * 条件分页查询登录日志信息
+     *
      * @param sysLoginLog 登录日志
      * @return List<SysLoginLog>
      */
-    @Operation(summary = "条件分页查询SysLoginLog信息")
     @SaCheckPermission("system::logs::loginlog::query")
     @PostMapping("/pageByParams")
     public R pageByParams(@RequestBody SysLoginLog sysLoginLog) {
@@ -75,26 +76,27 @@ public class SysLoginLogController extends BaseController {
 
     /**
      * 新增登录日志信息
+     *
      * @param sysLoginLog 登录日志
      * @return 添加成功
      */
-    @Operation(summary = "新增SysLoginLog信息")
     @SaCheckPermission("system::logs::loginlog::insert")
     @Log(title = "登录日志", businessType = BusinessType.INSERT)
     @PostMapping("/save")
     public R save(@RequestBody SysLoginLog sysLoginLog) {
-        if(sysLoginLogService.getById(sysLoginLog.getId())!=null){
+        if (sysLoginLogService.getById(sysLoginLog.getId()) != null) {
             throw new CustomException("ID已存在");
         }
         sysLoginLogService.save(sysLoginLog);
         return R.ok("添加成功");
     }
+
     /**
      * 根据ID修改登录日志信息
+     *
      * @param sysLoginLog 登录日志
      * @return 修改成功
      */
-    @Operation(summary = "修改SysLoginLog信息")
     @SaCheckPermission("system::logs::loginlog::update")
     @Log(title = "登录日志", businessType = BusinessType.UPDATE)
     @PostMapping("/updateById")
@@ -104,16 +106,16 @@ public class SysLoginLogController extends BaseController {
     }
 
     /**
-    * 批量删除和删除登录日志信息
-    * @param ids 主键ID数组
-    * @return 删除成功
-    */
-    @Operation(summary = "批量删除和删除SysLoginLog信息")
+     * 批量删除和删除登录日志信息
+     *
+     * @param ids 主键ID数组
+     * @return 删除成功
+     */
     @SaCheckPermission("system::logs::loginlog::delete")
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
     @GetMapping("/delete/{ids}")
     public R deleteByIds(@PathVariable(name = "ids") Serializable[] ids) {
-        if (ids.length <= 0){
+        if (ids.length <= 0) {
             throw new CustomException("请选择要删除的数据");
         }
         sysLoginLogService.removeBatchByIds(Arrays.asList(ids));

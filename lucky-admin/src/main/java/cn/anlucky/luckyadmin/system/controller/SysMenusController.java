@@ -26,7 +26,6 @@ import cn.anlucky.luckyadmin.system.annotation.Log;
  * @since 2025-02-06 10:00:06
  */
 @RestController
-@Tag(name = "菜单信息Controller")
 @RequiredArgsConstructor
 @RequestMapping("/system/sysMenus")
 public class SysMenusController extends BaseController {
@@ -39,7 +38,6 @@ public class SysMenusController extends BaseController {
      * @param id 主键ID
      * @return SysMenus
      */
-    @Operation(summary = "id查询一个SysMenus")
     @SaCheckPermission("system::menus::query")
     @GetMapping("/get/{id}")
     public R getById(@PathVariable(name = "id") Serializable id) {
@@ -52,7 +50,6 @@ public class SysMenusController extends BaseController {
      *
      * @return List<SysMenus>
      */
-    @Operation(summary = "查询所有SysMenus信息")
     @SaCheckPermission("system::menus::query")
     @PostMapping("/list")
     public R list(@RequestBody SysMenus sysMenus) {
@@ -66,7 +63,6 @@ public class SysMenusController extends BaseController {
      * @param sysMenus 菜单信息
      * @return List<SysMenus>
      */
-    @Operation(summary = "条件分页查询SysMenus信息")
     @SaCheckPermission("system::menus::query")
     @PostMapping("/pageByParams")
     public R pageByParams(@RequestBody SysMenus sysMenus) {
@@ -82,7 +78,6 @@ public class SysMenusController extends BaseController {
      * @param sysMenus 菜单信息
      * @return 添加成功
      */
-    @Operation(summary = "新增SysMenus信息")
     @SaCheckPermission("system::menus::insert")
     @Log(title = "菜单信息", businessType = BusinessType.INSERT)
     @PostMapping("/save")
@@ -100,7 +95,6 @@ public class SysMenusController extends BaseController {
      * @param sysMenus 菜单信息
      * @return 修改成功
      */
-    @Operation(summary = "修改SysMenus信息")
     @SaCheckPermission("system::menus::update")
     @Log(title = "菜单信息", businessType = BusinessType.UPDATE)
     @PostMapping("/updateById")
@@ -115,7 +109,6 @@ public class SysMenusController extends BaseController {
      * @param ids 主键ID数组
      * @return 删除成功
      */
-    @Operation(summary = "批量删除和删除SysMenus信息")
     @SaCheckPermission("system::menus::delete")
     @Log(title = "菜单信息", businessType = BusinessType.DELETE)
     @GetMapping("/delete/{ids}")

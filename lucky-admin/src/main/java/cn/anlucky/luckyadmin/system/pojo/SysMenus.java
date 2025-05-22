@@ -1,17 +1,18 @@
 package cn.anlucky.luckyadmin.system.pojo;
 
-    import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-    import com.fasterxml.jackson.annotation.JsonFormat;
-    import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
-    import java.util.List;
+import java.util.List;
 
-    import lombok.Getter;
+import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -19,7 +20,7 @@ import lombok.ToString;
  * 菜单信息
  *
  * @author yifan.du
- * @since 2025-02-14 09:35:59
+ * @since 2025-05-22 17:25:42
  */
 @Getter
 @Setter
@@ -110,7 +111,7 @@ public class SysMenus implements Serializable {
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Schema(description = "创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
@@ -123,7 +124,7 @@ public class SysMenus implements Serializable {
     /**
      * 更新时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Schema(description = "更新时间")
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;

@@ -27,7 +27,6 @@ import cn.anlucky.luckyadmin.system.annotation.Log;
  * @since 2025-02-17 13:33:37
  */
 @RestController
-@Tag(name = "用户信息Controller")
 @RequiredArgsConstructor
 @RequestMapping("/system/sysUsers")
 public class SysUsersController extends BaseController {
@@ -42,7 +41,6 @@ public class SysUsersController extends BaseController {
      * @param id 主键ID
      * @return SysUsers
      */
-    @Operation(summary = "id查询一个SysUsers")
     @SaCheckPermission("system::users::query")
     @GetMapping("/get/{id}")
     public R getById(@PathVariable(name = "id") Serializable id) {
@@ -55,7 +53,6 @@ public class SysUsersController extends BaseController {
      *
      * @return List<SysUsers>
      */
-    @Operation(summary = "查询所有SysUsers信息")
     @SaCheckPermission("system::users::query")
     @PostMapping("/list")
     public R list() {
@@ -69,7 +66,6 @@ public class SysUsersController extends BaseController {
      * @param sysUsers 用户信息
      * @return List<SysUsers>
      */
-    @Operation(summary = "条件分页查询SysUsers信息")
     @SaCheckPermission("system::users::query")
     @PostMapping("/pageByParams")
     public R pageByParams(@RequestBody SysUsers sysUsers) {
@@ -85,7 +81,6 @@ public class SysUsersController extends BaseController {
      * @param sysUsers 用户信息
      * @return 添加成功
      */
-    @Operation(summary = "新增SysUsers信息")
     @SaCheckPermission("system::users::insert")
     @Log(title = "用户信息", businessType = BusinessType.INSERT)
     @PostMapping("/save")
@@ -103,7 +98,6 @@ public class SysUsersController extends BaseController {
      * @param sysUsers 用户信息
      * @return 修改成功
      */
-    @Operation(summary = "修改SysUsers信息")
     @SaCheckPermission("system::users::update")
     @Log(title = "用户信息", businessType = BusinessType.UPDATE)
     @PostMapping("/updateById")
@@ -118,7 +112,6 @@ public class SysUsersController extends BaseController {
      * @param ids 主键ID数组
      * @return 删除成功
      */
-    @Operation(summary = "批量删除和删除SysUsers信息")
     @SaCheckPermission("system::users::delete")
     @Log(title = "用户信息", businessType = BusinessType.DELETE)
     @GetMapping("/delete/{ids}")

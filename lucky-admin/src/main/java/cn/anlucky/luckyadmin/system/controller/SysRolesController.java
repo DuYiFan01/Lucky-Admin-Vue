@@ -27,7 +27,6 @@ import cn.anlucky.luckyadmin.system.annotation.Log;
  * @since 2025-02-17 17:56:51
  */
 @RestController
-@Tag(name = "角色信息Controller")
 @RequiredArgsConstructor
 @RequestMapping("/system/sysRoles")
 public class SysRolesController extends BaseController {
@@ -40,7 +39,6 @@ public class SysRolesController extends BaseController {
      * @param id 主键ID
      * @return SysRoles
      */
-    @Operation(summary = "id查询一个SysRoles")
     @SaCheckPermission("system::roles::query")
     @GetMapping("/get/{id}")
     public R getById(@PathVariable(name = "id") Long id) {
@@ -53,7 +51,6 @@ public class SysRolesController extends BaseController {
      *
      * @return List<SysRoles>
      */
-    @Operation(summary = "查询所有SysRoles信息")
     @SaCheckPermission("system::roles::query")
     @PostMapping("/list")
     public R list() {
@@ -67,7 +64,6 @@ public class SysRolesController extends BaseController {
      * @param sysRoles 角色信息
      * @return List<SysRoles>
      */
-    @Operation(summary = "条件分页查询SysRoles信息")
     @SaCheckPermission("system::roles::query")
     @PostMapping("/pageByParams")
     public R pageByParams(@RequestBody SysRoles sysRoles) {
@@ -83,7 +79,6 @@ public class SysRolesController extends BaseController {
      * @param sysRoles 角色信息
      * @return 添加成功
      */
-    @Operation(summary = "新增SysRoles信息")
     @SaCheckPermission("system::roles::insert")
     @Log(title = "角色信息", businessType = BusinessType.INSERT)
     @PostMapping("/save")
@@ -101,7 +96,6 @@ public class SysRolesController extends BaseController {
      * @param sysRolesVo 角色信息
      * @return 修改成功
      */
-    @Operation(summary = "修改SysRoles信息")
     @SaCheckPermission("system::roles::update")
     @Log(title = "角色信息", businessType = BusinessType.UPDATE)
     @PostMapping("/updateById")
@@ -116,7 +110,6 @@ public class SysRolesController extends BaseController {
      * @param sysRolesVo 角色信息
      * @return 修改成功
      */
-    @Operation(summary = "修改SysRoles信息")
     @SaCheckPermission("system::roles::update")
     @Log(title = "角色信息", businessType = BusinessType.UPDATE)
     @PostMapping("/updateAppById")
@@ -131,7 +124,6 @@ public class SysRolesController extends BaseController {
      * @param ids 主键ID数组
      * @return 删除成功
      */
-    @Operation(summary = "批量删除和删除SysRoles信息")
     @SaCheckPermission("system::roles::delete")
     @Log(title = "角色信息", businessType = BusinessType.DELETE)
     @GetMapping("/delete/{ids}")

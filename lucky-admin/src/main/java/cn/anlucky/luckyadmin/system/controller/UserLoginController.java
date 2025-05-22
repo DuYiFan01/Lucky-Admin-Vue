@@ -24,7 +24,6 @@ import java.util.List;
 /**
  * 登录注册Controller
  */
-@Tag(name = "登录注册Controller")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
