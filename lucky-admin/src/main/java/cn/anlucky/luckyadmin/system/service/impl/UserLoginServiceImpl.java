@@ -128,10 +128,10 @@ public class UserLoginServiceImpl implements UserLoginService {
             sysUser.setPassword(PasswordEncode.encode("1234567"));
         }
         if (sysUser.getName() == null || sysUser.getName().trim().isEmpty()) {
-            throw new CustomException("昵称不能为空");
+            sysUser.setName("新用户");
         }
         if (sysUser.getSex() == null || sysUser.getSex().trim().isEmpty()) {
-            throw new CustomException("性别不能为空");
+            sysUser.setSex("1");
         }
         sysUsersService.save(sysUser);
         return sysUser;

@@ -109,7 +109,7 @@ public class CaptchaController {
      * @param length 位数长度
      * @return
      */
-    public String getCaptchaByNumberType(int length){
+    public static String getCaptchaByNumberType(int length){
         if (length > 0){
             StringBuilder captcha = new StringBuilder();
             for (int i = 0; i < length; i++) {
@@ -124,7 +124,7 @@ public class CaptchaController {
      * @param length
      * @return
      */
-    public String getCaptchaByTextType(int length){
+    public static String getCaptchaByTextType(int length){
         if (length > 0){
             StringBuilder captcha = new StringBuilder();
             for (int i = 0; i < length; i++) {
@@ -139,7 +139,7 @@ public class CaptchaController {
      * @param length
      * @return
      */
-    public String getCaptchaByMixedType(int length){
+    public static String getCaptchaByMixedType(int length){
         if (length > 0){
             StringBuilder captcha = new StringBuilder();
             for (int i = 0; i < length; i++) {
@@ -157,7 +157,7 @@ public class CaptchaController {
      * 获取1位 0-9 随机数字
      * @return
      */
-    public String getRandomNumber(){
+    public static String getRandomNumber(){
         String[] number = {"0","1","2","3","4","5","6","7","8","9"};
         return number[(int)(Math.random()*10)];
     }
@@ -166,7 +166,7 @@ public class CaptchaController {
      * 获取1位 a-z A-Z 随机字符
      * @return
      */
-    public String getRandomText(){
+    public static String getRandomText(){
         String[] text = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
         return text[(int)(Math.random()*52)];
     }
