@@ -94,28 +94,34 @@ public class WxUserServiceImpl implements WxUserService {
                 // 保存用户和openId的绑定关系
                 sysOpenUsersService.save(sysOpenUsers);
             }
+
+            // 查询用户信息
+            SysUsers users = sysUsersService.getById(sysOpenUsers.getSysUserId());
+            String username = users.getUsername();
+            Long userId = users.getId();
+
             // 用户登录
             // 设置登录Token携带信息
             SaLoginModel saLoginModel = new SaLoginModel();
-            saLoginModel.setExtra("id", sysOpenUsers.getSysUserId());
-            saLoginModel.setExtra("username", openUserName);
+            saLoginModel.setExtra("id", userId);
+            saLoginModel.setExtra("username", username);
             // 携带参数登录
-            SaUtils.login(sysOpenUsers.getSysUserId(), saLoginModel);
+            SaUtils.login(userId, saLoginModel);
             String token = SaUtils.getToken();
             // 添加登录信息到缓存中
             UserLoginDetail userLoginDetail = new UserLoginDetail();
-            userLoginDetail.setUserId(sysOpenUsers.getSysUserId());
-            userLoginDetail.setUsername(openUserName);
+            userLoginDetail.setUserId(userId);
+            userLoginDetail.setUsername(username);
             userLoginDetail.setToken(token);
             setUserLoginDetailCache(userLoginDetail);
             // 设置返回响应
-            loginvo.setId(sysOpenUsers.getSysUserId());
-            loginvo.setUsername(openUserName);
+            loginvo.setId(userId);
+            loginvo.setUsername(username);
             loginvo.setToken(token);
             // 记录成功日志
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(openUserName, Constants.LOGIN_SUCCESS, "登录成功"));
+            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, "登录成功"));
             // 记录登录信息 登录IP和最后登录时间
-            recordLoginInfo(sysOpenUsers.getSysUserId());
+            recordLoginInfo(userId);
         } catch (Exception e) {
             // 记录失败日志
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(loginvo.getUsername(), Constants.LOGIN_FAIL, e.getMessage()));
