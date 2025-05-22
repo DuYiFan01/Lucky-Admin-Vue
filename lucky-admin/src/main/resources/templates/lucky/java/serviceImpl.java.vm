@@ -44,7 +44,7 @@ open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperNam
 public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}>#if(${generateService}) implements ${table.serviceName}#end {
 
         /**
-         * 条件分页查询$!{tableComment}信息
+         * 条件分页查询
          * @param ${tableEntityPath}
          * @return List<${entity}>
          */

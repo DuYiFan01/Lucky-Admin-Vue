@@ -31,7 +31,7 @@ interface ${table.serviceName} : ${superServiceClass}<${entity}>
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
     /**
-     * 条件分页查询$!{tableComment}信息
+     * 条件分页查询
      * @param ${tableEntityPath}
      * @return List<${entity}>
      */

@@ -43,7 +43,6 @@ import cn.anlucky.luckyadmin.system.annotation.Log;
 #else
 @Controller
 #end
-@Tag(name = "$!{tableComment}Controller")
 @RequiredArgsConstructor
 @RequestMapping("/${package.ModuleName}/${tableEntityPath}")
 #if(${kotlin})
@@ -58,38 +57,35 @@ public class ${table.controllerName} {
     private final ${table.serviceName} ${tableEntityPath}Service;
 
     /**
-    * 指定ID查询 $!{tableComment}信息
-    * @param id 主键ID
+    * ID查询 $!{tableComment}
+    * @param id
     * @return ${entityName}
     */
-    @Operation(summary = "id查询一个${entityName}")
-    @SaCheckPermission("${package.ModuleName}::${tableEntityPath}::query")
     @GetMapping("/get/{id}")
+    @SaCheckPermission("${package.ModuleName}::${tableEntityPath}::query")
     public R getById(@PathVariable(name = "id") Serializable id) {
         ${entity} ${tableEntityPath} = ${tableEntityPath}Service.getById(id);
         return R.ok(${tableEntityPath});
     }
 
     /**
-     * 查询所有$!{tableComment}信息
+     * 查询所有
      * @return List<${entity}>
      */
-    @Operation(summary = "查询所有${entityName}信息")
-    @SaCheckPermission("${package.ModuleName}::${tableEntityPath}::query")
     @PostMapping("/list")
+    @SaCheckPermission("${package.ModuleName}::${tableEntityPath}::query")
     public R list() {
         List<${entity}> list = ${tableEntityPath}Service.list();
         return R.ok(list);
     }
 
     /**
-     * 条件分页查询$!{tableComment}信息
+     * 条件分页查询
      * @param ${tableEntityPath} $!{tableComment}
      * @return List<${entity}>
      */
-    @Operation(summary = "条件分页查询${entityName}信息")
-    @SaCheckPermission("${package.ModuleName}::${tableEntityPath}::query")
     @PostMapping("/pageByParams")
+    @SaCheckPermission("${package.ModuleName}::${tableEntityPath}::query")
     public R pageByParams(@RequestBody ${entity} ${tableEntityPath}) {
         startPage();
         List<${entity}> list = ${tableEntityPath}Service.pageByParams(${tableEntityPath});
@@ -98,14 +94,13 @@ public class ${table.controllerName} {
     }
 
     /**
-     * 新增$!{tableComment}信息
+     * 新增
      * @param ${tableEntityPath} $!{tableComment}
      * @return 添加成功
      */
-    @Operation(summary = "新增${entityName}信息")
+    @PostMapping("/save")
     @SaCheckPermission("${package.ModuleName}::${tableEntityPath}::insert")
     @Log(title = "$!{tableComment}", businessType = BusinessType.INSERT)
-    @PostMapping("/save")
     public R save(@RequestBody ${entity} ${tableEntityPath}) {
         if(${tableEntityPath}Service.getById(${tableEntityPath}.get${tableKeyJavaBigName}())!=null){
             throw new CustomException("ID已存在");
@@ -114,28 +109,26 @@ public class ${table.controllerName} {
         return R.ok("添加成功");
     }
     /**
-     * 根据ID修改$!{tableComment}信息
+     * 修改
      * @param ${tableEntityPath} $!{tableComment}
      * @return 修改成功
      */
-    @Operation(summary = "修改${entityName}信息")
+    @PostMapping("/updateById")
     @SaCheckPermission("${package.ModuleName}::${tableEntityPath}::update")
     @Log(title = "$!{tableComment}", businessType = BusinessType.UPDATE)
-    @PostMapping("/updateById")
     public R updateById(@RequestBody ${entity} ${tableEntityPath}) {
         ${tableEntityPath}Service.updateById(${tableEntityPath});
         return R.ok("修改成功");
     }
 
     /**
-    * 批量删除和删除$!{tableComment}信息
+    * 删除/批量删除
     * @param ids 主键ID数组
     * @return 删除成功
     */
-    @Operation(summary = "批量删除和删除${entityName}信息")
+    @GetMapping("/delete/{ids}")
     @SaCheckPermission("${package.ModuleName}::${tableEntityPath}::delete")
     @Log(title = "$!{tableComment}", businessType = BusinessType.DELETE)
-    @GetMapping("/delete/{ids}")
     public R deleteByIds(@PathVariable(name = "ids") Serializable[] ids) {
         if (ids.length <= 0){
             throw new CustomException("请选择要删除的数据");
