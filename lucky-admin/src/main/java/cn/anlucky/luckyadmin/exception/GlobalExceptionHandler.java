@@ -26,6 +26,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(CustomException.class)
     public R<Void> handleCustomException(CustomException ex) {
+        ex.printStackTrace();
         return R.error(ex.getMessage());
     }
 
