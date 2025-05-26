@@ -141,7 +141,7 @@
           <el-form-item v-if="form.menuType === 'C'" label="菜单图标" prop="icon">
             <el-popover placement="bottom-start" width="460" trigger="click" @show="$refs['iconSelect'].reset()">
               <IconSelectApp ref="iconSelect" :active-icon="form.icon" @selected="selectedIcon" />
-              <el-input :prefix-icon="['iconfont', form.icon]" slot="reference" v-model="form.icon" placeholder="点击选择图标" readonly />
+              <el-input slot="reference" v-model="form.icon" :prefix-icon="['iconfont', form.icon]" placeholder="点击选择图标" readonly />
             </el-popover>
           </el-form-item>
         </el-row>
