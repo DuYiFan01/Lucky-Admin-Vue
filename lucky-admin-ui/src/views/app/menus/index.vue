@@ -57,7 +57,7 @@
         <el-table-column width="200" prop="title" label="菜单名称" :show-overflow-tooltip="showOverflowTooltip" />
         <el-table-column prop="icon" label="菜单图标" :show-overflow-tooltip="showOverflowTooltip">
           <template slot-scope="scope">
-            <svg-icon :icon-class="scope.row.icon" />
+            <i :class="['iconfont', scope.row.icon]" />
           </template>
         </el-table-column>
         <el-table-column prop="sort" label="显示顺序" />
@@ -140,11 +140,8 @@
         <el-row>
           <el-form-item v-if="form.menuType === 'C'" label="菜单图标" prop="icon">
             <el-popover placement="bottom-start" width="460" trigger="click" @show="$refs['iconSelect'].reset()">
-              <IconSelect ref="iconSelect" :active-icon="form.icon" @selected="selectedIcon" />
-              <el-input slot="reference" v-model="form.icon" placeholder="点击选择图标" readonly>
-                <svg-icon v-if="form.icon" slot="prefix" :icon-class="form.icon" style="width: 25px;" />
-                <i v-else slot="prefix" class="el-icon-search el-input__icon" />
-              </el-input>
+              <IconSelectApp ref="iconSelect" :active-icon="form.icon" @selected="selectedIcon" />
+              <el-input :prefix-icon="['iconfont', form.icon]" slot="reference" v-model="form.icon" placeholder="点击选择图标" readonly />
             </el-popover>
           </el-form-item>
         </el-row>
@@ -211,14 +208,14 @@
 <script>
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-import IconSelect from '@/components/IconSelect/index'
+import IconSelectApp from '@/components/IconSelectApp/index'
 
 import { list, save, updateById, deleteByIds } from '@/api/system/sysMenus'
 
 export default {
   components: {
     Treeselect,
-    IconSelect
+    IconSelectApp
   },
   data() {
     return {
