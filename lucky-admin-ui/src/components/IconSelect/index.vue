@@ -1,8 +1,6 @@
 <template>
   <div class="icon-body">
-    <el-input v-model="name" class="icon-search" clearable placeholder="请输入图标名称" @clear="filterIcons" @input="filterIcons">
-      <i slot="suffix" class="el-icon-search el-input__icon" />
-    </el-input>
+    <el-input v-model="name" suffix-icon="el-icon-search" clearable placeholder="请输入图标名称" @clear="filterIcons" @input="filterIcons" />
     <div class="icon-list">
       <div class="list-container">
         <div v-for="(item, index) in iconList" :key="index" class="icon-item-wrapper" @click="selectedIcon(item)">
